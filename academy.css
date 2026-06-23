@@ -512,4 +512,9 @@ footer {
   }
   .nav-links::-webkit-scrollbar { display: none; }   /* WebKit: hide the bar */
   .nav-links a { white-space: nowrap; flex: 0 0 auto; padding: 6px 12px; }
+
+  /* wide data tables (up to 5 cols) become a horizontal-scroll container
+     on phones — catches any genuine overflow without forcing text cells
+     wide; per the design system's table spec */
+  table.tbl { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
 }
