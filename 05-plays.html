@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Plays · 8BitTrading Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="academy.css">
+<style>
+  /* page-local: play cards + weekly tabs */
+  .plays-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:8px; }
+  .play-card { background:var(--bg3); border:1px solid var(--border); border-radius:12px; padding:22px; }
+  .play-card:hover { border-color:var(--border2); }
+  .play-num { font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--text3); margin-bottom:6px; }
+  .play-title { font-family:var(--font-display); font-size:14px; font-weight:700; margin-bottom:14px; }
+  .play-title.g { color:var(--gamma); } .play-title.v { color:var(--vanna); } .play-title.c { color:var(--charm); }
+  .play-row { display:flex; gap:8px; margin-bottom:7px; font-size:12px; align-items:flex-start; }
+  .play-key { color:var(--text3); min-width:54px; font-size:10px; letter-spacing:0.06em; text-transform:uppercase; padding-top:2px; }
+  .play-val { color:var(--text2); flex:1; line-height:1.6; }
+  .play-val a { color:inherit; text-decoration:underline; text-decoration-color:var(--border2); }
+  .week-tabs { display:flex; gap:4px; margin-bottom:26px; background:var(--bg3); padding:4px; border-radius:10px; border:1px solid var(--border); width:fit-content; flex-wrap:wrap; }
+  .week-tab { padding:8px 18px; border-radius:7px; font-size:12px; font-weight:500; cursor:pointer; transition:all 0.2s; color:var(--text3); letter-spacing:0.04em; border:none; background:transparent; font-family:var(--font-mono); }
+  .week-tab:hover { color:var(--text2); background:var(--bg4); }
+  .week-tab.active { background:var(--bg); color:var(--text); border:1px solid var(--border2); }
+  .week-tab.mon.active { color:var(--gamma); border-color:rgba(31,212,160,0.3); }
+  .week-tab.tue.active { color:#a0d080; border-color:rgba(160,208,128,0.3); }
+  .week-tab.wed.active { color:var(--charm); border-color:rgba(171,71,188,0.35); }
+  .week-tab.thu.active { color:var(--vanna); border-color:rgba(123,143,255,0.3); }
+  .week-tab.fri.active { color:#ff7799; border-color:rgba(255,119,153,0.3); }
+  .day-panel { display:none; } .day-panel.active { display:block; }
+  .day-hero { display:grid; grid-template-columns:1fr 2fr; gap:20px; margin-bottom:24px; align-items:start; }
+  .day-stat { background:var(--bg3); border:1px solid var(--border); border-radius:12px; padding:22px; }
+  .day-name { font-family:var(--font-display); font-size:30px; font-weight:800; letter-spacing:-0.02em; line-height:1; margin-bottom:10px; }
+  .day-lbl { font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--text3); margin-bottom:5px; }
+  .day-greek { font-family:var(--font-display); font-size:17px; font-weight:700; }
+  .day-info { background:var(--bg3); border:1px solid var(--border); border-radius:12px; padding:22px; }
+  .day-info p { font-size:12.5px; color:var(--text2); line-height:1.7; }
+  .day-info p strong { color:var(--text); font-weight:500; }
+  .qr-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin-bottom:26px; }
+  .qr-day { border-radius:10px; padding:18px 14px; border:1px solid var(--border); text-align:center; background:var(--bg3); }
+  .qr-name { font-family:var(--font-display); font-size:13px; font-weight:700; margin-bottom:8px; letter-spacing:0.04em; }
+  .qr-greek { font-family:var(--font-display); font-size:14px; font-weight:700; margin-bottom:8px; }
+  .qr-note { font-size:10px; color:var(--text3); line-height:1.5; }
+  @media (max-width:720px){ .plays-grid{grid-template-columns:1fr;} .day-hero{grid-template-columns:1fr;} .qr-grid{grid-template-columns:1fr 1fr;} }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-brand">8Bit<span class="accent">Trading</span> Academy</a>
+  <div class="nav-links">
+    <a href="01-gamma.html" class="gamma">Gamma</a>
+    <a href="02-vanna.html" class="vanna">Vanna</a>
+    <a href="03-charm.html" class="charm">Charm</a>
+    <a href="04-levels.html">Levels</a>
+    <a href="05-plays.html" class="active">Plays</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-label">Section 05 · The Plays · putting levels to work</div>
+    <h1>The <span class="g">plays</span></h1>
+    <p class="hero-sub">Twelve concrete setups built directly on the nine levels, plus a map of which greek leads each day of the week. Every play tells you the <strong style="color:var(--text)">setup, entry, target and stop</strong> in terms of the lines on your chart.</p>
+  </div>
+</section>
+
+<!-- HOW TO READ A PLAY -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header"><span class="section-num">05.1</span><h2 class="section-title">Discipline first</h2></div>
+    <div class="card-grid three">
+      <div class="intro-card gamma"><div class="card-label">Wait for confirmation</div><div class="card-value gamma">Never pre-enter at the edge</div><div class="card-note">Let price enter the zone AND print a confirmation candle. The level is a zone, not a single tick.</div></div>
+      <div class="intro-card"><div class="card-label">Targets are levels</div><div class="card-value">Exit into the next line</div><div class="card-note">Your target is the next opposing level — not the peak node, which is an anchor, not a destination.</div></div>
+      <div class="intro-card"><div class="card-label">Stops are breaks</div><div class="card-value">A close through, not a wick</div><div class="card-note">Invalidation = a decisive close beyond the level. Wicks hunt stops; closes change the story.</div></div>
+    </div>
+    <div class="callout key"><span class="ic">◎</span><div class="body"><strong>Read the regime before any play.</strong> Above the <a href="04-levels.html#flip" style="color:var(--lvl-flip)">gamma flip</a> you fade extremes (gamma &amp; charm plays). Below it you follow momentum (trapdoor plays). The flip decides which half of this page applies right now.</div></div>
+  </div>
+</section>
+
+<!-- GAMMA PLAYS -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header"><span class="section-num">05.2</span><h2 class="section-title gamma">Gamma plays</h2></div>
+    <div class="plays-grid">
+      <div class="play-card">
+        <div class="play-num">Play G1</div><div class="play-title g">Flip-level reaction</div>
+        <div class="play-row"><span class="play-key">Setup</span><span class="play-val">Price approaches the <a href="04-levels.html#flip">gamma flip</a> — the last meaningful +γ cluster before negative territory.</span></div>
+        <div class="play-row"><span class="play-key">Entry</span><span class="play-val">Price enters the zone AND prints a confirmation candle. Never pre-enter at the edge.</span></div>
+        <div class="play-row"><span class="play-key">Target</span><span class="play-val">First opposing level — the <a href="04-levels.html#ceiling">ceiling</a> above or <a href="04-levels.html#floor">floor</a> below.</span></div>
+        <div class="play-row"><span class="play-key">Stop</span><span class="play-val">Clean close back through the flip.</span></div>
+        <div style="margin-top:10px;"><span class="tag long">Long at +γ floor</span><span class="tag short">Short at −γ ceiling</span></div>
+      </div>
+      <div class="play-card">
+        <div class="play-num">Play G2</div><div class="play-title g">Trapdoor break</div>
+        <div class="play-row"><span class="play-key">Setup</span><span class="play-val">A <a href="04-levels.html#trapdoor">trapdoor</a> sits right beside price with no +γ catch on the far side.</span></div>
+        <div class="play-row"><span class="play-key">Entry</span><span class="play-val">Momentum entry on the confirmed break of the last wall before the trapdoor.</span></div>
+        <div class="play-row"><span class="play-key">Target</span><span class="play-val">Next <a href="04-levels.html#floor">floor</a> / +γ cluster beyond the <a href="04-levels.html#volzone">vol zone</a>.</span></div>
+        <div class="play-row"><span class="play-key">Note</span><span class="play-val">Move amplifies fast. Wider stops, larger size. Don't fight it.</span></div>
+        <div style="margin-top:10px;"><span class="tag warn">High velocity</span><span class="tag short">Follow the break</span></div>
+      </div>
+      <div class="play-card">
+        <div class="play-num">Play G3</div><div class="play-title g">Trend-day follow</div>
+        <div class="play-row"><span class="play-key">Setup</span><span class="play-val">Forward Negative Slide board — −γ stacked ahead in the direction of travel at the open.</span></div>
+        <div class="play-row"><span class="play-key">Entry</span><span class="play-val">Any shallow pullback to an intraday level. Don't wait for a deep retrace in trend mode.</span></div>
+        <div class="play-row"><span class="play-key">Target</span><span class="play-val">Next <a href="04-levels.html#trapdoor">trapdoor</a> / vol-trigger strike in the trend direction.</span></div>
+        <div class="play-row"><span class="play-key">Stop</span><span class="play-val">Flip back above the last positive cluster.</span></div>
+        <div style="margin-top:10px;"><span class="tag long">Buy dips up-slide</span><span class="tag short">Short rips down-slide</span></div>
+      </div>
+      <div class="play-card">
+        <div class="play-num">Play G4</div><div class="play-title g">Pin-gravity fade</div>
+        <div class="play-row"><span class="play-key">Setup</span><span class="play-val">Price extended away from a dominant <a href="04-levels.html#magnet">magnet</a> on a +γ ramp board. Morning only.</span></div>
+        <div class="play-row"><span class="play-key">Entry</span><span class="play-val">Fade the extension back toward the dominant node (largest absolute gamma strike).</span></div>
+        <div class="play-row"><span class="play-key">Target</span><span class="play-val">The magnet itself — the pin-gravity destination.</span></div>
+        <div class="play-row"><span class="play-key">Stop</span><span class="play-val">Break and hold beyond the second level away from the pin.</span></div>
+        <div style="margin-top:10px;"><span class="tag neutral">Range day only</span><span class="tag long">Mean reversion</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VANNA PLAYS -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header"><span class="section-num">05.3</span><h2 class="section-title vanna">Vanna plays</h2></div>
+    <p class="lede"><a href="02-vanna.html" style="color:var(--vanna)">Vanna</a> gives direction; gamma gives the entry level. These are bias plays you express through the gamma lines.</p>
+    <div class="plays-grid">
+      <div class="play-card">
+        <div class="play-num">Play V1</div><div class="play-title v">VIX-crush drift</div>
+        <div class="play-row"><span class="play-key">Setup</span><span class="play-val">Net +VEX board, VIX actively falling from an elevated level (not flat — falling).</span></div>
+        <div class="play-row"><span class="play-key">Entry</span><span class="play-val">Long any minor pullback to a <a href="04-levels.html#floor">floor</a> / +γ level. Gamma gives the spot, vanna the direction.</span></div>
+        <div class="play-row"><span class="play-key">Target</span><span class="play-val">Open-ended — hold until the VIX stops falling.</span></div>
+        <div class="play-row"><span class="play-key">Stops</span><span class="play-val">Wide. Vanna drifts don't retest cleanly; tight stops get clipped.</span></div>
+        <div style="margin-top:10px;"><span class="tag long">Best Tue / Thu</span><span class="tag neutral">VIX must be falling</span></div>
+      </div>
+      <div class="play-card">
+        <div class="play-num">Play V2</div><div class="play-title v">VIX-spike reversal</div>
+        <div class="play-row"><span class="play-key">Setup</span><span class="play-val">A sharp VIX spike (5%+ intraday) that stalls and starts to curl back down.</span></div>
+        <div class="play-row"><span class="play-key">Entry</span><span class="play-val">First 15-min candle that closes lower than it opened on the VIX → long ES at that confirmation.</span></div>
+        <div class="play-row"><span class="play-key">Target</span><span class="play-val">Full retrace of the vanna-driven drop — back to the morning gamma level.</span></div>
+        <div class="play-row"><span class="play-key">Tell</span><span class="play-val">ES lower-low while VIX makes a lower-high — that divergence is the signal.</span></div>
+        <div style="margin-top:10px;"><span class="tag long">Highest conviction</span><span class="tag neutral">Any day</span></div>
+      </div>
+      <div class="play-card">
+        <div class="play-num">Play V3</div><div class="play-title v">Weekly Thursday reversion</div>
+        <div class="play-row"><span class="play-key">Setup</span><span class="play-val">Mon–Wed made a big directional move with the VIX stretched; Thursday opens still extended.</span></div>
+        <div class="play-row"><span class="play-key">Entry</span><span class="play-val">Down week + VIX spiked → buy Thursday open. Up week + VIX crushed → fade Thursday open.</span></div>
+        <div class="play-row"><span class="play-key">Target</span><span class="play-val">50–61.8% retrace of the week's vanna-driven move.</span></div>
+        <div class="play-row"><span class="play-key">Exit</span><span class="play-val">By 2pm ET. Do not hold into Friday's charm dynamics.</span></div>
+        <div style="margin-top:10px;"><span class="tag warn">Thursday only</span><span class="tag neutral">Exit by 2pm</span></div>
+      </div>
+      <div class="play-card">
+        <div class="play-num">Play V4</div><div class="play-title v">OPEX-week vanna window</div>
+        <div class="play-row"><span class="play-key">Setup</span><span class="play-val">Week of the 3rd-Friday monthly. Net +VEX, VIX elevated but falling.</span></div>
+        <div class="play-row"><span class="play-key">Entry</span><span class="play-val">Buy Monday open of OPEX week; hold through Thursday.</span></div>
+        <div class="play-row"><span class="play-key">Target</span><span class="play-val">Multi-day sustained move — vanna compression into OPEX is the month's strongest.</span></div>
+        <div class="play-row"><span class="play-key">Exit</span><span class="play-val">Thursday close. Never hold into OPEX Friday — dynamics flip.</span></div>
+        <div style="margin-top:10px;"><span class="tag long">Swing trade</span><span class="tag warn">Exit Thu close</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHARM PLAYS -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header"><span class="section-num">05.4</span><h2 class="section-title charm">Charm plays</h2></div>
+    <p class="lede">Afternoon, expiry-day setups built on the <a href="03-charm.html" style="color:var(--charm)">charm clock</a> and the pin strike.</p>
+    <div class="plays-grid">
+      <div class="play-card">
+        <div class="play-num">Play C1</div><div class="play-title c">Afternoon pin drift</div>
+        <div class="play-row"><span class="play-key">Setup</span><span class="play-val">Wed or Fri, post-noon. Price within ~0.5% of the dominant <a href="04-levels.html#charm-pin">charm pin</a>.</span></div>
+        <div class="play-row"><span class="play-key">Entry</span><span class="play-val">Above pin → short rips toward it. Below pin → buy dips toward it.</span></div>
+        <div class="play-row"><span class="play-key">Target</span><span class="play-val">The pin strike. Exit at or just before — don't hold through.</span></div>
+        <div class="play-row"><span class="play-key">Tell</span><span class="play-val">Slow grind, low volume, no momentum. That IS the trade — don't wait for a breakout.</span></div>
+        <div style="margin-top:10px;"><span class="tag warn">Wed / Fri PM</span><span class="tag neutral">Exit before pin</span></div>
+      </div>
+      <div class="play-card">
+        <div class="play-num">Play C2</div><div class="play-title c">Morning bias filter</div>
+        <div class="play-row"><span class="play-key">Setup</span><span class="play-val">Wed or Fri morning. Price opens far (&gt;0.5%) from the pin strike.</span></div>
+        <div class="play-row"><span class="play-key">Use</span><span class="play-val">Keep your gamma entry — but set the pin as your profit target and bias direction toward it.</span></div>
+        <div class="play-row"><span class="play-key">Note</span><span class="play-val">Charm is a filter here, not an entry. It tilts your target and direction for the session.</span></div>
+        <div style="margin-top:10px;"><span class="tag neutral">Morning filter</span><span class="tag warn">Target = pin</span></div>
+      </div>
+      <div class="play-card">
+        <div class="play-num">Play C3</div><div class="play-title c">Final-hour unwind</div>
+        <div class="play-row"><span class="play-key">Setup</span><span class="play-val">Last 45–60 min of expiry. Price sitting on/near the pin, calm and quiet.</span></div>
+        <div class="play-row"><span class="play-key">Entry</span><span class="play-val">At 3:45pm, identify which side of the pin price is on; momentum entry that way only.</span></div>
+        <div class="play-row"><span class="play-key">Target</span><span class="play-val">Quick 5–10 point move as gamma expires and the pin collapses.</span></div>
+        <div class="play-row"><span class="play-key">Note</span><span class="play-val">Tight stops, small size. Optional — skip if unclear.</span></div>
+        <div style="margin-top:10px;"><span class="tag warn">3:45pm only</span><span class="tag neutral">Small size</span></div>
+      </div>
+      <div class="play-card">
+        <div class="play-num">Play C4</div><div class="play-title c">Post-OPEX Monday gap</div>
+        <div class="play-row"><span class="play-key">Setup</span><span class="play-val">Monday after the 3rd-Friday OPEX. Gap open either direction.</span></div>
+        <div class="play-row"><span class="play-key">Rule</span><span class="play-val">Gap into a <a href="04-levels.html#trapdoor">−γ zone</a> → follow. Gap into a <a href="04-levels.html#magnet">+γ cluster</a> → fade, target the gap fill.</span></div>
+        <div class="play-row"><span class="play-key">Why</span><span class="play-val">The board fully resets after OPEX — no charm anchor, the cleanest fresh gamma of the month.</span></div>
+        <div style="margin-top:10px;"><span class="tag long">Post-OPEX Mon</span><span class="tag neutral">Check γ sign first</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WEEKLY PLAYBOOK -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header"><span class="section-num">05.5</span><h2 class="section-title">The weekly map</h2></div>
+    <div class="callout warn"><span class="ic">⚠</span><div class="body"><strong>Override rule:</strong> if the VIX moves more than 5% intraday on <em>any</em> day, vanna takes over — drop the scheduled greek and switch to a vanna regime read until the VIX stabilizes.</div></div>
+    <div class="week-tabs">
+      <button class="week-tab mon active" onclick="showDay('mon')">Monday</button>
+      <button class="week-tab tue" onclick="showDay('tue')">Tuesday</button>
+      <button class="week-tab wed" onclick="showDay('wed')">Wednesday</button>
+      <button class="week-tab thu" onclick="showDay('thu')">Thursday</button>
+      <button class="week-tab fri" onclick="showDay('fri')">Friday</button>
+    </div>
+
+    <div class="day-panel active" id="d-mon">
+      <div class="day-hero">
+        <div class="day-stat"><div class="day-name" style="color:var(--gamma)">Mon</div><div class="day-lbl">Primary greek</div><div class="day-greek" style="color:var(--gamma)">GEX only</div></div>
+        <div class="day-info"><p><strong>Cleanest gamma of the week.</strong> Fresh board, no expiry hangover, light open interest — pure gamma mechanics. Trade the ramp structure and the <a href="04-levels.html#flip" style="color:var(--lvl-flip)">flip</a> with full confidence; use reaction zones, not single strikes. Charm is mild even into the afternoon. The Monday after OPEX is the single most reliable gamma read of the month — run Play C4 on the gap, then fresh gamma analysis.</p></div>
+      </div>
+    </div>
+    <div class="day-panel" id="d-tue">
+      <div class="day-hero">
+        <div class="day-stat"><div class="day-name" style="color:#a0d080">Tue</div><div class="day-lbl">Primary greek</div><div class="day-greek" style="color:#a0d080">GEX + VEX check</div></div>
+        <div class="day-info"><p><strong>Gamma still leads, vanna starts whispering.</strong> Run the Monday gamma playbook but glance at the VEX column at the open. If price ignores two+ gamma levels in a row, you may be in a vanna flow day — switch to Play V1. A nearby 7-DTE VEX cluster can override your gamma read without warning, so note its location as your "if I'm wrong" explanation.</p></div>
+      </div>
+    </div>
+    <div class="day-panel" id="d-wed">
+      <div class="day-hero">
+        <div class="day-stat"><div class="day-name" style="color:var(--charm)">Wed</div><div class="day-lbl">Split day</div><div class="day-greek" style="color:var(--charm)">GEX → Charm</div></div>
+        <div class="day-info"><p><strong>Gamma morning, charm afternoon.</strong> Treat the AM like a slightly noisier Monday — full ramp analysis, but set profit targets at the pin strike (Play C2). At <strong>12:00 the hard switch</strong>: drop gamma-level fades, trade pin drift only (Play C1), fade everything moving away from the pin. Exit by 3:00. Optional 3:45 unwind (C3) with tight stops.</p></div>
+      </div>
+    </div>
+    <div class="day-panel" id="d-thu">
+      <div class="day-hero">
+        <div class="day-stat"><div class="day-name" style="color:var(--vanna)">Thu</div><div class="day-lbl">Primary greek</div><div class="day-greek" style="color:var(--vanna)">Vanna (VEX)</div></div>
+        <div class="day-info"><p><strong>Vanna's day.</strong> Wednesday's expiry cleared, the board rebuilds for Friday, and IV is still repricing — vanna sensitivity peaks. The VIX direction at the open matters more than any gamma level. Gamma becomes speed-bumps (where stops go), not direction. VIX falling + net +VEX → buy dips all day (V1); big week + VIX stretched → counter-trend reversion (V3). Exit vanna plays by 2pm.</p></div>
+      </div>
+    </div>
+    <div class="day-panel" id="d-fri">
+      <div class="day-hero">
+        <div class="day-stat"><div class="day-name" style="color:#ff7799">Fri</div><div class="day-lbl">Split day</div><div class="day-greek" style="color:#ff7799">GEX → Charm</div></div>
+        <div class="day-info"><p><strong>The strongest charm of the week.</strong> Same shape as Wednesday — gamma AM, charm PM — but the Friday weight bump makes the afternoon pin the firmest of the week (OPEX Fridays firmest of the month; quarterly triple-witching the most intense of all). Identify the pin by 11am, trade toward it post-noon (C1), and exit by 3:30 without exception. Note the unwind direction into the close to prep Monday's Play C4.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUICK REFERENCE -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header"><span class="section-num">05.6</span><h2 class="section-title">Quick reference</h2></div>
+
+    <h4 class="eyebrow">Which greek leads each day</h4>
+    <div class="qr-grid">
+      <div class="qr-day"><div class="qr-name" style="color:var(--gamma)">Mon</div><div class="qr-greek" style="color:var(--gamma)">GEX</div><div class="qr-note">Cleanest gamma. Trade ramps &amp; flip.</div></div>
+      <div class="qr-day"><div class="qr-name" style="color:#a0d080">Tue</div><div class="qr-greek" style="color:#a0d080">GEX+</div><div class="qr-note">Gamma leads, watch a VEX cluster.</div></div>
+      <div class="qr-day"><div class="qr-name" style="color:var(--charm)">Wed</div><div class="qr-greek" style="color:var(--charm)">GEX→Charm</div><div class="qr-note">Switch to pin drift at noon.</div></div>
+      <div class="qr-day"><div class="qr-name" style="color:var(--vanna)">Thu</div><div class="qr-greek" style="color:var(--vanna)">VEX</div><div class="qr-note">VIX direction over any level.</div></div>
+      <div class="qr-day"><div class="qr-name" style="color:#ff7799">Fri</div><div class="qr-greek" style="color:#ff7799">GEX→Charm</div><div class="qr-note">Strongest pin. Exit by 3:30.</div></div>
+    </div>
+
+    <h4 class="eyebrow">Pre-market checklist — 5 steps</h4>
+    <div class="intro-card neutral" style="margin-bottom:30px;">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+        <div style="font-size:12.5px; color:var(--text2); line-height:1.9;">
+          <span style="color:var(--gamma);font-weight:500;">1.</span> Classify the ramp (Forward/Backward, Pos/Neg)<br>
+          <span style="color:var(--gamma);font-weight:500;">2.</span> Find the <a href="04-levels.html#flip" style="color:var(--lvl-flip)">flip</a> (last meaningful +γ cluster)<br>
+          <span style="color:var(--gamma);font-weight:500;">3.</span> Map the <a href="04-levels.html#trapdoor" style="color:var(--lvl-trapdoor)">trapdoors</a> (−γ next to price)
+        </div>
+        <div style="font-size:12.5px; color:var(--text2); line-height:1.9;">
+          <span style="color:var(--vanna);font-weight:500;">4.</span> VEX sign + VIX direction → vanna lean<br>
+          <span style="color:var(--charm);font-weight:500;">5.</span> Pin strike (largest abs γ near price, round number)<br>
+          <span style="color:var(--text3);">+ Day of week → which greek is primary</span>
+        </div>
+      </div>
+    </div>
+
+    <h4 class="eyebrow">All plays at a glance</h4>
+    <table class="tbl">
+      <thead><tr><th>Play</th><th>Greek</th><th>Setup</th><th>Best day</th><th>Trigger</th></tr></thead>
+      <tbody>
+        <tr><td style="color:var(--gamma)">G1 — Flip reaction</td><td><span class="tag long">GEX</span></td><td>Price at the flip zone</td><td>Mon / Tue</td><td>Confirmation candle in the zone</td></tr>
+        <tr><td style="color:var(--gamma)">G2 — Trapdoor break</td><td><span class="tag long">GEX</span></td><td>−γ adjacent, no catch beyond</td><td>Mon / Tue</td><td>Break of the last wall on volume</td></tr>
+        <tr><td style="color:var(--gamma)">G3 — Trend follow</td><td><span class="tag long">GEX</span></td><td>Forward Negative Slide board</td><td>Mon / Tue</td><td>Shallow pullback to a level</td></tr>
+        <tr><td style="color:var(--gamma)">G4 — Pin-gravity fade</td><td><span class="tag long">GEX</span></td><td>Extended from a magnet, +γ ramp</td><td>Mon AM</td><td>Any extension away from the pin</td></tr>
+        <tr><td style="color:var(--vanna)">V1 — VIX-crush drift</td><td><span class="tag neutral" style="background:var(--vanna-dim);color:var(--vanna);border-color:rgba(123,143,255,0.25)">VEX</span></td><td>+VEX + VIX falling</td><td>Tue / Thu</td><td>Pullback to a +γ level</td></tr>
+        <tr><td style="color:var(--vanna)">V2 — VIX-spike reversal</td><td><span class="tag neutral" style="background:var(--vanna-dim);color:var(--vanna);border-color:rgba(123,143,255,0.25)">VEX</span></td><td>5%+ VIX spike that curls down</td><td>Any day</td><td>First 15m VIX candle closing down</td></tr>
+        <tr><td style="color:var(--vanna)">V3 — Weekly reversion</td><td><span class="tag neutral" style="background:var(--vanna-dim);color:var(--vanna);border-color:rgba(123,143,255,0.25)">VEX</span></td><td>Big week + VIX stretched</td><td>Thursday</td><td>Counter-trend at open, exit 2pm</td></tr>
+        <tr><td style="color:var(--vanna)">V4 — OPEX window</td><td><span class="tag neutral" style="background:var(--vanna-dim);color:var(--vanna);border-color:rgba(123,143,255,0.25)">VEX</span></td><td>OPEX week, +VEX, VIX falling</td><td>Mon–Thu OPEX</td><td>Monday open, swing to Thu close</td></tr>
+        <tr><td style="color:var(--charm)">C1 — Afternoon pin drift</td><td><span class="tag warn">Charm</span></td><td>Post-noon, near the pin</td><td>Wed / Fri PM</td><td>Any move away from the pin</td></tr>
+        <tr><td style="color:var(--charm)">C2 — Morning bias filter</td><td><span class="tag warn">Charm</span></td><td>Expiry day, far from pin at open</td><td>Wed / Fri AM</td><td>Bias + target filter on gamma entries</td></tr>
+        <tr><td style="color:var(--charm)">C3 — Final-hour unwind</td><td><span class="tag warn">Charm</span></td><td>3:45pm, price near the pin</td><td>Wed / Fri</td><td>Momentum toward the pin side</td></tr>
+        <tr><td style="color:var(--charm)">C4 — Post-OPEX gap</td><td><span class="tag warn">Charm</span></td><td>Monday after OPEX, gap open</td><td>Post-OPEX Mon</td><td>Gap into −γ follow, +γ fade</td></tr>
+      </tbody>
+    </table>
+
+    <h4 class="eyebrow">DTE → greek map</h4>
+    <table class="tbl">
+      <thead><tr><th>DTE</th><th>Dominant greek</th><th>What it means</th></tr></thead>
+      <tbody>
+        <tr><td>45+</td><td class="neu">Vega</td><td>Macro positioning. Not directly tradeable on Periscope.</td></tr>
+        <tr><td>21</td><td style="color:var(--vanna)">Vanna builds</td><td>OPEX-week setup begins; VEX column starts showing intent.</td></tr>
+        <tr><td>7</td><td style="color:var(--vanna)">Vanna peak</td><td>Weekly vanna target. Thursday's anchor. Most IV-sensitive.</td></tr>
+        <tr><td>3</td><td style="color:var(--charm)">Charm builds</td><td>Time decay takes over from vanna. Wed-PM setup begins.</td></tr>
+        <tr><td>1</td><td style="color:var(--charm)">Charm + GEX</td><td>Thursday into Friday. Both active. Run the charm clock.</td></tr>
+        <tr><td>0</td><td style="color:var(--gamma)">GEX + Charm</td><td>Daily expiry. Your core framework — 40–50% of all SPX volume.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="teacher"><span class="ic">✦</span><div class="body"><strong>I'm your teacher.</strong> Want to pressure-test one of these plays against a real board, or build a custom checklist for the way you trade? Ask me and we'll work it out.</div></div>
+    <div class="source-note"><strong>Primary source:</strong> plays and the weekly framework are the 8BitTrading house system, mapped onto the levels emitted by the <em>gexgreeks</em> and <em>gamma-ramps</em> skills. Pair with the level deep-dives on <a href="04-levels.html">section 04</a>.</div>
+
+    <div class="pager">
+      <a href="04-levels.html" class="prev"><div class="pg-dir">← Previous</div><div class="pg-name">04 · The Levels</div></a>
+      <a href="index.html" class="next"><div class="pg-dir">Back to →</div><div class="pg-name">Academy home</div></a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">8BitTrading Academy · The Plays</div>
+    <div class="footer-note">Based on Unusual Whales Periscope · gexpro indicator · Educational — not financial advice</div>
+  </div>
+</footer>
+
+<script>
+function showDay(d){
+  document.querySelectorAll('.day-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.week-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('d-'+d).classList.add('active');
+  document.querySelector('.week-tab.'+d).classList.add('active');
+}
+</script>
+
+</body>
+</html>

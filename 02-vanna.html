@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vanna · 8BitTrading Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="academy.css">
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-brand">8Bit<span class="accent">Trading</span> Academy</a>
+  <div class="nav-links">
+    <a href="01-gamma.html" class="gamma">Gamma</a>
+    <a href="02-vanna.html" class="vanna active">Vanna</a>
+    <a href="03-charm.html" class="charm">Charm</a>
+    <a href="04-levels.html">Levels</a>
+    <a href="05-plays.html">Plays</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-label">Section 02 · Vanna (VEX) · the tone-setter</div>
+    <h1>Vanna —<br>the <span class="v">volatility</span> tide</h1>
+    <p class="hero-sub">If gamma is the structure, vanna is the <strong style="color:var(--text)">tide</strong> moving underneath it. It's hedging driven by the <span class="v">VIX</span>, and it explains those days where the market just… drifts up all day on no news. We use it as <strong style="color:var(--text)">context</strong> — it sets the day's lean, but it never becomes a line on your chart.</p>
+  </div>
+</section>
+
+<!-- WHAT IS VANNA -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header"><span class="section-num">02.1</span><h2 class="section-title vanna">What vanna actually is</h2></div>
+    <p class="lede">Vanna is <strong>how a dealer's hedge changes when implied volatility moves</strong> — when the VIX rises or falls. Gamma reacts to <em>price</em>; vanna reacts to <em>fear</em>. When the VIX drops, dealers are mechanically forced to buy futures, and that buying can carry the market higher with no fundamental reason at all.</p>
+    <div class="card-grid">
+      <div class="intro-card vanna"><div class="card-label">In one sentence</div><div class="card-value vanna">How dealer hedging reacts to the VIX moving</div><div class="card-note">Falling VIX → mechanical buying. Rising VIX → mechanical selling.</div></div>
+      <div class="intro-card"><div class="card-label">Where you see it</div><div class="card-value">The "VEX" column on Periscope</div><div class="card-note">Vanna Exposure. We read its sign and concentration, not as a level.</div></div>
+    </div>
+    <div class="mechanic-box vanna">
+      <div class="mechanic-label">The classic vanna drift (positive VEX + VIX falling)</div>
+      <div class="flow-chain">
+        <div class="flow-node">VIX drops</div><div class="flow-arrow">→</div>
+        <div class="flow-node">Dealer delta rises automatically</div><div class="flow-arrow">→</div>
+        <div class="flow-node highlight vanna">Dealer BUYS ES mechanically</div><div class="flow-arrow">→</div>
+        <div class="flow-node">Relentless upward drift</div>
+      </div>
+    </div>
+    <div class="callout key"><span class="ic">◎</span><div class="body"><strong>The tell:</strong> a slow grind higher on mediocre breadth, no headline, that just won't pull back. That's not real buying demand — that's vanna. Recognising it stops you from shorting "the obvious top" all day long.</div></div>
+  </div>
+</section>
+
+<!-- FOUR REGIMES -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header"><span class="section-num">02.2</span><h2 class="section-title vanna">The four vanna regimes</h2></div>
+    <p class="lede">Vanna's effect depends on two things: the <strong>sign of net VEX</strong> and the <strong>direction of the VIX</strong>. Two by two gives four regimes. Read the box, then commit to the lean.</p>
+    <table class="tbl">
+      <thead><tr><th>Net VEX</th><th>VIX</th><th>Dealers are forced to…</th><th>ES behavior</th><th>Your lean</th></tr></thead>
+      <tbody>
+        <tr><td>+ VEX</td><td class="bull">🟢 Falling</td><td>buy</td><td class="bull">Drift up, shallow pullbacks</td><td>Buy dips. Don't fade rips.</td></tr>
+        <tr><td>+ VEX</td><td class="bear">🔴 Rising</td><td>sell</td><td class="bear">Mechanical selling pressure</td><td>Fade rips. Don't buy dips.</td></tr>
+        <tr><td>− VEX</td><td class="bull">🟢 Falling</td><td>sell</td><td class="bear">Selling into the drop</td><td>Short. Don't fade the selling.</td></tr>
+        <tr><td>− VEX</td><td class="bear">🔴 Rising</td><td>buy</td><td class="bull">Short-squeeze risk</td><td>Don't fight upside. Buy the squeeze.</td></tr>
+      </tbody>
+    </table>
+    <div class="callout tip"><span class="ic">↯</span><div class="body"><strong>How to use it:</strong> vanna sets the day's <em>direction bias</em>; gamma gives you the <em>entry levels</em>. On a "+VEX, VIX falling" day, you still buy dips into a <a href="04-levels.html#floor" style="color:var(--lvl-floor)">floor</a> — but now you hold longer because vanna is pushing your way.</div></div>
+  </div>
+</section>
+
+<!-- WHY CONTEXT ONLY -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header"><span class="section-num">02.3</span><h2 class="section-title vanna">Why vanna is context, never a line</h2></div>
+    <p class="lede">In the 8BitTrading system, vanna <strong>never produces a level</strong>. This is deliberate. Vanna's force is diffuse and time-varying — it's a current across the whole board, not a wall at one strike. Pinning a line on it would be false precision.</p>
+    <div class="card-grid">
+      <div class="intro-card vanna"><div class="card-label">What vanna DOES do</div><div class="card-value">Sets the drift &amp; bias</div><div class="card-note">Tells you which direction to lean and how hard to hold winners.</div></div>
+      <div class="intro-card"><div class="card-label">What vanna does NOT do</div><div class="card-value">Draw a support/resistance line</div><div class="card-note">Levels come only from gamma + charm. Vanna colors the narrative.</div></div>
+    </div>
+    <div class="callout key"><span class="ic">◎</span><div class="body">In your indicator's read you'll see a line like <em>"net vanna positive — an IV pop tends to add spot support."</em> That's the whole role: a sentence of context that frames how you hold the gamma trade, not a price to react to.</div></div>
+  </div>
+</section>
+
+<!-- OVERRIDE RULE -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header"><span class="section-num">02.4</span><h2 class="section-title vanna">The override rule</h2></div>
+    <div class="callout warn"><span class="ic">⚠</span><div class="body"><strong>If the VIX moves more than 5% intraday — vanna takes over, regardless of the day or the gamma board.</strong> Drop the scheduled greek, drop the level fades, and switch to a pure vanna regime read until the VIX stabilizes. A 5%+ VIX move means dealers are being forced to hedge volatility so hard it swamps everything else. This is the one rule that overrides the rest of the system.</div></div>
+    <p class="lede">Most days the VIX is calm and vanna just sets a gentle lean. But on a volatility event — a hot inflation print, a geopolitical shock — vanna becomes <em>the</em> story, and gamma levels get run straight over. Respect the 5% line.</p>
+
+    <div class="teacher"><span class="ic">✦</span><div class="body"><strong>I'm your teacher.</strong> Not sure which of the four regimes you're in today, or whether a VIX move qualifies as an override? Ask me and we'll read it together.</div></div>
+    <div class="source-note"><strong>Primary source:</strong> vanna mechanics per the 8BitTrading weekly framework and the <em>gexgreeks</em> skill (vanna = context-only). For the volatility-feedback theory, see Kris Abdelmessih's <em>Moontower</em> writing on vanna &amp; dealer flows.</div>
+
+    <div class="pager">
+      <a href="01-gamma.html" class="prev"><div class="pg-dir">← Previous</div><div class="pg-name">01 · Gamma</div></a>
+      <a href="03-charm.html" class="next"><div class="pg-dir">Next →</div><div class="pg-name">03 · Charm</div></a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">8BitTrading Academy · Vanna</div>
+    <div class="footer-note">Based on Unusual Whales Periscope · gexpro indicator · Educational — not financial advice</div>
+  </div>
+</footer>
+
+</body>
+</html>

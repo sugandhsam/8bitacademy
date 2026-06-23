@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Charm · 8BitTrading Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="academy.css">
+<style>
+  /* charm clock — page-local timeline */
+  .clock { display:grid; grid-template-columns:96px 1fr; background:var(--bg3); border:1px solid var(--border); border-radius:12px; overflow:hidden; margin-bottom:26px; }
+  .clk-row { display:contents; }
+  .clk-row:not(:last-child) .clk-t, .clk-row:not(:last-child) .clk-c { border-bottom:1px solid var(--border); }
+  .clk-t { padding:13px 16px; font-size:11px; color:var(--text3); background:var(--bg4); display:flex; align-items:center; letter-spacing:0.04em; }
+  .clk-c { padding:13px 18px; font-size:12px; color:var(--text2); display:flex; align-items:center; gap:10px; line-height:1.55; }
+  .clk-dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+  .clk-dot.g { background:var(--gamma); } .clk-dot.c { background:var(--charm); } .clk-dot.off { background:var(--text3); }
+  .clk-c strong { color:var(--text); font-weight:500; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-brand">8Bit<span class="accent">Trading</span> Academy</a>
+  <div class="nav-links">
+    <a href="01-gamma.html" class="gamma">Gamma</a>
+    <a href="02-vanna.html" class="vanna">Vanna</a>
+    <a href="03-charm.html" class="charm active">Charm</a>
+    <a href="04-levels.html">Levels</a>
+    <a href="05-plays.html">Plays</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-label">Section 03 · Charm · the clock</div>
+    <h1>Charm —<br>the <span class="c">gravity</span> of the close</h1>
+    <p class="hero-sub">Charm is the quiet one. It's hedging driven purely by <strong style="color:var(--text)">time passing</strong> — no price move, no VIX move, just the clock ticking toward expiry. It's why afternoons on expiry days <span class="c">pin</span> to a magic number, and why the morning playbook stops working after lunch.</p>
+  </div>
+</section>
+
+<!-- WHAT IS CHARM -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header"><span class="section-num">03.1</span><h2 class="section-title charm">What charm actually is</h2></div>
+    <p class="lede">Charm is <strong>how a dealer's hedge drifts as time passes, with everything else frozen.</strong> Options lose value to time decay every minute; as they decay, the dealer's hedge slowly becomes wrong, so they trade futures to correct it. Near expiry that correction concentrates around the biggest strikes — and price gets dragged toward them.</p>
+    <div class="card-grid">
+      <div class="intro-card charm"><div class="card-label">In one sentence</div><div class="card-value charm">How dealer hedging drifts as time runs out</div><div class="card-note">Pure clock effect — independent of price and the VIX.</div></div>
+      <div class="intro-card"><div class="card-label">The key idea</div><div class="card-value">Pin gravity</div><div class="card-note">Price gets pulled to the dominant strike and held there into the close.</div></div>
+    </div>
+    <div class="mechanic-box charm">
+      <div class="mechanic-label">Typical charm flow into expiry</div>
+      <div class="flow-chain">
+        <div class="flow-node">Time passes</div><div class="flow-arrow">→</div>
+        <div class="flow-node">OTM option deltas decay toward zero</div><div class="flow-arrow">→</div>
+        <div class="flow-node highlight charm">Dealer unwinds the hedge</div><div class="flow-arrow">→</div>
+        <div class="flow-node">Price drifts toward the pin strike</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIME WEIGHT -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header"><span class="section-num">03.2</span><h2 class="section-title charm">Charm grows through the day</h2></div>
+    <p class="lede">Charm is almost meaningless at 9:30 and dominant by 3:00. That's why the pipeline <strong>time-weights</strong> it: a multiplier that ramps from <strong>×0.5 at the open to ×1.5 at the close</strong>. The same charm reading means very different things at different times.</p>
+    <table class="tbl">
+      <thead><tr><th>Time (ET)</th><th>Weight</th><th>What it means</th></tr></thead>
+      <tbody>
+        <tr><td>09:30</td><td>×0.5</td><td class="neu">Charm muted — trade gamma normally, ignore the pin.</td></tr>
+        <tr><td>12:00</td><td>×0.93</td><td class="neu">Charm waking up — start filtering trades toward the pin.</td></tr>
+        <tr><td>15:00</td><td>×1.36</td><td class="bull">Charm dominant — pin drift is the trade.</td></tr>
+        <tr><td>16:00</td><td>×1.50</td><td class="bull">Maximum pull — exits only.</td></tr>
+      </tbody>
+    </table>
+    <div class="callout key"><span class="ic">◎</span><div class="body"><strong>The Friday bump:</strong> on Fridays the weight gets an extra <strong>×1.25</strong>. Weekly expiry stacks the most decay into that session, so Friday afternoons pin the hardest of the week — and OPEX Fridays (the monthly 3rd Friday) hardest of all.</div></div>
+  </div>
+</section>
+
+<!-- THE CHARM CLOCK -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header"><span class="section-num">03.3</span><h2 class="section-title charm">The charm clock</h2></div>
+    <p class="lede">Every expiry day runs the same arc — gamma in the morning, charm in the afternoon. This is the session structure to keep on your desk:</p>
+    <div class="clock">
+      <div class="clk-row"><div class="clk-t">9:30 AM</div><div class="clk-c"><span class="clk-dot g"></span>GEX dominant. Trade ramps and flip levels normally. Charm present but weak.</div></div>
+      <div class="clk-row"><div class="clk-t">11:00 AM</div><div class="clk-c"><span class="clk-dot g"></span>Identify the pin strike now. Start filtering trades toward it. GEX still primary.</div></div>
+      <div class="clk-row"><div class="clk-t">12:00 PM</div><div class="clk-c"><span class="clk-dot c"></span><strong>Charm accelerates.</strong> Reduce gamma-level trades. Only take entries aligned with the pin.</div></div>
+      <div class="clk-row"><div class="clk-t">1:30 PM</div><div class="clk-c"><span class="clk-dot c"></span>Charm dominant. Pin drift trade active. Fade everything moving away from the pin.</div></div>
+      <div class="clk-row"><div class="clk-t">3:00 PM</div><div class="clk-c"><span class="clk-dot c"></span>Maximum pin gravity. Exits only — no new entries after this.</div></div>
+      <div class="clk-row"><div class="clk-t">3:30 PM</div><div class="clk-c"><span class="clk-dot off"></span>Exit all charm trades. Gamma expires, the stabilizer is removed, unwind risk begins.</div></div>
+    </div>
+    <div class="callout warn"><span class="ic">⚠</span><div class="body"><strong>The hard rule on Wed &amp; Fri: switch at 12:00.</strong> Your morning gamma-level reactions become unreliable after noon — charm takes the wheel. Traders who keep fading gamma walls into the afternoon get ground up by the pin drift.</div></div>
+  </div>
+</section>
+
+<!-- FINDING THE PIN + CHARM LEVELS -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header"><span class="section-num">03.4</span><h2 class="section-title charm">The pin strike &amp; your two charm levels</h2></div>
+    <p class="lede">Charm produces two of your nine levels — and one all-important target, the <strong>pin strike</strong>.</p>
+    <div class="intro-card neutral" style="margin-bottom:24px;">
+      <div class="card-label" style="color:var(--charm)">Pin-strike recipe</div>
+      <div class="card-value" style="font-family:var(--font-mono); font-size:13px; line-height:1.9; color:var(--text2); font-weight:400;">
+        Largest absolute gamma strike within ~1% of price<br>
+        + a round or semi-round number (7300, 7350, 7400)<br>
+        + already tested twice and held intraday<br>
+        = <span style="color:var(--charm)">high-probability charm pin target</span>
+      </div>
+    </div>
+    <div class="legend-grid">
+      <div class="legend-item"><span class="swatch charm"></span><div><div class="lg-name charm">Charm pin</div><div class="lg-desc"><strong>Positive</strong> charm — decay forces dealer buying → a stabilizing magnet. Price is pulled to it and held.</div></div></div>
+      <div class="legend-item"><span class="swatch charm"></span><div><div class="lg-name charm">Charm fade</div><div class="lg-desc"><strong>Negative</strong> charm — decay unwinds the hedge → a directional push. Pushes price away, doesn't hold it.</div></div></div>
+    </div>
+    <p class="lede" style="margin-top:24px">Full play-by-play on both — edge cases, scenario trees and all — lives on the <a href="04-levels.html#charm-pin" style="color:var(--lvl-charm)">Levels page</a>.</p>
+  </div>
+</section>
+
+<!-- DRIFT TRAILER -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header"><span class="section-num">03.5</span><h2 class="section-title charm">The charm-drift read</h2></div>
+    <p class="lede">Besides the two levels, the pipeline computes a single <strong>board-wide charm tilt</strong> — is the day's decay flow pulling up or down, and how hard? You'll see it in your Discord post and the indicator's info table as a small arrow:</p>
+    <div class="code"><span class="c-charm">#CHXDRIFT</span>
+<span class="c-charm">▼ DOWN · heavy</span> — charm decay pulls lower into a negative-gamma board below
+the flip; drift and regime align, so fade-the-rally pressure compounds into
+the close. First real support is the trapdoor below — lose it and charm and
+dealers both sell the break. Background tilt, not a trigger.</div>
+    <div class="callout tip"><span class="ic">↯</span><div class="body"><strong>How to use the drift:</strong> it's a <em>background tilt</em>, the weakest of the three forces. When it <strong>aligns</strong> with the gamma regime it compounds the move into the close; when it <strong>opposes</strong> the regime it just fades and doesn't lead. A gamma-flip break or a news event always overrides it.</div></div>
+
+    <div class="teacher"><span class="ic">✦</span><div class="body"><strong>I'm your teacher.</strong> Want help picking today's pin strike, or reading whether the charm drift aligns with or fights the gamma regime? Ask me with a live board.</div></div>
+    <div class="source-note"><strong>Primary source:</strong> charm time-weighting and the drift algorithm are codified in the <em>gexgreeks</em> skill. For the theory of expiry pinning, read the academic work on <em>"option expiration and stock pinning"</em> (Ni, Pearson &amp; Poteshman) and SpotGamma's charm/pinning notes.</div>
+
+    <div class="pager">
+      <a href="02-vanna.html" class="prev"><div class="pg-dir">← Previous</div><div class="pg-name">02 · Vanna</div></a>
+      <a href="04-levels.html" class="next"><div class="pg-dir">Next →</div><div class="pg-name">04 · The Levels</div></a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">8BitTrading Academy · Charm</div>
+    <div class="footer-note">Based on Unusual Whales Periscope · gexpro indicator · Educational — not financial advice</div>
+  </div>
+</footer>
+
+</body>
+</html>

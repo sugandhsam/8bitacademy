@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Levels · 8BitTrading Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="academy.css">
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-brand">8Bit<span class="accent">Trading</span> Academy</a>
+  <div class="nav-links">
+    <a href="01-gamma.html" class="gamma">Gamma</a>
+    <a href="02-vanna.html" class="vanna">Vanna</a>
+    <a href="03-charm.html" class="charm">Charm</a>
+    <a href="04-levels.html" class="active">Levels</a>
+    <a href="05-plays.html">Plays</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-label">Section 04 · The Levels · the heart of the system</div>
+    <h1>The nine <span class="trapdoor">levels</span><br>your indicator draws</h1>
+    <p class="hero-sub">Every line on your chart is a place where <strong style="color:var(--text)">dealers are forced to trade</strong>. Learn what each one means, when it breaks, how to play it, and the most likely ways it resolves. The colors below are the exact colors the gexpro indicator paints.</p>
+  </div>
+</section>
+
+<!-- ANATOMY -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header"><span class="section-num">04.1</span><h2 class="section-title">Anatomy of a level</h2></div>
+
+    <p class="lede">The pipeline scrapes the Unusual Whales options board, ranks every strike, and hands the indicator one line per level. A line looks like this:</p>
+
+    <div class="code"><span class="c-ceiling">7591</span>|<span class="c-ceiling">ceiling</span>|extreme|+|gex|35
+<span class="c-dim">  │      │       │     │  │   │</span>
+<span class="c-dim">  │      │       │     │  │   └─</span> strength  0–100 bar (how dominant within its greek)
+<span class="c-dim">  │      │       │     │  └────</span> source    gex · chex · conf · flip
+<span class="c-dim">  │      │       │     └───────</span> sign      + positive greek · − negative greek
+<span class="c-dim">  │      │       └─────────────</span> size      solid · big · massive · extreme
+<span class="c-dim">  │      └─────────────────────</span> tag       the level TYPE (this page)
+<span class="c-dim">  └────────────────────────────</span> ES price  where the line is drawn</div>
+
+    <div class="card-grid three">
+      <div class="intro-card">
+        <div class="card-label">Size = conviction</div>
+        <div class="card-value">solid → big → massive → extreme</div>
+        <div class="card-note">Bigger size = a thicker box on the chart. It is the raw dealer positioning at that strike — how much they must defend it.</div>
+      </div>
+      <div class="intro-card">
+        <div class="card-label">Strength bar = rank</div>
+        <div class="card-value">0 – 100</div>
+        <div class="card-note">Normalized <em>within each greek</em>. The longest gamma bar is the board's strongest gamma level — never compared against charm.</div>
+      </div>
+      <div class="intro-card">
+        <div class="card-label">Tradeable window</div>
+        <div class="card-value">±100 ES of price</div>
+        <div class="card-note">Levels only post inside ±100 points of spot. Walls miles away aren't intraday-actionable on 0DTE, so they're left off the chart.</div>
+      </div>
+    </div>
+
+    <div class="callout key">
+      <span class="ic">◎</span>
+      <div class="body"><strong>The one rule that explains every level:</strong> dealers are mostly short options to the public, so they hedge in the futures to stay neutral. <em>Positive gamma</em> makes them trade <em>against</em> price (stabilizing — walls, pins, magnets). <em>Negative gamma</em> makes them trade <em>with</em> price (accelerating — trapdoors, vol zones). Every color below is just one flavor of that single mechanic. New to this? Start with <a href="01-gamma.html" style="color:var(--gamma)">Gamma from zero</a>.</div>
+    </div>
+  </div>
+</section>
+
+<!-- LEGEND -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header"><span class="section-num">04.2</span><h2 class="section-title">The color key</h2></div>
+    <p class="lede">These nine colors are the gexpro indicator's actual palette. Memorize them once and you can read a chart in two seconds.</p>
+    <div class="legend-grid">
+      <div class="legend-item"><span class="swatch ceiling"></span><div><div class="lg-name ceiling">Ceiling</div><div class="lg-desc">Strongest call wall above price — dealer resistance.</div></div></div>
+      <div class="legend-item"><span class="swatch floor"></span><div><div class="lg-name floor">Floor</div><div class="lg-desc">Strongest put wall below price — dealer support.</div></div></div>
+      <div class="legend-item"><span class="swatch magnet"></span><div><div class="lg-name magnet">Magnet</div><div class="lg-desc">Secondary positive-gamma pin — pulls price in.</div></div></div>
+      <div class="legend-item"><span class="swatch trapdoor"></span><div><div class="lg-name trapdoor">Trapdoor</div><div class="lg-desc">Near-spot negative gamma — break it and price accelerates.</div></div></div>
+      <div class="legend-item"><span class="swatch volzone"></span><div><div class="lg-name volzone">Vol zone</div><div class="lg-desc">Interior negative gamma — fast, whippy chop pocket.</div></div></div>
+      <div class="legend-item"><span class="swatch charm"></span><div><div class="lg-name charm">Charm pin / fade</div><div class="lg-desc">Time-decay level — stabilizing (pin) or directional (fade).</div></div></div>
+      <div class="legend-item"><span class="swatch line"></span><div><div class="lg-name" style="color:var(--lvl-flip)">Gamma flip</div><div class="lg-desc">Dashed regime line — bullish above, bearish below.</div></div></div>
+      <div class="legend-item"><span class="swatch" style="background:linear-gradient(135deg,var(--lvl-magnet),var(--lvl-charm))"></span><div><div class="lg-name" style="color:var(--lvl-charm)">Confluence ★</div><div class="lg-desc">Gamma <em>and</em> charm agree at one strike — highest conviction.</div></div></div>
+    </div>
+    <div class="callout tip">
+      <span class="ic">↯</span>
+      <div class="body"><strong>How to read this page:</strong> each level below has five rows — <strong>What it is</strong>, <strong>The dealer mechanic</strong>, <strong>Edge cases</strong>, <strong>How to play it</strong>, and a <strong>Scenario tree</strong> showing the most likely ways it resolves with the tell that confirms each. The probabilities are <em>relative likelihoods</em>, not backtested win-rates — read them as "what usually happens vs. what rarely does."</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE NINE LEVELS ============ -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header"><span class="section-num">04.3</span><h2 class="section-title">Each level, in depth</h2></div>
+
+    <!-- CEILING -->
+    <div class="level-card ceiling" id="ceiling">
+      <div class="level-head">
+        <div class="level-icon">▔</div>
+        <div><div class="level-name">Ceiling</div></div>
+        <div class="level-meta">Positive gamma · above spot<br><span class="greek-src">source: gex · one per board</span></div>
+      </div>
+      <div class="level-body">
+        <div class="level-row"><div class="rk">What it is</div><div class="rv">The <strong>single strongest positive-gamma wall above price</strong> — the classic "call wall." It is the most likely <strong>upside cap</strong> for the session and the top of the expected range. Only one ceiling exists per board.</div></div>
+        <div class="level-row"><div class="rk">The dealer mechanic</div><div class="rv">Dealers are long gamma here. As price rises toward the wall their delta grows, so they <strong>sell futures to re-hedge</strong> — which pushes price back down. The rally feeds its own resistance. The bigger the wall, the harder the suppression.</div></div>
+        <div class="level-row"><div class="rk">Edge cases</div><ul class="bullets">
+          <li><strong>Ceiling far overhead</strong> (near the ±100 edge) means a wide, low-friction path up — the cap is real but distant.</li>
+          <li><strong>News or a VIX spike</strong> overrides positioning — a hot CPI print blows through any wall. Gamma is a tendency, not a wall of bricks.</li>
+          <li>On an <strong>all-positive board</strong> the ceiling + floor define the whole day's range — expect grind between them.</li>
+          <li>If price <strong>closes above and holds</strong>, the old ceiling often flips into support on the retest.</li>
+        </ul></div>
+        <div class="level-row"><div class="rk">How to play it</div><ul class="bullets">
+          <li><strong>Fade rallies into it</strong> — short the tag, target the gamma flip or floor below. Best on positive-gamma / range days.</li>
+          <li><strong>Never chase longs into a fresh ceiling</strong> — you're buying directly into dealer supply.</li>
+          <li><strong>Stop</strong> = a strong, high-volume close above the wall. That's the suppression failing, not a wick.</li>
+        </ul></div>
+        <div class="level-row"><div class="rk">Scenario tree · price arrives from below</div>
+          <div class="scenario-tree">
+            <div class="scn"><div class="scn-prob high">High</div><div class="scn-body"><div class="scn-name">Rejection &amp; fade</div><div class="scn-tell"><span class="lbl">tell</span> &nbsp;wick into the wall, close back inside the range — dealers defended.</div></div></div>
+            <div class="scn"><div class="scn-prob med">Med</div><div class="scn-body"><div class="scn-name">Tag &amp; stall (chop)</div><div class="scn-tell"><span class="lbl">tell</span> &nbsp;price pins just under it, no follow-through either way — pin gravity.</div></div></div>
+            <div class="scn"><div class="scn-prob low">Low</div><div class="scn-body"><div class="scn-name">Break &amp; run</div><div class="scn-tell"><span class="lbl">tell</span> &nbsp;strong close above on volume, often with a VIX drop or news — regime override.</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FLOOR -->
+    <div class="level-card floor" id="floor">
+      <div class="level-head">
+        <div class="level-icon">▁</div>
+        <div><div class="level-name">Floor</div></div>
+        <div class="level-meta">Positive gamma · below spot<br><span class="greek-src">source: gex · one per board</span></div>
+      </div>
+      <div class="level-body">
+        <div class="level-row"><div class="rk">What it is</div><div class="rv">The <strong>strongest positive-gamma wall below price</strong> — the "put wall." The most likely <strong>downside support</strong> and the bottom of the expected range. Mirror image of the ceiling; one per board.</div></div>
+        <div class="level-row"><div class="rk">The dealer mechanic</div><div class="rv">Dealers long gamma at the floor <strong>buy futures as price falls toward it</strong> to re-hedge, cushioning the drop. Dips get absorbed. The wall acts like a trampoline — the bigger it is, the firmer the bounce.</div></div>
+        <div class="level-row"><div class="rk">Edge cases</div><ul class="bullets">
+          <li><strong>A broken floor is dangerous</strong> — once support gives way the same dealers flip to selling, so a lost floor often becomes the start of a slide rather than a small dip.</li>
+          <li>On a <strong>negative-gamma day</strong> floors are softer — there's less stabilizing flow beneath price.</li>
+          <li>A floor sitting <strong>right on a round number</strong> (xx00 / xx50) is stickier — retail and dealer interest stack there.</li>
+        </ul></div>
+        <div class="level-row"><div class="rk">How to play it</div><ul class="bullets">
+          <li><strong>Buy dips into it</strong> — long the tag, target the flip or ceiling. Confirmation candle first; don't pre-position at the edge.</li>
+          <li><strong>Stop</strong> = a decisive close below. Below the floor the next stop is the first trapdoor or vol zone.</li>
+          <li>Pair it with the <a href="#confluence" style="color:var(--lvl-charm)">confluence</a> rule — a floor that's <em>also</em> a charm pin is the strongest long zone on the board.</li>
+        </ul></div>
+        <div class="level-row"><div class="rk">Scenario tree · price arrives from above</div>
+          <div class="scenario-tree">
+            <div class="scn"><div class="scn-prob high">High</div><div class="scn-body"><div class="scn-name">Bounce &amp; hold</div><div class="scn-tell"><span class="lbl">tell</span> &nbsp;wick into support, reclaim, close back above — dealers bought the dip.</div></div></div>
+            <div class="scn"><div class="scn-prob med">Med</div><div class="scn-body"><div class="scn-name">Grind / chop on the wall</div><div class="scn-tell"><span class="lbl">tell</span> &nbsp;price sits on it sideways, coiling — decision pending.</div></div></div>
+            <div class="scn"><div class="scn-prob low">Low</div><div class="scn-body"><div class="scn-name">Break down (slide begins)</div><div class="scn-tell"><span class="lbl">tell</span> &nbsp;close below on volume — support flips to supply, watch the next trapdoor.</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAGNET -->
+    <div class="level-card magnet" id="magnet">
+      <div class="level-head">
+        <div class="level-icon">🧲</div>
+        <div><div class="level-name">Magnet</div></div>
+        <div class="level-meta">Positive gamma · secondary<br><span class="greek-src">source: gex</span></div>
+      </div>
+      <div class="level-body">
+        <div class="level-row"><div class="rk">What it is</div><div class="rv">Any <strong>positive-gamma pin that isn't the main ceiling or floor</strong>. A secondary attractor — price tends to gravitate toward it and stick. Several can exist on one board.</div></div>
+        <div class="level-row"><div class="rk">The dealer mechanic</div><div class="rv">Same stabilizing hedging as a wall, just smaller. Dealer buying below the strike and selling above it creates a <strong>gravity well</strong> that pulls price in and dampens momentum once it's there.</div></div>
+        <div class="level-row"><div class="rk">Edge cases</div><ul class="bullets">
+          <li><strong>Stacked magnets</strong> within 15 points get declustered by the pipeline — only the strongest survives, so what you see is already the dominant one in its neighborhood.</li>
+          <li>Magnets <strong>strengthen into the afternoon</strong> as charm adds pin pressure — a midday magnet can become an end-of-day pin target.</li>
+          <li>On a <strong>trend day</strong> (negative gamma) magnets get ignored — gravity loses to momentum.</li>
+        </ul></div>
+        <div class="level-row"><div class="rk">How to play it</div><ul class="bullets">
+          <li><strong>Fade extensions back toward it</strong> when price stretches away on a range day.</li>
+          <li>Use it as a <strong>realistic target</strong>, not an entry — price is drawn to magnets, so take profit into them.</li>
+          <li>The <strong>largest absolute magnet near a round number</strong> is your pin-strike candidate for the afternoon (see <a href="03-charm.html" style="color:var(--charm)">Charm</a>).</li>
+        </ul></div>
+        <div class="level-row"><div class="rk">Scenario tree · price near a magnet</div>
+          <div class="scenario-tree">
+            <div class="scn"><div class="scn-prob high">High</div><div class="scn-body"><div class="scn-name">Drift toward &amp; pin</div><div class="scn-tell"><span class="lbl">tell</span> &nbsp;low-momentum grind that keeps returning to the strike — positive-gamma day.</div></div></div>
+            <div class="scn"><div class="scn-prob med">Med</div><div class="scn-body"><div class="scn-name">Pass through to next level</div><div class="scn-tell"><span class="lbl">tell</span> &nbsp;magnet is weak vs a bigger wall beyond — gravity loses, price continues.</div></div></div>
+            <div class="scn"><div class="scn-prob low">Low</div><div class="scn-body"><div class="scn-name">Ignored entirely</div><div class="scn-tell"><span class="lbl">tell</span> &nbsp;negative-gamma trend day — momentum overrides every pin.</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TRAPDOOR -->
+    <div class="level-card trapdoor" id="trapdoor">
+      <div class="level-head">
+        <div class="level-icon">⚠</div>
+        <div><div class="level-name">Trapdoor</div></div>
+        <div class="level-meta">Negative gamma · near spot<br><span class="greek-src">source: gex · the accelerant</span></div>
+      </div>
+      <div class="level-body">
+        <div class="level-row"><div class="rk">What it is</div><div class="rv">The <strong>strongest negative-gamma strike right next to price</strong>. Below spot it's a <strong>downside trapdoor</strong>; above spot it's an <strong>upside squeeze</strong>. It is defined by <em>proximity + strength</em>, not by being the furthest level out — it's the cliff edge nearest your feet.</div></div>
+        <div class="level-row"><div class="rk">The dealer mechanic</div><div class="rv">Negative gamma flips the hedging sign. Break the trapdoor and dealers must <strong>sell into the drop</strong> (or buy into the rip) to re-hedge — pouring fuel on the move instead of damping it. This is the single most important level for catching trend days.</div></div>
+        <div class="level-row"><div class="rk">Edge cases</div><ul class="bullets">
+          <li>The strike <strong>price is already sitting on</strong> (within ±5) isn't a trapdoor — that's "current," not a distinct level to break.</li>
+          <li><strong>No positive-gamma catch beyond it</strong> = a clean cascade; the move can run unchecked to the next wall. <em>With</em> a floor close behind, the fall is cushioned.</li>
+          <li>A trapdoor <strong>embedded in an otherwise positive board</strong> is an isolated air-pocket — calm until it's hit, then sudden.</li>
+          <li><strong>Both</strong> a down-trapdoor and up-squeeze can exist at once — that's a coiled board ready to break either way.</li>
+        </ul></div>
+        <div class="level-row"><div class="rk">How to play it</div><ul class="bullets">
+          <li><strong>Do not fade a confirmed break.</strong> Once it goes, follow it — momentum entry to the next vol zone or floor.</li>
+          <li>Wider stops, bigger size on the break — these moves are fast and don't retest cleanly.</li>
+          <li>While price holds <em>above</em> a down-trapdoor, the board is still stable — trade the walls normally and treat the trapdoor as your invalidation.</li>
+        </ul></div>
+        <div class="level-row"><div class="rk">Scenario tree · price pressing a down-trapdoor</div>
+          <div class="scenario-tree">
+            <div class="scn"><div class="scn-prob high">High</div><div class="scn-body"><div class="scn-name">Break &amp; accelerate</div><div class="scn-tell"><span class="lbl">tell</span> &nbsp;close below with no +gamma catch beneath — dealers sell the break, velocity expands.</div></div></div>
+            <div class="scn"><div class="scn-prob med">Med</div><div class="scn-body"><div class="scn-name">Hold / absorb</div><div class="scn-tell"><span class="lbl">tell</span> &nbsp;a floor or magnet sits just below — the cascade is caught and stalls.</div></div></div>
+            <div class="scn"><div class="scn-prob low">Low</div><div class="scn-body"><div class="scn-name">Fakeout wick &amp; reclaim</div><div class="scn-tell"><span class="lbl">tell</span> &nbsp;stop-run spike that immediately reclaims — common in the first 30 min.</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VOL ZONE -->
+    <div class="level-card volzone" id="volzone">
+      <div class="level-head">
+        <div class="level-icon">〰</div>
+        <div><div class="level-name">Vol zone</div></div>
+        <div class="level-meta">Negative gamma · interior<br><span class="greek-src">source: gex</span></div>
+      </div>
+      <div class="level-body">
+        <div class="level-row"><div class="rk">What it is</div><div class="rv">Negative-gamma territory that <strong>isn't</strong> the near-spot trapdoor — the interior of a negative pocket. A region of <strong>fast, whippy, unstable price</strong> rather than a clean reaction line.</div></div>
+        <div class="level-row"><div class="rk">The dealer mechanic</div><div class="rv">The same destabilizing hedging as a trapdoor, but spread across a band instead of concentrated at the cliff edge. Inside it, dealer flow amplifies every wiggle — price travels quickly and chops.</div></div>
+        <div class="level-row"><div class="rk">Edge cases</div><ul class="bullets">
+          <li>Vol zones usually sit <strong>between trapdoors</strong> — they're the "no man's land" price crosses fast on its way to the next real wall.</li>
+          <li>A wide vol zone with <strong>no walls inside it</strong> means a near-vertical traverse — don't expect mid-zone reactions.</li>
+          <li>Treat its boundaries as <strong>targets and stops</strong>, not as bounce levels.</li>
+        </ul></div>
+        <div class="level-row"><div class="rk">How to play it</div><ul class="bullets">
+          <li><strong>Don't park limit orders inside it</strong> — there's nothing to hold price there.</li>
+          <li>Use it to <strong>size expectations</strong>: entering a vol zone means accept higher velocity and wider stops.</li>
+          <li>Trade the <em>edges</em> (the trapdoor in, the wall out), not the middle.</li>
+        </ul></div>
+        <div class="level-row"><div class="rk">Scenario tree · price inside a vol zone</div>
+          <div class="scenario-tree">
+            <div class="scn"><div class="scn-prob high">High</div><div class="scn-body"><div class="scn-name">Fast traverse</div><div class="scn-tell"><span class="lbl">tell</span> &nbsp;long-range bars, little overlap — price hunts the next wall.</div></div></div>
+            <div class="scn"><div class="scn-prob med">Med</div><div class="scn-body"><div class="scn-name">Whippy two-way chop</div><div class="scn-tell"><span class="lbl">tell</span> &nbsp;sharp reversals with no clean trend — stops get hunted both sides.</div></div></div>
+            <div class="scn"><div class="scn-prob low">Low</div><div class="scn-body"><div class="scn-name">Pivot / reversal point</div><div class="scn-tell"><span class="lbl">tell</span> &nbsp;an unmarked strike holds — possible only if fresh positioning built intraday.</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHARM PIN -->
+    <div class="level-card charm" id="charm-pin">
+      <div class="level-head">
+        <div class="level-icon">⏱</div>
+        <div><div class="level-name">Charm pin</div></div>
+        <div class="level-meta">Positive charm · stabilizing<br><span class="greek-src">source: chex · strengthens into close</span></div>
+      </div>
+      <div class="level-body">
+        <div class="level-row"><div class="rk">What it is</div><div class="rv">A <strong>time-decay magnet</strong>. Positive charm means that, as the clock runs, dealers are <strong>forced to buy delta</strong> at this strike to stay hedged — pulling price toward it and holding it there. The afternoon's pin target.</div></div>
+        <div class="level-row"><div class="rk">The dealer mechanic</div><div class="rv">Charm measures how delta drifts purely from time passing. Positive charm → the hedge requirement grows in a stabilizing direction → mechanical buying that <strong>tightens around the strike</strong> as expiry approaches. It needs no price move and no IV move — just the clock.</div></div>
+        <div class="level-row"><div class="rk">Edge cases</div><ul class="bullets">
+          <li><strong>Weak in the morning, strong into the close.</strong> The pipeline time-weights charm from ×0.5 at the open to ×1.5 at 4pm — a 10am charm pin is a whisper; a 2pm one is a shout. <strong>Fridays get an extra ×1.25.</strong></li>
+          <li><strong>Wing charm</strong> (far-OTM lottery strikes) is excluded from levels — it feeds the drift read, not a line. Only near-spot charm pins are tradeable.</li>
+          <li>A charm pin that <strong>coincides with a magnet</strong> is a <a href="#confluence" style="color:var(--lvl-charm)">confluence</a> level — the highest-conviction pin you can get.</li>
+        </ul></div>
+        <div class="level-row"><div class="rk">How to play it</div><ul class="bullets">
+          <li><strong>Afternoon pin drift:</strong> after noon, fade moves away from the pin and ride the grind back to it.</li>
+          <li>Use it as the <strong>profit target</strong> for morning trades on Wed/Fri.</li>
+          <li>Exit before the pin, not through it — the edge is the drift, not the close.</li>
+        </ul></div>
+        <div class="level-row"><div class="rk">Scenario tree · afternoon, price near a charm pin</div>
+          <div class="scenario-tree">
+            <div class="scn"><div class="scn-prob high">High</div><div class="scn-body"><div class="scn-name">Pin &amp; hold into close</div><div class="scn-tell"><span class="lbl">tell</span> &nbsp;post-noon, low volume, price keeps returning — classic Wed/Fri PM.</div></div></div>
+            <div class="scn"><div class="scn-prob med">Med</div><div class="scn-body"><div class="scn-name">Slow drift toward it</div><div class="scn-tell"><span class="lbl">tell</span> &nbsp;price still a touch away, grinding in with no momentum.</div></div></div>
+            <div class="scn"><div class="scn-prob low">Low</div><div class="scn-body"><div class="scn-name">Pin breaks</div><div class="scn-tell"><span class="lbl">tell</span> &nbsp;a gamma-flip break or news event — charm is the weakest force and gets overridden.</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHARM FADE -->
+    <div class="level-card charm" id="charm-fade">
+      <div class="level-head">
+        <div class="level-icon">⤳</div>
+        <div><div class="level-name">Charm fade</div></div>
+        <div class="level-meta">Negative charm · directional<br><span class="greek-src">source: chex · pushes, doesn't hold</span></div>
+      </div>
+      <div class="level-body">
+        <div class="level-row"><div class="rk">What it is</div><div class="rv">The directional twin of the pin. Negative charm means time decay <strong>unwinds</strong> the dealer hedge at this strike — instead of holding price, it <strong>pushes price away</strong>. A source of one-way drift, not support or resistance.</div></div>
+        <div class="level-row"><div class="rk">The dealer mechanic</div><div class="rv">Negative charm → dealers shed delta as time passes → mechanical selling (or buying) that nudges price <strong>off</strong> the strike in a consistent direction. Quiet but persistent, and it compounds into the close just like the pin.</div></div>
+        <div class="level-row"><div class="rk">Edge cases</div><ul class="bullets">
+          <li><strong>Don't trade it as a wall.</strong> A charm fade is a current, not a barrier — expecting a bounce there is the classic mistake.</li>
+          <li>A charm fade <strong>stacked with a trapdoor</strong> in the same direction is a strong directional tell — time decay and dealer hedging both push the same way.</li>
+          <li>Read it together with the board-level <strong>drift trailer</strong> (the indicator's <span class="muted">#CHXDRIFT</span> arrow) — same force, summarized.</li>
+        </ul></div>
+        <div class="level-row"><div class="rk">How to play it</div><ul class="bullets">
+          <li><strong>Align with the push, never against it</strong> — bias entries in the fade's direction.</li>
+          <li>Treat it as a <strong>background tilt</strong> that strengthens your gamma read, not a standalone trigger.</li>
+          <li>Strongest Wed/Fri afternoons; near-irrelevant in the first hour.</li>
+        </ul></div>
+        <div class="level-row"><div class="rk">Scenario tree · afternoon, charm fade active</div>
+          <div class="scenario-tree">
+            <div class="scn"><div class="scn-prob high">High</div><div class="scn-body"><div class="scn-name">Persistent directional push</div><div class="scn-tell"><span class="lbl">tell</span> &nbsp;slow one-way drift that aligns with the #CHXDRIFT arrow into the close.</div></div></div>
+            <div class="scn"><div class="scn-prob med">Med</div><div class="scn-body"><div class="scn-name">Stall against a gamma wall</div><div class="scn-tell"><span class="lbl">tell</span> &nbsp;the drift meets a strong ceiling/floor — gamma outranks charm and halts it.</div></div></div>
+            <div class="scn"><div class="scn-prob low">Low</div><div class="scn-body"><div class="scn-name">Absorbed / reverses</div><div class="scn-tell"><span class="lbl">tell</span> &nbsp;opposing news or a VIX move swamps the quiet charm flow.</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GAMMA FLIP -->
+    <div class="level-card flip" id="flip">
+      <div class="level-head">
+        <div class="level-icon" style="border-color:var(--lvl-flip);color:var(--lvl-flip)">⇅</div>
+        <div><div class="level-name">Gamma flip</div></div>
+        <div class="level-meta">Regime line · not a magnet<br><span class="greek-src">source: flip · dashed line</span></div>
+      </div>
+      <div class="level-body">
+        <div class="level-row"><div class="rk">What it is</div><div class="rv">The <strong>boundary between the two regimes</strong>. Above the flip the board is positive-gamma (pinning, mean-reverting, fade extremes). Below it the board is negative-gamma (trending, breaking out, follow momentum). It's a <strong>bias switch, not a target.</strong></div></div>
+        <div class="level-row"><div class="rk">The dealer mechanic</div><div class="rv">It marks where net dealer gamma changes sign — where their hedging behavior literally inverts from <em>stabilizing</em> to <em>destabilizing</em>. Which side of this line price sits on tells you which entire playbook to run.</div></div>
+        <div class="level-row"><div class="rk">Edge cases</div><ul class="bullets">
+          <li>It's the <strong>nearest-spot meaningful sign change</strong>, not a raw cumulative zero-cross — so it sits where the real near-price pivot is, not out in the noise tail.</li>
+          <li><strong>No flip line at all</strong> = a uniform board (all positive or all negative). One regime all day; trade it as such.</li>
+          <li>The flip's <strong>color/sign encodes the net-board regime</strong>, which can differ from which side price sits — the line gives the pivot price, the sign gives the day's bias.</li>
+          <li>It's the <strong>only level exempt from spacing</strong> — it can sit close to another line because it's a regime marker, not a wall.</li>
+        </ul></div>
+        <div class="level-row"><div class="rk">How to play it</div><ul class="bullets">
+          <li><strong>Above = lean long &amp; fade extremes. Below = lean short &amp; follow breaks.</strong> This single line frames every other level.</li>
+          <li>A <strong>reclaim or loss of the flip is a regime change</strong> — switch playbooks the moment it goes, don't fight the new side.</li>
+          <li>Treat it as your master <strong>invalidation</strong>: a long thesis above the flip is wrong once price closes below it.</li>
+        </ul></div>
+        <div class="level-row"><div class="rk">Scenario tree · price interacting with the flip</div>
+          <div class="scenario-tree">
+            <div class="scn"><div class="scn-prob high">High</div><div class="scn-body"><div class="scn-name">Respected as the pivot</div><div class="scn-tell"><span class="lbl">tell</span> &nbsp;price reacts cleanly each touch — behavior changes as it crosses.</div></div></div>
+            <div class="scn"><div class="scn-prob med">Med</div><div class="scn-body"><div class="scn-name">Whipsaw around it</div><div class="scn-tell"><span class="lbl">tell</span> &nbsp;price oscillates across the line — transitional board, smaller size.</div></div></div>
+            <div class="scn"><div class="scn-prob low">Low</div><div class="scn-body"><div class="scn-name">Sliced through &amp; ignored</div><div class="scn-tell"><span class="lbl">tell</span> &nbsp;a strong trend or gap blows past it — the dominant move outweighs the pivot.</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONFLUENCE -->
+    <div class="level-card conf" id="confluence">
+      <div class="level-head">
+        <div class="level-icon">★</div>
+        <div><div class="level-name">Confluence</div></div>
+        <div class="level-meta">Gamma + charm agree<br><span class="greek-src">source: conf · highest conviction</span></div>
+      </div>
+      <div class="level-body">
+        <div class="level-row"><div class="rk">What it is</div><div class="rv">A strike where <strong>both gamma and charm independently pass their filters</strong> — two separate dealer forces pointing at the same price. The highest-conviction zone on the board and your best risk/reward.</div></div>
+        <div class="level-row"><div class="rk">The dealer mechanic</div><div class="rv">Two independent hedging pressures stacking at one strike. When a positive-gamma wall is <em>also</em> a charm pin, the structural magnet and the time-decay magnet reinforce each other — price gets held far more firmly than either force alone would manage.</div></div>
+        <div class="level-row"><div class="rk">Edge cases</div><ul class="bullets">
+          <li>On a <strong>dense board</strong> confluence can appear at many near-spot strikes; the pipeline declusters them so only the strongest in each neighborhood posts. What survives is genuine.</li>
+          <li>Its size and sign come from the <strong>dominant greek</strong> — confluence doesn't get an automatic max strength, it gets its honest value.</li>
+          <li>The compound tag tells you the recipe: <span class="muted">magnet+charm-pin</span>, <span class="muted">ceiling+charm-fade</span>, etc. Read both halves.</li>
+          <li>A confluence <strong>failure is itself a strong signal</strong> — if two forces can't hold price, the move against them has real conviction.</li>
+        </ul></div>
+        <div class="level-row"><div class="rk">How to play it</div><ul class="bullets">
+          <li><strong>Prioritize these for reaction trades</strong> — they're where the tightest stops and cleanest bounces live.</li>
+          <li>A <strong>confluence floor</strong> = premier long zone; a <strong>confluence ceiling</strong> = premier short zone.</li>
+          <li>When a confluence level breaks, <strong>respect it</strong> — flip your bias rather than averaging in.</li>
+        </ul></div>
+        <div class="level-row"><div class="rk">Scenario tree · price reaching a confluence level</div>
+          <div class="scenario-tree">
+            <div class="scn"><div class="scn-prob high">High</div><div class="scn-body"><div class="scn-name">Strong, clean reaction</div><div class="scn-tell"><span class="lbl">tell</span> &nbsp;sharp rejection/bounce on the tag — two forces defending at once.</div></div></div>
+            <div class="scn"><div class="scn-prob med">Med</div><div class="scn-body"><div class="scn-name">Partial hold then chop</div><div class="scn-tell"><span class="lbl">tell</span> &nbsp;initial reaction fades to a grind — forces present but modest size.</div></div></div>
+            <div class="scn"><div class="scn-prob low">Low</div><div class="scn-body"><div class="scn-name">Failure (high-signal)</div><div class="scn-tell"><span class="lbl">tell</span> &nbsp;clean break through both — rare, and a strong cue the move is for real.</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- READING TOGETHER -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header"><span class="section-num">04.4</span><h2 class="section-title">Reading them together</h2></div>
+    <p class="lede">No level trades in isolation. The flip sets the regime, the walls cap the range, the trapdoors mark where it breaks, and charm tilts the whole thing into the close. A quick worked board:</p>
+    <div class="code"><span class="c-ceiling">7591</span>|<span class="c-ceiling">ceiling</span>|extreme|+|gex|35     <span class="c-dim">← cap of the day, fade rallies here</span>
+<span class="c-magnet">7571</span>|<span class="c-magnet">magnet</span>|massive|+|gex|40      <span class="c-dim">← secondary pin / first target up</span>
+<span class="c-flip">7544</span>|<span class="c-flip">gamma-flip</span>|big|-|flip|0     <span class="c-dim">← REGIME LINE — below = trending bias</span>
+<span class="c-trapdoor">7541</span>|<span class="c-trapdoor">trapdoor</span>|extreme|-|gex|38    <span class="c-dim">← lose this and dealers sell the break</span>
+<span class="c-volzone">7516</span>|<span class="c-volzone">vol-zone</span>|extreme|-|gex|100   <span class="c-dim">← fast, whippy air-pocket below</span>
+<span class="c-floor">7466</span>|<span class="c-floor">floor</span>|extreme|+|gex|23      <span class="c-dim">← the catch / downside support</span></div>
+    <p class="lede">Read top-down: price below the <strong style="color:var(--lvl-flip)">7544 flip</strong> is in a trending regime. The <strong style="color:var(--lvl-trapdoor)">7541 trapdoor</strong> is the trigger — break it and the <strong style="color:var(--lvl-volzone)">7516 vol zone</strong> offers no support until the <strong style="color:var(--lvl-floor)">7466 floor</strong>. Above the flip, fade toward the <strong style="color:var(--lvl-ceiling)">7591 ceiling</strong>. That's the whole day in six lines.</p>
+
+    <div class="callout key"><span class="ic">◎</span><div class="body"><strong>Expected range</strong> is just the floor-to-ceiling band — here ES 7466–7591. Price lives inside it on positive-gamma days and escapes it when a trapdoor cascades. It's a gamma-defined range, no volatility math required.</div></div>
+
+    <div class="teacher"><span class="ic">✦</span><div class="body"><strong>I'm your teacher — ask me anything.</strong> Want a real board from today's pipeline broken down line by line? Confused why a level is tagged trapdoor and not vol zone? Ask, and we'll walk through it together.</div></div>
+
+    <div class="source-note"><strong>Primary source:</strong> these definitions come straight from the <em>gexgreeks</em> extraction skill (the engine behind your Discord posts) and the <em>gexpro</em> v0.8.1 indicator color spec. To go deeper on the dealer mechanics, read SqueezeMetrics' <em>"The Implied Order Book"</em> and SpotGamma's gamma-exposure primers.</div>
+
+    <div class="pager">
+      <a href="03-charm.html" class="prev"><div class="pg-dir">← Previous</div><div class="pg-name">03 · Charm</div></a>
+      <a href="05-plays.html" class="next"><div class="pg-dir">Next →</div><div class="pg-name">05 · The Plays</div></a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">8BitTrading Academy · The Levels</div>
+    <div class="footer-note">Based on Unusual Whales Periscope · gexpro indicator · Educational — not financial advice</div>
+  </div>
+</footer>
+
+</body>
+</html>

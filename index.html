@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>8BitTrading Academy · Learn to trade dealer exposure from zero</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="academy.css">
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-brand">8Bit<span class="accent">Trading</span> Academy</a>
+  <div class="nav-links">
+    <a href="01-gamma.html" class="gamma">Gamma</a>
+    <a href="02-vanna.html" class="vanna">Vanna</a>
+    <a href="03-charm.html" class="charm">Charm</a>
+    <a href="04-levels.html">Levels</a>
+    <a href="05-plays.html">Plays</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-label">ES Futures · SPX Options · Market-Maker Mechanics</div>
+    <h1>Trade the lines<br>the <span class="g">dealers</span> draw for you</h1>
+    <p class="hero-sub">Never heard of gamma? Start here. This academy takes you from <strong style="color:var(--text)">zero options knowledge</strong> to reading the exact <span class="g">ceiling</span>, <span class="c">floor</span>, and <span class="trapdoor">trapdoor</span> levels your 8BitTrading indicator plots — and knowing what to do at each one. No math degree required.</p>
+    <div style="margin-top:28px; display:flex; gap:10px; flex-wrap:wrap;">
+      <a href="01-gamma.html" style="text-decoration:none; background:var(--gamma-dim); border:1px solid rgba(31,212,160,0.3); color:var(--gamma); padding:10px 20px; border-radius:100px; font-size:12px; letter-spacing:0.04em; font-weight:500;">Start from zero →</a>
+      <a href="04-levels.html" style="text-decoration:none; background:var(--bg4); border:1px solid var(--border2); color:var(--text2); padding:10px 20px; border-radius:100px; font-size:12px; letter-spacing:0.04em;">Jump to the levels</a>
+    </div>
+  </div>
+</section>
+
+<!-- THE BIG IDEA -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header"><span class="section-num">00</span><h2 class="section-title">The one idea behind everything</h2></div>
+    <p class="lede">You don't need to know options math. You need <strong>one</strong> mental model: big options dealers (market makers) are forced to buy and sell futures to stay neutral, and <em>where</em> they're forced to trade is predictable. Those forced-trading prices are your levels.</p>
+
+    <div class="mechanic-box gamma">
+      <div class="mechanic-label">The whole system in one chain</div>
+      <div class="flow-chain">
+        <div class="flow-node">Public buys options</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node">Dealers take the other side</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node">They hedge in ES futures</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node highlight gamma">Their hedging creates levels</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node">You trade those levels</div>
+      </div>
+    </div>
+
+    <div class="card-grid three">
+      <div class="intro-card gamma">
+        <div class="card-label">Greek #1 — Gamma</div>
+        <div class="card-value gamma">Price-driven</div>
+        <div class="card-note">Dealer hedging triggered by price <em>moving</em>. Builds walls, floors, and trapdoors. The backbone of every day.</div>
+      </div>
+      <div class="intro-card vanna">
+        <div class="card-label">Greek #2 — Vanna</div>
+        <div class="card-value vanna">Volatility-driven</div>
+        <div class="card-note">Hedging triggered by the VIX moving. Sets the day's drift and tone. Context — never its own level.</div>
+      </div>
+      <div class="intro-card charm">
+        <div class="card-label">Greek #3 — Charm</div>
+        <div class="card-value charm">Time-driven</div>
+        <div class="card-note">Hedging triggered purely by the clock. Pulls price to a pin into the close. Strongest Wed &amp; Fri afternoons.</div>
+      </div>
+    </div>
+
+    <div class="callout tip"><span class="ic">↯</span><div class="body"><strong>That's the entire framework.</strong> Gamma builds the structure, vanna tilts the drift, charm pins the close. Everything else on this site is detail hanging off those three hooks.</div></div>
+  </div>
+</section>
+
+<!-- START HERE PATH -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header"><span class="section-num">01</span><h2 class="section-title">Your learning path</h2></div>
+    <p class="lede">Work through it in order the first time. Each page is short and gives you one usable skill. Come back to <a href="04-levels.html" style="color:var(--lvl-trapdoor)">the Levels</a> page as your day-to-day reference.</p>
+    <div class="path">
+      <div class="path-step gamma"><div class="path-num">1</div><div><div class="path-h">Gamma from zero</div><div class="path-d">What gamma actually is, why dealers hedge, and the difference between a <em>pinning</em> day and a <em>trending</em> day. <a href="01-gamma.html">Open Gamma →</a></div></div></div>
+      <div class="path-step vanna"><div class="path-num">2</div><div><div class="path-h">Vanna &amp; volatility</div><div class="path-d">How the VIX quietly steers the market, the four vanna regimes, and why we use it as context, never a line. <a href="02-vanna.html">Open Vanna →</a></div></div></div>
+      <div class="path-step charm"><div class="path-num">3</div><div><div class="path-h">Charm &amp; the clock</div><div class="path-d">Why afternoons pin, how time decay drags price to a strike, and the charm clock that runs every expiry day. <a href="03-charm.html">Open Charm →</a></div></div></div>
+      <div class="path-step levels"><div class="path-num">4</div><div><div class="path-h">The nine levels</div><div class="path-d">The core reference — every line your indicator draws, what it does, when it breaks, and how to play it. <a href="04-levels.html">Open Levels →</a></div></div></div>
+      <div class="path-step"><div class="path-num">5</div><div><div class="path-h">The plays &amp; weekly map</div><div class="path-d">Concrete setups built on the levels, plus which greek leads each day of the week. <a href="05-plays.html">Open Plays →</a></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- LEVEL LEGEND -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header"><span class="section-num">02</span><h2 class="section-title">The levels at a glance</h2></div>
+    <p class="lede">These are the nine things your chart can show you — in the indicator's real colors. Full deep-dive on each lives in <a href="04-levels.html" style="color:var(--lvl-trapdoor)">section 04</a>.</p>
+    <div class="legend-grid">
+      <div class="legend-item"><span class="swatch ceiling"></span><div><div class="lg-name ceiling">Ceiling</div><div class="lg-desc">Strongest wall above — likely cap. Fade rallies into it.</div></div></div>
+      <div class="legend-item"><span class="swatch floor"></span><div><div class="lg-name floor">Floor</div><div class="lg-desc">Strongest wall below — likely support. Buy dips into it.</div></div></div>
+      <div class="legend-item"><span class="swatch magnet"></span><div><div class="lg-name magnet">Magnet</div><div class="lg-desc">Secondary pin. Price gravitates toward it on calm days.</div></div></div>
+      <div class="legend-item"><span class="swatch trapdoor"></span><div><div class="lg-name trapdoor">Trapdoor</div><div class="lg-desc">Break it and the move accelerates. The trend-day fuel.</div></div></div>
+      <div class="legend-item"><span class="swatch volzone"></span><div><div class="lg-name volzone">Vol zone</div><div class="lg-desc">Fast, whippy air-pocket. Cross it, don't camp in it.</div></div></div>
+      <div class="legend-item"><span class="swatch charm"></span><div><div class="lg-name charm">Charm pin / fade</div><div class="lg-desc">Time-decay pull (pin) or push (fade). Afternoon force.</div></div></div>
+      <div class="legend-item"><span class="swatch line"></span><div><div class="lg-name" style="color:var(--lvl-flip)">Gamma flip</div><div class="lg-desc">The regime line. Bullish above, bearish below.</div></div></div>
+      <div class="legend-item"><span class="swatch" style="background:linear-gradient(135deg,var(--lvl-magnet),var(--lvl-charm))"></span><div><div class="lg-name" style="color:var(--lvl-charm)">Confluence ★</div><div class="lg-desc">Two greeks agree. Your highest-conviction zone.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- HUB CARDS -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header"><span class="section-num">03</span><h2 class="section-title">Explore the academy</h2></div>
+    <div class="hub-grid">
+      <a class="hub-card gamma" href="01-gamma.html"><div class="hub-step">Section 01 · Greek</div><div class="hub-title">Gamma</div><div class="hub-desc">Price-driven hedging. Walls, floors, trapdoors, the flip, and the four ramp scenarios that decide trend vs. range.</div></a>
+      <a class="hub-card vanna" href="02-vanna.html"><div class="hub-step">Section 02 · Greek</div><div class="hub-title">Vanna</div><div class="hub-desc">Volatility-driven hedging. The four VEX × VIX regimes and the 5% override rule that trumps every other read.</div></a>
+      <a class="hub-card charm" href="03-charm.html"><div class="hub-step">Section 03 · Greek</div><div class="hub-title">Charm</div><div class="hub-desc">Time-driven hedging. Pin gravity, the charm clock, the time-weight that grows into the close, and the drift trailer.</div></a>
+      <a class="hub-card levels" href="04-levels.html"><div class="hub-step">Section 04 · Reference</div><div class="hub-title">The Levels</div><div class="hub-desc">The heart of the system. Nine levels, each with mechanics, edge cases, strategies, and a scenario tree.</div></a>
+      <a class="hub-card plays" href="05-plays.html"><div class="hub-step">Section 05 · Application</div><div class="hub-title">The Plays</div><div class="hub-desc">Concrete setups on every level, the weekly greek map, and a pre-market checklist you can run in five minutes.</div></a>
+    </div>
+  </div>
+</section>
+
+<!-- GLOSSARY -->
+<section class="section" id="glossary">
+  <div class="section-inner">
+    <div class="section-header"><span class="section-num">04</span><h2 class="section-title">Glossary</h2></div>
+    <p class="lede">The exact vocabulary used across the academy and in your indicator. One source of truth.</p>
+    <dl class="gloss">
+      <dt style="color:var(--gamma)">Gamma (GEX)</dt><dd>How fast a dealer's hedge changes as <em>price</em> moves. Positive = stabilizing, negative = destabilizing.</dd>
+      <dt style="color:var(--vanna)">Vanna (VEX)</dt><dd>How a dealer's hedge changes as <em>implied volatility</em> (the VIX) moves. Context only in our system.</dd>
+      <dt style="color:var(--charm)">Charm</dt><dd>How a dealer's hedge changes as <em>time</em> passes — even with price and IV frozen.</dd>
+      <dt style="color:var(--lvl-ceiling)">Ceiling</dt><dd>The strongest positive-gamma wall above price. One per board.</dd>
+      <dt style="color:var(--lvl-floor)">Floor</dt><dd>The strongest positive-gamma wall below price. One per board.</dd>
+      <dt style="color:var(--lvl-magnet)">Magnet</dt><dd>Any secondary positive-gamma pin that isn't the main ceiling or floor.</dd>
+      <dt style="color:var(--lvl-trapdoor)">Trapdoor</dt><dd>The strongest negative-gamma strike near price. Break = acceleration.</dd>
+      <dt style="color:var(--lvl-volzone)">Vol zone</dt><dd>Interior negative-gamma territory. Fast, whippy, no reliable reactions.</dd>
+      <dt style="color:var(--lvl-charm)">Charm pin / fade</dt><dd>Positive charm pulls price to the strike (pin); negative charm pushes it away (fade).</dd>
+      <dt style="color:var(--lvl-flip)">Gamma flip</dt><dd>The price where net dealer gamma changes sign — the regime boundary.</dd>
+      <dt style="color:var(--lvl-charm)">Confluence</dt><dd>A strike where gamma and charm both qualify. Highest conviction.</dd>
+      <dt>Regime</dt><dd>The board's overall character: positive-gamma (pinning/range) or negative-gamma (trending).</dd>
+      <dt>Size</dt><dd>A level's raw strength bucket: solid → big → massive → extreme.</dd>
+      <dt>Strength bar</dt><dd>0–100 ranking of a level within its own greek. Not compared across greeks.</dd>
+      <dt>Expected range</dt><dd>The floor-to-ceiling band. Where price tends to live on calm days.</dd>
+      <dt>Pin / pin gravity</dt><dd>The tendency of price to be drawn to and held at a dominant strike into expiry.</dd>
+      <dt>0DTE</dt><dd>Zero-days-to-expiry options — expiring today. Where gamma and charm bite hardest.</dd>
+      <dt>ES offset</dt><dd>The points added to an SPX strike to get the matching ES futures price.</dd>
+    </dl>
+    <div class="teacher"><span class="ic">✦</span><div class="body"><strong>Stuck on a term or a level?</strong> I'm your teacher — ask me to explain any of these with a live example from today's board, and we'll work it through together.</div></div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">8BitTrading Academy</div>
+    <div class="footer-note">Based on Unusual Whales Periscope · gexpro indicator · Educational — not financial advice</div>
+  </div>
+</footer>
+
+</body>
+</html>

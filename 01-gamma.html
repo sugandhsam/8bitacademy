@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gamma · 8BitTrading Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="academy.css">
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-brand">8Bit<span class="accent">Trading</span> Academy</a>
+  <div class="nav-links">
+    <a href="01-gamma.html" class="gamma active">Gamma</a>
+    <a href="02-vanna.html" class="vanna">Vanna</a>
+    <a href="03-charm.html" class="charm">Charm</a>
+    <a href="04-levels.html">Levels</a>
+    <a href="05-plays.html">Plays</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-label">Section 01 · Gamma (GEX) · the backbone</div>
+    <h1>Gamma —<br>the <span class="g">structure</span> of the day</h1>
+    <p class="hero-sub">Gamma is the most important greek and the easiest to feel. It's the force that builds <strong style="color:var(--text)">walls, floors and trapdoors</strong>, and it decides the single biggest question of any session: is today a <span class="g">pinning</span> day or a <span style="color:var(--lvl-trapdoor)">trending</span> day? Let's build it from nothing.</p>
+  </div>
+</section>
+
+<!-- WHAT IS GAMMA -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header"><span class="section-num">01.1</span><h2 class="section-title gamma">What gamma actually is</h2></div>
+    <p class="lede">Forget the textbook. Here's the only definition you need: <strong>gamma is how quickly a dealer's hedge has to change as price moves.</strong> When dealers hold a lot of gamma at a strike, they're forced to trade futures aggressively around that price — and that forced trading is what you see as support and resistance.</p>
+
+    <div class="card-grid">
+      <div class="intro-card gamma">
+        <div class="card-label">In one sentence</div>
+        <div class="card-value gamma">How dealer hedging reacts to price moving</div>
+        <div class="card-note">Not volatility, not time — pure price sensitivity.</div>
+      </div>
+      <div class="intro-card">
+        <div class="card-label">Where you see it</div>
+        <div class="card-value">The "GEX" column on Periscope</div>
+        <div class="card-note">Net Gamma Exposure per strike. Green = positive, red = negative.</div>
+      </div>
+    </div>
+
+    <div class="callout key"><span class="ic">◎</span><div class="body"><strong>Why dealers hedge at all:</strong> a market maker who sells you a call doesn't want a directional bet — they just want the fee. So they buy/sell ES futures to cancel out the directional risk. As price moves, that hedge needs constant adjusting. <em>Gamma is the speed of that adjusting</em>, and the sign of gamma decides whether their adjusting calms the market or feeds it.</div></div>
+  </div>
+</section>
+
+<!-- THE TWO REGIMES -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header"><span class="section-num">01.2</span><h2 class="section-title gamma">The two regimes — the whole game</h2></div>
+    <p class="lede">Every gamma board is one of two characters. Knowing which one you're in tells you whether to <strong>fade</strong> moves or <strong>follow</strong> them. Get this right and you're ahead of most traders.</p>
+
+    <div class="mechanic-box gamma">
+      <div class="mechanic-label" style="color:var(--gamma)">Positive gamma — the stabilizer (pinning / range day)</div>
+      <div class="flow-chain">
+        <div class="flow-node">Price moves up</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node">Dealer delta grows</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node highlight gamma">Dealer SELLS ES to re-hedge</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node">Move is dampened &amp; fades</div>
+      </div>
+    </div>
+    <p class="lede muted" style="margin-top:-8px">Dealers trade <em>against</em> price. Rallies get sold, dips get bought. Result: <strong style="color:var(--gamma)">mean reversion</strong>. Fade the extremes back toward the middle. This is where <a href="04-levels.html#ceiling" style="color:var(--lvl-ceiling)">ceilings</a>, <a href="04-levels.html#floor" style="color:var(--lvl-floor)">floors</a> and <a href="04-levels.html#magnet" style="color:var(--lvl-magnet)">magnets</a> live.</p>
+
+    <div class="mechanic-box gamma" style="border-color:rgba(231,53,40,0.25)">
+      <div class="mechanic-label" style="color:var(--lvl-trapdoor)">Negative gamma — the accelerator (trending / volatile day)</div>
+      <div class="flow-chain">
+        <div class="flow-node">Price moves down</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node">Dealer delta worsens</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node highlight charm" style="background:rgba(231,53,40,0.14);border-color:rgba(231,53,40,0.35);color:var(--lvl-trapdoor)">Dealer SELLS MORE ES to re-hedge</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node">Move AMPLIFIES</div>
+      </div>
+    </div>
+    <p class="lede muted" style="margin-top:-8px">Dealers trade <em>with</em> price. Selling begets selling, rallies squeeze. Result: <strong style="color:var(--lvl-trapdoor)">trends and breakouts</strong>. Follow, never fade. This is where <a href="04-levels.html#trapdoor" style="color:var(--lvl-trapdoor)">trapdoors</a> and <a href="04-levels.html#volzone" style="color:var(--lvl-volzone)">vol zones</a> live.</p>
+
+    <table class="tbl">
+      <thead><tr><th>If the board is…</th><th>Dealers…</th><th>Price tends to…</th><th>Your default</th></tr></thead>
+      <tbody>
+        <tr><td class="bull">Positive gamma</td><td>trade against the move</td><td>pin, range, mean-revert</td><td>Fade extremes to walls</td></tr>
+        <tr><td class="bear">Negative gamma</td><td>trade with the move</td><td>trend, break out, gap-and-go</td><td>Follow momentum</td></tr>
+      </tbody>
+    </table>
+    <div class="callout warn"><span class="ic">⚠</span><div class="body"><strong>The most expensive mistake in this whole system</strong> is fading a negative-gamma trend day because it "looks extended." It isn't extended — dealers are pouring fuel on it. Check the regime <em>before</em> you fade anything.</div></div>
+  </div>
+</section>
+
+<!-- THE GAMMA FLIP -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header"><span class="section-num">01.3</span><h2 class="section-title gamma">The gamma flip — the line that picks the regime</h2></div>
+    <p class="lede">The two regimes meet at one price: the <strong style="color:var(--lvl-flip)">gamma flip</strong>. Above it the board is positive (stabilizing); below it the board is negative (accelerating). It's the single most important line on your chart because it tells you <em>which playbook to run.</em></p>
+    <div class="card-grid">
+      <div class="intro-card" style="border-color:rgba(242,54,69,0.3)"><div class="card-label" style="color:var(--lvl-flip)">Above the flip</div><div class="card-value">Positive gamma — lean long, fade the extremes, trust the walls.</div></div>
+      <div class="intro-card" style="border-color:rgba(242,54,69,0.3)"><div class="card-label" style="color:var(--lvl-flip)">Below the flip</div><div class="card-value">Negative gamma — lean short, follow breaks, respect the trapdoors.</div></div>
+    </div>
+    <div class="callout tip"><span class="ic">↯</span><div class="body"><strong>A reclaim or loss of the flip is a regime change.</strong> The moment price closes through it, switch sides — stop fading, start following (or vice-versa). Full breakdown on the <a href="04-levels.html#flip" style="color:var(--lvl-flip)">Levels page</a>.</div></div>
+  </div>
+</section>
+
+<!-- FOUR RAMP SCENARIOS -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header"><span class="section-num">01.4</span><h2 class="section-title gamma">The four ramp scenarios</h2></div>
+    <p class="lede">Zoom out from a single line to the <em>shape</em> of the whole board. Where the gamma is stacked — ahead of price or behind it, positive or negative — sorts every day into one of four scenarios. This is your morning classification.</p>
+    <table class="tbl">
+      <thead><tr><th>Scenario</th><th>Structure</th><th>Day type</th><th>How to trade it</th></tr></thead>
+      <tbody>
+        <tr><td>Forward Positive Ramp</td><td>Large +γ stacked ahead in the direction price is heading</td><td class="neu">Range / grind</td><td>Fade extensions — dealers absorb the move. Mean reversion.</td></tr>
+        <tr><td>Backward Positive Ramp</td><td>+γ is behind price; ahead is thin or negative</td><td class="neu">Expansion / reversal</td><td>Price can move fast once the last +γ clears. Watch for a breakout.</td></tr>
+        <tr><td>Forward Negative Slide</td><td>−γ stacked ahead, in the direction of travel</td><td class="bull">Trend day</td><td><strong>Follow, never fade.</strong> Dealers chase. The most important setup.</td></tr>
+        <tr><td>Backward Negative Slide</td><td>−γ was behind; ahead is +γ or neutral</td><td class="neu">Relief / recovery</td><td>Worst of the move is likely done. Expect a grind recovery.</td></tr>
+      </tbody>
+    </table>
+    <div class="callout key"><span class="ic">◎</span><div class="body"><strong>The 5-second read:</strong> ① Where's the biggest bar? ② Is it ahead of price or behind? ③ Is the path between price and that bar clean or interrupted? ④ What sign dominates that path? ⑤ What's on the <em>other</em> side (your trapdoor risk)? Answer those five and you've classified the day.</div></div>
+  </div>
+</section>
+
+<!-- HOW GAMMA BECOMES LEVELS -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header"><span class="section-num">01.5</span><h2 class="section-title gamma">How gamma becomes your levels</h2></div>
+    <p class="lede">Gamma produces five of the nine level types directly. Here's the map from greek to line:</p>
+    <div class="legend-grid">
+      <div class="legend-item"><span class="swatch ceiling"></span><div><div class="lg-name ceiling">Ceiling</div><div class="lg-desc">Strongest <strong>positive</strong> gamma above price.</div></div></div>
+      <div class="legend-item"><span class="swatch floor"></span><div><div class="lg-name floor">Floor</div><div class="lg-desc">Strongest <strong>positive</strong> gamma below price.</div></div></div>
+      <div class="legend-item"><span class="swatch magnet"></span><div><div class="lg-name magnet">Magnet</div><div class="lg-desc">Any other <strong>positive</strong> gamma pin.</div></div></div>
+      <div class="legend-item"><span class="swatch trapdoor"></span><div><div class="lg-name trapdoor">Trapdoor</div><div class="lg-desc">Strongest <strong>negative</strong> gamma near price.</div></div></div>
+      <div class="legend-item"><span class="swatch volzone"></span><div><div class="lg-name volzone">Vol zone</div><div class="lg-desc">Interior <strong>negative</strong> gamma chop.</div></div></div>
+      <div class="legend-item"><span class="swatch line"></span><div><div class="lg-name" style="color:var(--lvl-flip)">Gamma flip</div><div class="lg-desc">Where positive flips to negative.</div></div></div>
+    </div>
+    <p class="lede" style="margin-top:24px">Positive gamma above you = a cap. Positive below = a cushion. Negative near you = a cliff edge. That's the entire translation. Go see each one in depth on the <a href="04-levels.html" style="color:var(--lvl-trapdoor)">Levels page</a>.</p>
+
+    <div class="teacher"><span class="ic">✦</span><div class="body"><strong>I'm your teacher.</strong> Want me to classify today's live board into one of the four scenarios, or explain why a strike is positive vs negative gamma? Just ask.</div></div>
+    <div class="source-note"><strong>Primary source:</strong> mechanics per the <em>gamma-ramps</em> and <em>gexgreeks</em> skills. To go deeper, read SqueezeMetrics' <em>"The Implied Order Book"</em> (the clearest dealer-hedging explainer) and SpotGamma's gamma-exposure primer.</div>
+
+    <div class="pager">
+      <a href="index.html" class="prev"><div class="pg-dir">← Home</div><div class="pg-name">Academy index</div></a>
+      <a href="02-vanna.html" class="next"><div class="pg-dir">Next →</div><div class="pg-name">02 · Vanna</div></a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">8BitTrading Academy · Gamma</div>
+    <div class="footer-note">Based on Unusual Whales Periscope · gexpro indicator · Educational — not financial advice</div>
+  </div>
+</footer>
+
+</body>
+</html>
