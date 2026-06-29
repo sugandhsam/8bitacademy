@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>8BitTrading · Published Indicators</title>
+<meta name="description" content="Every published 8B TradingView indicator — the tools that plot the dealer-exposure levels this academy teaches.">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="academy.css">
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-brand">8Bit<span class="accent">Trading</span> Academy</a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="01-gamma.html" class="gamma">Gamma</a>
+    <a href="02-vanna.html" class="vanna">Vanna</a>
+    <a href="03-charm.html" class="charm">Charm</a>
+    <a href="04-levels.html">Levels</a>
+    <a href="05-plays.html">Plays</a>
+    <a href="06-indicators.html" class="active">Indicators</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-label">TradingView · Published Scripts · the8bitfuturist</div>
+    <h1>The <span class="g">indicators</span></h1>
+    <p class="hero-sub">Every published 8B script — the tools that plot the levels this academy teaches. Open any one straight on TradingView.</p>
+  </div>
+</section>
+
+<!-- GRID -->
+<section class="section">
+  <div class="section-inner">
+    <div class="ind-toolbar">
+      <div class="section-header"><span class="section-num">06</span><h2 class="section-title">Published indicators</h2></div>
+      <label class="ind-sort">Sort
+        <select id="sort">
+          <option value="new">Newest first</option>
+          <option value="old">Oldest first</option>
+        </select>
+      </label>
+    </div>
+    <div class="ind-grid" id="ind-grid"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">8BitTrading Academy · Indicators</div>
+    <div class="footer-note">Educational — not financial advice · <a href="https://discord.gg/usRSrWm7" target="_blank" rel="noopener">Join the Discord</a></div>
+  </div>
+</footer>
+
+<script>
+// Ordered newest-updated first. access: "protected" | "open" · hot: true => ★ Popular
+// shot: /public/shots/<slug>.png (falls back to placeholder until the image exists)
+// dates = real "last updated" from TradingView. descriptions = draft (edit freely).
+const BRAND = "[8B]";
+const DATA = [
+  { slug:"greekzonespro",          name:"GreekZonesPro",            cat:"GEX · Greeks",   access:"protected", hot:true,  updated:"Jun 2026", ts:202606,
+    url:"https://www.tradingview.com/script/yjJnSEnX-8B-GreekZonesPro/",
+    desc:"Renders the gexgreeks chart-string zones — gamma, vanna and charm levels — with simplified source and sign color inputs." },
+  { slug:"ict-opening-lines",      name:"ICT Opening Lines",        cat:"Sessions · ICT", access:"protected", hot:false, updated:"Jan 2026", ts:202601,
+    url:"https://www.tradingview.com/script/Ho48sOIq-8BF-ICT-Opening-Lines/",
+    desc:"Plots ICT session opening lines and key time-based reference levels." },
+  { slug:"market-maker-series-3",  name:"Market Maker Series 3",    cat:"Market Maker",   access:"protected", hot:false, updated:"Dec 2025", ts:202512,
+    url:"https://www.tradingview.com/script/geLSEZFi-8BF-Market-Maker-Series-3/",
+    desc:"Third-generation market-maker positional levels and dealer-zone mapping." },
+  { slug:"dynamic-orb-pitraids",   name:"Dynamic ORB PitRaids",     cat:"ORB · Raids",    access:"protected", hot:false, updated:"Dec 2025", ts:202512,
+    url:"https://www.tradingview.com/script/tadB2St1-8BF-Dynamic-ORB-PitRaids/",
+    desc:"Dynamic opening-range breakout with pit-session raid detection." },
+  { slug:"rolling-vwap",           name:"Rolling VWAP & Values Lines", cat:"VWAP",        access:"protected", hot:false, updated:"Nov 2025", ts:202511,
+    url:"https://www.tradingview.com/script/ZCowz47j-8BF-Rolling-VWAP-Values-Lines/",
+    desc:"Rolling VWAP with printed value lines for clean intraday mean tracking." },
+  { slug:"htf-raids",              name:"HTF Raids",                cat:"Liquidity",      access:"protected", hot:false, updated:"Nov 2025", ts:202511,
+    url:"https://www.tradingview.com/script/N9PO39DG-8BF-HTF-Raids/",
+    desc:"Higher-timeframe liquidity raids — flags sweeps of prior HTF highs and lows." },
+  { slug:"trading-pockets",        name:"Trading Pockets",          cat:"Structure",      access:"protected", hot:false, updated:"Nov 2025", ts:202511,
+    url:"https://www.tradingview.com/script/KJNGtCA9-8BF-Trading-Pockets/",
+    desc:"Highlights high-probability reaction pockets built from confluent structure." },
+  { slug:"battle-zones",           name:"Battle Zones",             cat:"Zones",          access:"protected", hot:false, updated:"Nov 2025", ts:202511,
+    url:"https://www.tradingview.com/script/HxrKctJh-8BF-Battle-Zones/",
+    desc:"Maps contested supply / demand battle zones where price is likely to fight." },
+  { slug:"bbt",                    name:"BBT",                      cat:"Volatility",     access:"protected", hot:false, updated:"Jun 2025", ts:202506,
+    url:"https://www.tradingview.com/script/gUlpPewP-8BF-BBT/",
+    desc:"Band-based tool for compression, expansion and mean-reversion context." },
+  { slug:"fishert-div",            name:"FisherT Div",              cat:"Oscillator",     access:"protected", hot:false, updated:"Jun 2025", ts:202506,
+    url:"https://www.tradingview.com/script/MT5rsrYd-8BF-FisherT-Div/",
+    desc:"Fisher-transform oscillator with automatic regular and hidden divergence detection." },
+  { slug:"fractal-liquidity",      name:"Fractal Liquidity",        cat:"Liquidity",      access:"protected", hot:false, updated:"May 2025", ts:202505,
+    url:"https://www.tradingview.com/script/6sGsrprv-8BF-Fractal-Liquidity/",
+    desc:"Marks fractal swing liquidity pools and the levels price hunts." },
+  { slug:"doctradermacgraw-toolkit", name:"DocTraderMacgraw Toolkit", cat:"Toolkit",     access:"protected", hot:false, updated:"May 2025", ts:202505,
+    url:"https://www.tradingview.com/script/xPQdqZPF-8BF-DocTraderMacgraw-Toolkit/",
+    desc:"All-in-one discretionary toolkit bundling the core 8B confluence overlays." },
+  { slug:"strength-vi",            name:"Strength VI",              cat:"Momentum",       access:"protected", hot:false, updated:"Apr 2025", ts:202504,
+    url:"https://www.tradingview.com/script/f0Nm78I5-8BF-Strength-VI/",
+    desc:"Composite strength / volatility-index read for gauging trend conviction and exhaustion." },
+  { slug:"quaddforza",             name:"QuadDForza",               cat:"Trend",          access:"protected", hot:false, updated:"Mar 2025", ts:202503,
+    url:"https://www.tradingview.com/script/guwrJrHi-8BF-QuadDForza/",
+    desc:"Four-factor directional force model blended into one momentum signal." },
+];
+const ACC_LABEL = { protected:"Protected", open:"Open-source" };
+
+const card = d => `
+  <a class="ind-card" href="${d.url}" target="_blank" rel="noopener">
+    <div class="ind-shot">
+      <img src="public/shots/${d.slug}.png" alt="${d.name} chart" loading="lazy" onerror="this.remove()">
+      <div class="ind-badges">
+        ${d.hot ? '<span class="ind-hot">★ Popular</span>' : '<span></span>'}
+        <span class="ind-access ${d.access}">${ACC_LABEL[d.access]}</span>
+      </div>
+    </div>
+    <div class="ind-body">
+      <div class="ind-tag">${d.cat}</div>
+      <div class="ind-title"><span class="brk">${BRAND}</span> ${d.name}</div>
+      <div class="ind-desc">${d.desc}</div>
+      <div class="ind-foot"><span class="ind-meta">Updated <b>${d.updated}</b></span><span class="ind-link">Open →</span></div>
+    </div>
+  </a>`;
+
+const grid = document.getElementById('ind-grid');
+const sortSel = document.getElementById('sort');
+function render(mode) {
+  const sorted = [...DATA].sort((a, b) => mode === 'old' ? a.ts - b.ts : b.ts - a.ts);
+  grid.innerHTML = sorted.map(card).join('');
+}
+sortSel.addEventListener('change', e => render(e.target.value));
+render('new');
+</script>
+
+</body>
+</html>

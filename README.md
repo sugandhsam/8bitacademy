@@ -23,6 +23,14 @@ pipeline. Every level definition and color matches what the indicator actually p
 Plain static HTML + one shared CSS file. No build step, no framework, no dependencies —
 open `index.html` in a browser, or host the folder as-is (GitHub Pages, Netlify, etc.).
 
+## Design system
+
+This site uses the **Matrix design system**, defined in
+`~/Projects/AGENT/skills/matrix-design-system/SKILL.md`. `academy.css` is the built
+implementation of that spec (Space Mono, single dark surface, one brand-green accent,
+2px corners, hairline borders). **Agents:** read that skill before adding or restyling
+any UI here — it is the source of truth for tokens, components, and layout.
+
 ## Local preview
 
 ```bash
