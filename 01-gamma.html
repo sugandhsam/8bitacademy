@@ -120,12 +120,18 @@
     <table class="tbl">
       <thead><tr><th>Scenario</th><th>Structure</th><th>Day type</th><th>How to trade it</th></tr></thead>
       <tbody>
-        <tr><td>Forward Positive Ramp</td><td>Large +γ stacked ahead in the direction price is heading</td><td class="neu">Range / grind</td><td>Fade extensions — dealers absorb the move. Mean reversion.</td></tr>
-        <tr><td>Backward Positive Ramp</td><td>+γ is behind price; ahead is thin or negative</td><td class="neu">Expansion / reversal</td><td>Price can move fast once the last +γ clears. Watch for a breakout.</td></tr>
-        <tr><td>Forward Negative Slide</td><td>−γ stacked ahead, in the direction of travel</td><td class="bull">Trend day</td><td><strong>Follow, never fade.</strong> Dealers chase. The most important setup.</td></tr>
-        <tr><td>Backward Negative Slide</td><td>−γ was behind; ahead is +γ or neutral</td><td class="neu">Relief / recovery</td><td>Worst of the move is likely done. Expect a grind recovery.</td></tr>
+        <tr><td>Forward Positive Ramp</td><td>Large +γ stacked ahead in the direction price is heading</td><td class="neu">Grind / Range</td><td>Fade extensions — dealers absorb the move. Mean reversion.</td></tr>
+        <tr><td>Backward Positive Ramp</td><td>+γ is behind price; ahead is thin or negative</td><td class="bear">Reversal / Chop</td><td>Price can move fast once the last +γ clears. Watch for a breakout.</td></tr>
+        <tr><td>Forward Negative Slide</td><td>−γ stacked ahead, in the direction of travel</td><td class="bull">Trend</td><td><strong>Follow, never fade.</strong> Dealers chase. The most important setup.</td></tr>
+        <tr><td>Backward Negative Slide</td><td>−γ was behind; ahead is +γ or neutral</td><td class="neu">Grind (recovery)</td><td>Worst of the move is likely done. Expect a grind recovery.</td></tr>
       </tbody>
     </table>
+    <p class="lede" style="margin-top:24px">Every board resolves to <strong>one Day Type</strong> — the single label your pipeline prints at the top of the read, colour-coded so you can size the day at a glance:</p>
+    <div class="legend-grid">
+      <div class="legend-item"><span class="swatch" style="background:#2ECC71"></span><div><div class="lg-name" style="color:#2ECC71">Trend</div><div class="lg-desc">Directional · squeeze · breakout. Clean to trade <em>with</em> — follow, don't fade.</div></div></div>
+      <div class="legend-item"><span class="swatch" style="background:#F1C40F"></span><div><div class="lg-name" style="color:#F1C40F">Grind / Range</div><div class="lg-desc">Rotational. Fade the edges back to the middle. The bread-and-butter positive-gamma day.</div></div></div>
+      <div class="legend-item"><span class="swatch" style="background:#E74C3C"></span><div><div class="lg-name" style="color:#E74C3C">Reversal / Chop / Volatile</div><div class="lg-desc">Whippy, two-sided, danger. Smaller size, wait for confirmation.</div></div></div>
+    </div>
     <div class="callout key"><span class="ic">◎</span><div class="body"><strong>The 5-second read:</strong> ① Where's the biggest bar? ② Is it ahead of price or behind? ③ Is the path between price and that bar clean or interrupted? ④ What sign dominates that path? ⑤ What's on the <em>other</em> side (your trapdoor risk)? Answer those five and you've classified the day.</div></div>
   </div>
 </section>
@@ -134,18 +140,19 @@
 <section class="section">
   <div class="section-inner">
     <div class="section-header"><span class="section-num">01.5</span><h2 class="section-title gamma">How gamma becomes your levels</h2></div>
-    <p class="lede">Gamma produces five of the nine level types directly. Here's the map from greek to line:</p>
+    <p class="lede">Gamma produces <strong>five</strong> of your levels directly — the walls, pins and cliffs — plus the one <strong>line</strong> that governs them all. Here's the map from greek to level:</p>
     <div class="legend-grid">
       <div class="legend-item"><span class="swatch ceiling"></span><div><div class="lg-name ceiling">Ceiling</div><div class="lg-desc">Strongest <strong>positive</strong> gamma above price.</div></div></div>
       <div class="legend-item"><span class="swatch floor"></span><div><div class="lg-name floor">Floor</div><div class="lg-desc">Strongest <strong>positive</strong> gamma below price.</div></div></div>
       <div class="legend-item"><span class="swatch magnet"></span><div><div class="lg-name magnet">Magnet</div><div class="lg-desc">Any other <strong>positive</strong> gamma pin.</div></div></div>
-      <div class="legend-item"><span class="swatch trapdoor"></span><div><div class="lg-name trapdoor">Trapdoor</div><div class="lg-desc">Strongest <strong>negative</strong> gamma near price.</div></div></div>
-      <div class="legend-item"><span class="swatch volzone"></span><div><div class="lg-name volzone">Vol zone</div><div class="lg-desc">Interior <strong>negative</strong> gamma chop.</div></div></div>
-      <div class="legend-item"><span class="swatch line"></span><div><div class="lg-name" style="color:var(--lvl-flip)">Gamma flip</div><div class="lg-desc">Where positive flips to negative.</div></div></div>
+      <div class="legend-item"><span class="swatch trapdoor"></span><div><div class="lg-name trapdoor">Trapdoor / squeeze</div><div class="lg-desc">Strongest <strong>negative</strong> gamma next to price — <em>below</em>, a break accelerates the drop; <em>above</em>, it fuels a squeeze.</div></div></div>
+      <div class="legend-item"><span class="swatch volzone"></span><div><div class="lg-name volzone">Vol zone</div><div class="lg-desc">Interior <strong>negative</strong> gamma chop — anything not one of those two nearest edges.</div></div></div>
     </div>
-    <p class="lede" style="margin-top:24px">Positive gamma above you = a cap. Positive below = a cushion. Negative near you = a cliff edge. That's the entire translation. Go see each one in depth on the <a href="04-levels.html" style="color:var(--lvl-trapdoor)">Levels page</a>.</p>
+    <p class="lede" style="margin-top:24px">Positive gamma above you = a cap. Positive below = a cushion. Negative next to you = a cliff edge — a trapdoor below, a squeeze above. That's the entire translation. Go see each one in depth on the <a href="04-levels.html" style="color:var(--lvl-trapdoor)">Levels page</a>.</p>
 
-    <div class="source-note"><strong>Primary source:</strong> mechanics per the <em>gamma-ramps</em> and <em>gexgreeks</em> skills. To go deeper, read SqueezeMetrics' <em>"The Implied Order Book"</em> (the clearest dealer-hedging explainer) and SpotGamma's gamma-exposure primer.</div>
+    <div class="callout key"><span class="ic">◎</span><div class="body"><strong>And the line that governs all five:</strong> the <span style="color:var(--lvl-flip)">gamma flip</span> — where positive gamma flips to negative. It's a <em>regime boundary</em>, not a level: it carries no strength bar and is never crowded out for spacing. It tells you which playbook the five levels belong to.</div></div>
+
+    <div class="source-note"><strong>Primary source:</strong> mechanics per the <em>gexgreeks</em> skill (which now owns the ramp &amp; day-type classification). To go deeper, read SqueezeMetrics' <em>"The Implied Order Book"</em> (the clearest dealer-hedging explainer) and SpotGamma's gamma-exposure primer.</div>
 
     <div class="pager">
       <a href="index.html" class="prev"><div class="pg-dir">← Home</div><div class="pg-name">Academy index</div></a>

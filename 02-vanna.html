@@ -53,21 +53,19 @@
   </div>
 </section>
 
-<!-- FOUR REGIMES -->
+<!-- THE BASIC READ -->
 <section class="section">
   <div class="section-inner">
-    <div class="section-header"><span class="section-num">02.2</span><h2 class="section-title vanna">The four vanna regimes</h2></div>
-    <p class="lede">Vanna's effect depends on two things: the <strong>sign of net VEX</strong> and the <strong>direction of the VIX</strong>. Two by two gives four regimes. Read the box, then commit to the lean.</p>
+    <div class="section-header"><span class="section-num">02.2</span><h2 class="section-title vanna">The one basic read</h2></div>
+    <p class="lede">We keep vanna deliberately simple. You don't track the VIX tick-by-tick or compute regimes — you read <strong>one line of context</strong> off the sign of net vanna, and let it tilt how you hold the gamma trade.</p>
     <table class="tbl">
-      <thead><tr><th>Net VEX</th><th>VIX</th><th>Dealers are forced to…</th><th>ES behavior</th><th>Your lean</th></tr></thead>
+      <thead><tr><th>Net vanna</th><th>What it means</th><th>Your lean</th></tr></thead>
       <tbody>
-        <tr><td>+ VEX</td><td class="bull">🟢 Falling</td><td>buy</td><td class="bull">Drift up, shallow pullbacks</td><td>Buy dips. Don't fade rips.</td></tr>
-        <tr><td>+ VEX</td><td class="bear">🔴 Rising</td><td>sell</td><td class="bear">Mechanical selling pressure</td><td>Fade rips. Don't buy dips.</td></tr>
-        <tr><td>− VEX</td><td class="bull">🟢 Falling</td><td>sell</td><td class="bear">Selling into the drop</td><td>Short. Don't fade the selling.</td></tr>
-        <tr><td>− VEX</td><td class="bear">🔴 Rising</td><td>buy</td><td class="bull">Short-squeeze risk</td><td>Don't fight upside. Buy the squeeze.</td></tr>
+        <tr><td class="bull">Positive</td><td>An IV pop tends to <strong>add</strong> spot support (falling VIX = mechanical tailwind up)</td><td>Hold longs a touch longer into a floor.</td></tr>
+        <tr><td class="bear">Negative</td><td>An IV pop tends to <strong>pressure</strong> spot (vol flows lean against you)</td><td>Don't overstay longs; respect ceilings.</td></tr>
       </tbody>
     </table>
-    <div class="callout tip"><span class="ic">↯</span><div class="body"><strong>How to use it:</strong> vanna sets the day's <em>direction bias</em>; gamma gives you the <em>entry levels</em>. On a "+VEX, VIX falling" day, you still buy dips into a <a href="04-levels.html#floor" style="color:var(--lvl-floor)">floor</a> — but now you hold longer because vanna is pushing your way.</div></div>
+    <div class="callout tip"><span class="ic">↯</span><div class="body"><strong>How to use it:</strong> vanna sets a gentle <em>lean</em>; gamma still gives you the <em>entry levels</em>. On a positive-vanna day you buy the same dip into a <a href="04-levels.html#floor" style="color:var(--lvl-floor)">floor</a> — you just hold it a little longer because the tide's with you. That's the entire job.</div></div>
   </div>
 </section>
 
@@ -84,14 +82,14 @@
   </div>
 </section>
 
-<!-- OVERRIDE RULE -->
+<!-- VOL-EVENT FLAG -->
 <section class="section">
   <div class="section-inner">
-    <div class="section-header"><span class="section-num">02.4</span><h2 class="section-title vanna">The override rule</h2></div>
-    <div class="callout warn"><span class="ic">⚠</span><div class="body"><strong>If the VIX moves more than 5% intraday — vanna takes over, regardless of the day or the gamma board.</strong> Drop the scheduled greek, drop the level fades, and switch to a pure vanna regime read until the VIX stabilizes. A 5%+ VIX move means dealers are being forced to hedge volatility so hard it swamps everything else. This is the one rule that overrides the rest of the system.</div></div>
-    <p class="lede">Most days the VIX is calm and vanna just sets a gentle lean. But on a volatility event — a hot inflation print, a geopolitical shock — vanna becomes <em>the</em> story, and gamma levels get run straight over. Respect the 5% line.</p>
+    <div class="section-header"><span class="section-num">02.4</span><h2 class="section-title vanna">The vol-event flag</h2></div>
+    <div class="callout warn"><span class="ic">⚠</span><div class="body"><strong>On a genuine volatility event — a hot inflation print, a geopolitical shock, the VIX spiking — vol flow can run straight over your gamma levels.</strong> Don't fade into it. This is a <em>risk flag</em>, not a number you calculate: when the tape is clearly in a vol event, stand aside from level fades until it settles.</div></div>
+    <p class="lede">Most days the VIX is calm and vanna just sets a gentle lean. On the rare day it isn't, vanna becomes <em>the</em> story and the walls get overrun. You don't need a threshold — you'll know one when you see it.</p>
 
-    <div class="source-note"><strong>Primary source:</strong> vanna mechanics per the 8BitTrading weekly framework and the <em>gexgreeks</em> skill (vanna = context-only). For the volatility-feedback theory, see Kris Abdelmessih's <em>Moontower</em> writing on vanna &amp; dealer flows.</div>
+    <div class="source-note"><strong>Primary source:</strong> the <em>gexgreeks</em> skill — vanna is context-only in the 8BitTrading pipeline (never a level). For the volatility-feedback theory, see Kris Abdelmessih's <em>Moontower</em> writing on vanna &amp; dealer flows.</div>
 
     <div class="pager">
       <a href="01-gamma.html" class="prev"><div class="pg-dir">← Previous</div><div class="pg-name">01 · Gamma</div></a>

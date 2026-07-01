@@ -77,7 +77,7 @@
         <tr><td>16:00</td><td>×1.50</td><td class="bull">Maximum pull — exits only.</td></tr>
       </tbody>
     </table>
-    <div class="callout key"><span class="ic">◎</span><div class="body"><strong>The Friday bump:</strong> on Fridays the weight gets an extra <strong>×1.25</strong>. Weekly expiry stacks the most decay into that session, so Friday afternoons pin the hardest of the week — and OPEX Fridays (the monthly 3rd Friday) hardest of all.</div></div>
+    <div class="callout key"><span class="ic">◎</span><div class="body"><strong>The Friday bump:</strong> on Fridays the time-weight gets an extra <strong>×1.25</strong> on top. Weekly expiry stacks the most decay into that session, so Friday afternoons pin the hardest of the week.</div></div>
   </div>
 </section>
 
@@ -92,9 +92,9 @@
       <div class="clk-row"><div class="clk-t">12:00 PM</div><div class="clk-c"><span class="clk-dot c"></span><strong>Charm accelerates.</strong> Reduce gamma-level trades. Only take entries aligned with the pin.</div></div>
       <div class="clk-row"><div class="clk-t">1:30 PM</div><div class="clk-c"><span class="clk-dot c"></span>Charm dominant. Pin drift trade active. Fade everything moving away from the pin.</div></div>
       <div class="clk-row"><div class="clk-t">3:00 PM</div><div class="clk-c"><span class="clk-dot c"></span>Maximum pin gravity. Exits only — no new entries after this.</div></div>
-      <div class="clk-row"><div class="clk-t">3:30 PM</div><div class="clk-c"><span class="clk-dot off"></span>Exit all charm trades. Gamma expires, the stabilizer is removed, unwind risk begins.</div></div>
+      <div class="clk-row"><div class="clk-t">3:30 PM</div><div class="clk-c"><span class="clk-dot off"></span>Exit all charm trades. Into the 4:00 close, 0DTE gamma runs off — the stabilizer's removed and unwind risk builds.</div></div>
     </div>
-    <div class="callout warn"><span class="ic">⚠</span><div class="body"><strong>The hard rule on Wed &amp; Fri: switch at 12:00.</strong> Your morning gamma-level reactions become unreliable after noon — charm takes the wheel. Traders who keep fading gamma walls into the afternoon get ground up by the pin drift.</div></div>
+    <div class="callout warn"><span class="ic">⚠</span><div class="body"><strong>The hard rule, every session: switch around noon.</strong> With daily 0DTE, charm runs every day — its time-weight just climbs through the afternoon (and gets an extra push on Fridays). Your morning gamma-level reactions become unreliable after noon; traders who keep fading gamma walls into the pin drift get ground up.</div></div>
   </div>
 </section>
 
@@ -102,14 +102,14 @@
 <section class="section">
   <div class="section-inner">
     <div class="section-header"><span class="section-num">03.4</span><h2 class="section-title charm">The pin strike &amp; your two charm levels</h2></div>
-    <p class="lede">Charm produces two of your nine levels — and one all-important target, the <strong>pin strike</strong>.</p>
+    <p class="lede">Charm produces two of your levels — and one all-important target, the <strong>pin strike</strong>.</p>
     <div class="intro-card neutral" style="margin-bottom:24px;">
-      <div class="card-label" style="color:var(--charm)">Pin-strike recipe</div>
+      <div class="card-label" style="color:var(--charm)">How the pin is actually found</div>
       <div class="card-value" style="font-family:var(--font-mono); font-size:13px; line-height:1.9; color:var(--text2); font-weight:400;">
-        Largest absolute gamma strike within ~1% of price<br>
-        + a round or semi-round number (7300, 7350, 7400)<br>
-        + already tested twice and held intraday<br>
-        = <span style="color:var(--charm)">high-probability charm pin target</span>
+        Strongest time-weighted charm strike near spot<br>
+        (top slice of |charm| × time-weight, inside the tradeable window)<br>
+        → the more the clock runs, the more it dominates<br>
+        = <span style="color:var(--charm)">your charm-pin target</span>
       </div>
     </div>
     <div class="legend-grid">
