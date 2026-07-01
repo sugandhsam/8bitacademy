@@ -2,3 +2,8 @@
 *.log
 .vscode/
 .idea/
+
+# Internal planning + memory — kept local, never published to the public repo
+/MEMORY.md
+/ERRORS.md
+/docs/plans/
