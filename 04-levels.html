@@ -26,7 +26,7 @@
 <section class="hero">
   <div class="hero-inner">
     <div class="hero-label">Section 04 · The Levels · the heart of the system</div>
-    <h1>The nine <span class="trapdoor">levels</span><br>your indicator draws</h1>
+    <h1>The <span class="trapdoor">levels</span><br>your indicator draws</h1>
     <p class="hero-sub">Every line on your chart is a place where <strong style="color:var(--text)">dealers are forced to trade</strong>. Learn what each one means, when it breaks, how to play it, and the most likely ways it resolves. The colors below are the exact colors the gexpro indicator paints.</p>
   </div>
 </section>
@@ -45,7 +45,7 @@
 <span class="c-dim">  │      │       │     └───────</span> sign      + positive greek · − negative greek
 <span class="c-dim">  │      │       └─────────────</span> size      solid · big · massive · extreme
 <span class="c-dim">  │      └─────────────────────</span> tag       the level TYPE (this page)
-<span class="c-dim">  └────────────────────────────</span> ES price  where the line is drawn</div>
+<span class="c-dim">  └────────────────────────────</span> ES price  where the line is drawn (SPX strike + your ES offset)</div>
 
     <div class="card-grid three">
       <div class="intro-card">
@@ -69,6 +69,11 @@
       <span class="ic">◎</span>
       <div class="body"><strong>The one rule that explains every level:</strong> dealers are mostly short options to the public, so they hedge in the futures to stay neutral. <em>Positive gamma</em> makes them trade <em>against</em> price (stabilizing — walls, pins, magnets). <em>Negative gamma</em> makes them trade <em>with</em> price (accelerating — trapdoors, vol zones). Every color below is just one flavor of that single mechanic. New to this? Start with <a href="01-gamma.html" style="color:var(--gamma)">Gamma from zero</a>.</div>
     </div>
+
+    <div class="callout tip">
+      <span class="ic">↯</span>
+      <div class="body"><strong>Why some days show fewer lines:</strong> the pipeline posts at most <strong>eight levels</strong> (the flip is extra), keeps a minimum ~15-point gap between them, and leads with the structural skeleton — ceiling, floor, and the near-spot trapdoors — before filling the rest by strength. It <em>never pads</em>, so a quiet board might show four lines and a busy one eight. Fewer lines means a cleaner board, not a broken feed.</div>
+    </div>
   </div>
 </section>
 
@@ -76,16 +81,16 @@
 <section class="section">
   <div class="section-inner">
     <div class="section-header"><span class="section-num">04.2</span><h2 class="section-title">The color key</h2></div>
-    <p class="lede">These nine colors are the gexpro indicator's actual palette. Memorize them once and you can read a chart in two seconds.</p>
+    <p class="lede">This is the gexpro indicator's actual palette — <strong>seven levels</strong>, the <strong>regime flip</strong>, and the <strong>confluence flag</strong> that stacks on top. Memorize it once and you can read a chart in two seconds.</p>
     <div class="legend-grid">
       <div class="legend-item"><span class="swatch ceiling"></span><div><div class="lg-name ceiling">Ceiling</div><div class="lg-desc">Strongest call wall above price — dealer resistance.</div></div></div>
       <div class="legend-item"><span class="swatch floor"></span><div><div class="lg-name floor">Floor</div><div class="lg-desc">Strongest put wall below price — dealer support.</div></div></div>
       <div class="legend-item"><span class="swatch magnet"></span><div><div class="lg-name magnet">Magnet</div><div class="lg-desc">Secondary positive-gamma pin — pulls price in.</div></div></div>
-      <div class="legend-item"><span class="swatch trapdoor"></span><div><div class="lg-name trapdoor">Trapdoor</div><div class="lg-desc">Near-spot negative gamma — break it and price accelerates.</div></div></div>
+      <div class="legend-item"><span class="swatch trapdoor"></span><div><div class="lg-name trapdoor">Trapdoor / squeeze</div><div class="lg-desc">Near-spot negative gamma — break it and price accelerates (down = trapdoor, up = squeeze).</div></div></div>
       <div class="legend-item"><span class="swatch volzone"></span><div><div class="lg-name volzone">Vol zone</div><div class="lg-desc">Interior negative gamma — fast, whippy chop pocket.</div></div></div>
       <div class="legend-item"><span class="swatch charm"></span><div><div class="lg-name charm">Charm pin / fade</div><div class="lg-desc">Time-decay level — stabilizing (pin) or directional (fade).</div></div></div>
       <div class="legend-item"><span class="swatch line"></span><div><div class="lg-name" style="color:var(--lvl-flip)">Gamma flip</div><div class="lg-desc">Dashed regime line — bullish above, bearish below.</div></div></div>
-      <div class="legend-item"><span class="swatch" style="background:linear-gradient(135deg,var(--lvl-magnet),var(--lvl-charm))"></span><div><div class="lg-name" style="color:var(--lvl-charm)">Confluence ★</div><div class="lg-desc">Gamma <em>and</em> charm agree at one strike — highest conviction.</div></div></div>
+      <div class="legend-item"><span class="swatch" style="background:linear-gradient(135deg,var(--lvl-magnet),var(--lvl-charm))"></span><div><div class="lg-name" style="color:var(--lvl-charm)">Confluence 🧿</div><div class="lg-desc">Gamma <em>and</em> charm agree at one strike — a flag on the level, highest conviction.</div></div></div>
     </div>
     <div class="callout tip">
       <span class="ic">↯</span>
@@ -94,7 +99,7 @@
   </div>
 </section>
 
-<!-- ============ THE NINE LEVELS ============ -->
+<!-- ============ THE LEVELS ============ -->
 <section class="section">
   <div class="section-inner">
     <div class="section-header"><span class="section-num">04.3</span><h2 class="section-title">Each level, in depth</h2></div>
@@ -178,7 +183,7 @@
         <div class="level-row"><div class="rk">How to play it</div><ul class="bullets">
           <li><strong>Fade extensions back toward it</strong> when price stretches away on a range day.</li>
           <li>Use it as a <strong>realistic target</strong>, not an entry — price is drawn to magnets, so take profit into them.</li>
-          <li>The <strong>largest absolute magnet near a round number</strong> is your pin-strike candidate for the afternoon (see <a href="03-charm.html" style="color:var(--charm)">Charm</a>).</li>
+          <li>A magnet that <strong>also carries strong afternoon charm</strong> is your pin target — when both agree it posts as a <a href="#confluence" style="color:var(--lvl-charm)">confluence</a> pin (see <a href="03-charm.html" style="color:var(--charm)">Charm</a>).</li>
         </ul></div>
         <div class="level-row"><div class="rk">Scenario tree · price near a magnet</div>
           <div class="scenario-tree">
@@ -194,7 +199,7 @@
     <div class="level-card trapdoor" id="trapdoor">
       <div class="level-head">
         <div class="level-icon">⚠</div>
-        <div><div class="level-name">Trapdoor</div></div>
+        <div><div class="level-name">Trapdoor / squeeze</div></div>
         <div class="level-meta">Negative gamma · near spot<br><span class="greek-src">source: gex · the accelerant</span></div>
       </div>
       <div class="level-body">
@@ -268,12 +273,12 @@
         </ul></div>
         <div class="level-row"><div class="rk">How to play it</div><ul class="bullets">
           <li><strong>Afternoon pin drift:</strong> after noon, fade moves away from the pin and ride the grind back to it.</li>
-          <li>Use it as the <strong>profit target</strong> for morning trades on Wed/Fri.</li>
+          <li>Use it as the <strong>profit target</strong> for morning trades — the pull tightens every afternoon (hardest on Fridays).</li>
           <li>Exit before the pin, not through it — the edge is the drift, not the close.</li>
         </ul></div>
         <div class="level-row"><div class="rk">Scenario tree · afternoon, price near a charm pin</div>
           <div class="scenario-tree">
-            <div class="scn"><div class="scn-prob high">High</div><div class="scn-body"><div class="scn-name">Pin &amp; hold into close</div><div class="scn-tell"><span class="lbl">tell</span> &nbsp;post-noon, low volume, price keeps returning — classic Wed/Fri PM.</div></div></div>
+            <div class="scn"><div class="scn-prob high">High</div><div class="scn-body"><div class="scn-name">Pin &amp; hold into close</div><div class="scn-tell"><span class="lbl">tell</span> &nbsp;post-noon, low volume, price keeps returning — the classic afternoon pin.</div></div></div>
             <div class="scn"><div class="scn-prob med">Med</div><div class="scn-body"><div class="scn-name">Slow drift toward it</div><div class="scn-tell"><span class="lbl">tell</span> &nbsp;price still a touch away, grinding in with no momentum.</div></div></div>
             <div class="scn"><div class="scn-prob low">Low</div><div class="scn-body"><div class="scn-name">Pin breaks</div><div class="scn-tell"><span class="lbl">tell</span> &nbsp;a gamma-flip break or news event — charm is the weakest force and gets overridden.</div></div></div>
           </div>
@@ -299,7 +304,7 @@
         <div class="level-row"><div class="rk">How to play it</div><ul class="bullets">
           <li><strong>Align with the push, never against it</strong> — bias entries in the fade's direction.</li>
           <li>Treat it as a <strong>background tilt</strong> that strengthens your gamma read, not a standalone trigger.</li>
-          <li>Strongest Wed/Fri afternoons; near-irrelevant in the first hour.</li>
+          <li>Strongest into the afternoon (and on Fridays); near-irrelevant in the first hour.</li>
         </ul></div>
         <div class="level-row"><div class="rk">Scenario tree · afternoon, charm fade active</div>
           <div class="scenario-tree">
@@ -345,12 +350,12 @@
     <!-- CONFLUENCE -->
     <div class="level-card conf" id="confluence">
       <div class="level-head">
-        <div class="level-icon">★</div>
+        <div class="level-icon">🧿</div>
         <div><div class="level-name">Confluence</div></div>
-        <div class="level-meta">Gamma + charm agree<br><span class="greek-src">source: conf · highest conviction</span></div>
+        <div class="level-meta">Gamma + charm agree<br><span class="greek-src">source: conf · a flag on a level</span></div>
       </div>
       <div class="level-body">
-        <div class="level-row"><div class="rk">What it is</div><div class="rv">A strike where <strong>both gamma and charm independently pass their filters</strong> — two separate dealer forces pointing at the same price. The highest-conviction zone on the board and your best risk/reward.</div></div>
+        <div class="level-row"><div class="rk">What it is</div><div class="rv"><strong>Not a separate line — a flag.</strong> When <strong>both gamma and charm independently pass their filters at the same strike</strong>, the level keeps its own tag and lights up as confluence (🧿). Two separate dealer forces on one price: the highest-conviction zone on the board and your best risk/reward.</div></div>
         <div class="level-row"><div class="rk">The dealer mechanic</div><div class="rv">Two independent hedging pressures stacking at one strike. When a positive-gamma wall is <em>also</em> a charm pin, the structural magnet and the time-decay magnet reinforce each other — price gets held far more firmly than either force alone would manage.</div></div>
         <div class="level-row"><div class="rk">Edge cases</div><ul class="bullets">
           <li>On a <strong>dense board</strong> confluence can appear at many near-spot strikes; the pipeline declusters them so only the strongest in each neighborhood posts. What survives is genuine.</li>
@@ -392,7 +397,7 @@
     <div class="callout key"><span class="ic">◎</span><div class="body"><strong>Expected range</strong> is just the floor-to-ceiling band — here ES 7466–7591. Price lives inside it on positive-gamma days and escapes it when a trapdoor cascades. It's a gamma-defined range, no volatility math required.</div></div>
 
 
-    <div class="source-note"><strong>Primary source:</strong> these definitions come straight from the <em>gexgreeks</em> extraction skill (the engine behind your Discord posts) and the <em>gexpro</em> v0.8.1 indicator color spec. To go deeper on the dealer mechanics, read SqueezeMetrics' <em>"The Implied Order Book"</em> and SpotGamma's gamma-exposure primers.</div>
+    <div class="source-note"><strong>Primary source:</strong> these definitions come straight from the <em>gexgreeks</em> extraction skill (the engine behind your Discord posts) and the <em>gexpro</em> v0.13.0 indicator color spec. To go deeper on the dealer mechanics, read SqueezeMetrics' <em>"The Implied Order Book"</em> and SpotGamma's gamma-exposure primers.</div>
 
     <div class="pager">
       <a href="03-charm.html" class="prev"><div class="pg-dir">← Previous</div><div class="pg-name">03 · Charm</div></a>
