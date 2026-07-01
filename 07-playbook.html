@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Playbook · 8BitTrading Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="academy.css">
+<link rel="icon" type="image/png" sizes="32x32" href="public/assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="public/assets/favicon-32.png">
+<link rel="apple-touch-icon" href="public/assets/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="8BitTrading Academy">
+<meta property="og:title" content="The Playbook · 8BitTrading Academy">
+<meta property="og:description" content="Turn this morning's ES levels into a plan — the day type, the plays, and the charm clock, in the academy's own words.">
+<meta property="og:url" content="https://8bittrading.com/07-playbook.html">
+<meta property="og:image" content="https://8bittrading.com/public/assets/avat-big.png">
+<meta property="og:image:width" content="1024">
+<meta property="og:image:height" content="1024">
+<meta property="og:image:alt" content="8BitTrading 8B logo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="The Playbook · 8BitTrading Academy">
+<meta name="twitter:description" content="Turn this morning's ES levels into a plan — the day type, the plays, and the charm clock, in the academy's own words.">
+<meta name="twitter:image" content="https://8bittrading.com/public/assets/avat-big.png">
+<style>
+  /* ============================================================
+     07-playbook — page-local tool CSS on top of academy.css.
+     Reuses academy tokens (Space Mono, brand green, level hues,
+     2px corners). Only the interactive prep widgets live here.
+     ============================================================ */
+
+  /* step scaffold */
+  .pb-step { margin-bottom: 30px; }
+  .pb-step-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 6px; }
+  .pb-step-num { font-family: var(--font-display); font-size: 11px; font-weight: 700; color: var(--brand); letter-spacing: 0.04em; }
+  .pb-step-title { font-family: var(--font-display); font-size: 16px; font-weight: 700; color: var(--text); }
+  .pb-step-help { font-size: 12px; color: var(--text3); line-height: 1.6; margin-bottom: 14px; }
+  .pb-req { font-size: 9px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--brand-strong); border: 1px solid var(--brand-soft); background: var(--brand-softer); border-radius: 2px; padding: 2px 6px; margin-left: 6px; }
+  .pb-clear { margin-left: auto; background: transparent; border: 1px solid var(--border2); color: var(--text3); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.04em; text-transform: uppercase; padding: 5px 12px; border-radius: 2px; cursor: pointer; transition: border-color 0.15s, color 0.15s; }
+  .pb-clear:hover { border-color: var(--danger); color: var(--danger-strong); }
+
+  /* day picker */
+  .day-picker { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+  .day-btn { background: var(--bg3); border: 1px solid var(--border); color: var(--text2); padding: 12px 8px; font-family: var(--font-mono); cursor: pointer; text-align: center; border-radius: 2px; transition: border-color 0.15s, color 0.15s, background 0.15s; }
+  .day-btn:hover { border-color: var(--border2); color: var(--text); }
+  .day-btn.active { background: var(--brand-softer); border-color: var(--brand-soft); color: var(--brand-strong); }
+  .day-btn .d-name { font-family: var(--font-display); font-size: 14px; font-weight: 700; display: block; margin-bottom: 3px; }
+  .day-btn .d-sub { font-size: 9px; color: var(--text3); letter-spacing: 0.04em; text-transform: uppercase; }
+  .day-btn.active .d-sub { color: var(--text2); }
+
+  /* choice buttons (ramp) */
+  .choice-row { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .choice-btn { background: var(--bg3); border: 1px solid var(--border); color: var(--text2); padding: 12px 14px; font-family: var(--font-mono); font-size: 12px; cursor: pointer; text-align: left; border-radius: 2px; display: flex; align-items: center; gap: 10px; transition: border-color 0.15s, color 0.15s, background 0.15s; }
+  .choice-btn:hover { border-color: var(--border2); color: var(--text); }
+  .choice-btn.active { background: var(--brand-softer); border-color: var(--brand-soft); color: var(--brand-strong); }
+  .choice-btn .ic { font-family: var(--font-display); font-size: 13px; width: 22px; flex-shrink: 0; color: var(--text3); }
+  .choice-btn.active .ic { color: var(--brand-strong); }
+
+  /* segmented toggles (vanna sign, VIX state) */
+  .seg { display: inline-flex; gap: 3px; background: var(--bg3); padding: 3px; border-radius: 2px; border: 1px solid var(--border); flex-wrap: wrap; }
+  .seg button { background: transparent; border: none; color: var(--text3); padding: 7px 15px; font-family: var(--font-mono); font-size: 11px; cursor: pointer; border-radius: 2px; transition: color 0.15s, background 0.15s; letter-spacing: 0.03em; }
+  .seg button:hover { color: var(--text2); }
+  .seg button.active { background: var(--bg); color: var(--text); border: 1px solid var(--border2); }
+  .seg button.active.pos { color: var(--success); border-color: var(--brand-soft); }
+  .seg button.active.neg { color: var(--danger-strong); border-color: #4a0e20; }
+
+  /* level input groups */
+  .lvl-current { display: flex; flex-direction: column; gap: 6px; max-width: 220px; margin-bottom: 20px; }
+  .lvl-current label { font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--brand-strong); font-weight: 700; }
+  .lvl-groups { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .lvl-group { background: var(--bg3); border: 1px solid var(--border); border-radius: 2px; padding: 16px; }
+  .lvl-group-label { font-family: var(--font-display); font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text3); margin-bottom: 12px; display: flex; align-items: center; gap: 7px; }
+  .lvl-group-label::before { content: ''; width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+  .lvl-group.walls .lvl-group-label::before { background: var(--lvl-ceiling); }
+  .lvl-group.regime .lvl-group-label::before { background: var(--lvl-flip); }
+  .lvl-group.vol .lvl-group-label::before { background: var(--lvl-trapdoor); }
+  .lvl-group.charm .lvl-group-label::before { background: var(--lvl-charm); }
+  .lvl-field { display: grid; grid-template-columns: 84px 1fr auto; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .lvl-field:last-child { margin-bottom: 0; }
+  .lvl-field label { font-size: 11px; color: var(--text2); }
+  .lvl-field label .hue { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 5px; vertical-align: middle; }
+  .conf-btn { background: transparent; border: 1px solid var(--border2); color: var(--text3); width: 30px; height: 30px; border-radius: 2px; cursor: pointer; font-size: 13px; line-height: 1; transition: border-color 0.15s, background 0.15s; opacity: 0.55; }
+  .conf-btn:hover { border-color: var(--border3); opacity: 0.85; }
+  .conf-btn.active { opacity: 1; border-color: var(--lvl-charm); background: rgba(171,71,188,0.12); }
+
+  input[type=number] { background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 8px 10px; font-family: var(--font-mono); font-size: 13px; border-radius: 2px; width: 100%; transition: border-color 0.15s; }
+  input[type=number]:focus { outline: none; border-color: var(--brand); }
+  input::placeholder { color: var(--text3); }
+
+  /* paste-from-Discord box */
+  .paste-box { background: var(--bg3); border: 1px solid var(--border); border-radius: 2px; padding: 16px; margin-bottom: 18px; }
+  .paste-head { font-family: var(--font-display); font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+  .paste-sub { font-family: var(--font-mono); font-weight: 400; color: var(--text3); font-size: 11px; display: block; margin-bottom: 10px; line-height: 1.5; }
+  .paste-ta { width: 100%; background: var(--bg); border: 1px solid var(--border); color: var(--text); font-family: var(--font-mono); font-size: 12px; line-height: 1.6; border-radius: 2px; padding: 10px 12px; resize: vertical; }
+  .paste-ta:focus { outline: none; border-color: var(--brand); }
+  .paste-actions { display: flex; align-items: center; gap: 12px; margin-top: 10px; flex-wrap: wrap; }
+  .paste-result { font-size: 11px; color: var(--text3); line-height: 1.5; }
+
+  /* ── PLAN OUTPUT ─────────────────────────────────────────── */
+  .plan-section { margin-top: 44px; padding-top: 30px; border-top: 1px solid var(--border); }
+  .plan-header { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin-bottom: 22px; flex-wrap: wrap; }
+  .plan-title { font-family: var(--font-display); font-size: 22px; font-weight: 700; color: var(--text); }
+  .plan-meta { font-size: 10px; color: var(--text3); letter-spacing: 0.06em; text-transform: uppercase; }
+  .plan-h { font-family: var(--font-display); font-size: 11px; font-weight: 700; color: var(--text3); letter-spacing: 0.06em; text-transform: uppercase; margin: 26px 0 12px; display: flex; align-items: center; gap: 10px; }
+  .plan-h::after { content: ''; flex: 1; height: 1px; background: var(--divider); }
+
+  .regime-card { background: var(--bg3); border: 1px solid var(--border); border-radius: 2px; padding: 20px 22px; position: relative; overflow: hidden; margin-bottom: 12px; }
+  .regime-card::before { content: ''; position: absolute; left: 0; top: 0; width: 3px; height: 100%; background: var(--regime, var(--brand)); }
+  .regime-label { font-size: 10px; color: var(--text3); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 7px; }
+  .regime-value { font-family: var(--font-display); font-size: 19px; font-weight: 700; color: var(--regime, var(--text)); }
+  .regime-detail { font-size: 13px; color: var(--text2); margin-top: 8px; line-height: 1.7; }
+  .regime-detail strong { color: var(--text); font-weight: 700; }
+
+  /* day-type override chips */
+  .dt-override { margin-top: 14px; }
+  .dt-override .dt-lbl { font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text3); margin-bottom: 8px; }
+  .dt-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+  .dt-chip { background: var(--bg); border: 1px solid var(--border2); color: var(--text3); padding: 6px 12px; font-family: var(--font-mono); font-size: 11px; cursor: pointer; border-radius: 2px; transition: border-color 0.15s, color 0.15s; }
+  .dt-chip:hover { color: var(--text); border-color: var(--border3); }
+  .dt-chip.active { color: #05070c; font-weight: 700; }
+
+  /* levels table */
+  .lvl-table { background: var(--bg3); border: 1px solid var(--border); border-radius: 2px; overflow: hidden; }
+  .lvl-out-row { display: grid; grid-template-columns: 118px 74px 1fr; gap: 12px; padding: 12px 18px; border-bottom: 1px solid var(--divider); align-items: baseline; }
+  .lvl-out-row:last-child { border-bottom: none; }
+  .lvl-out-row.current { background: var(--bg4); }
+  .lvl-out-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.03em; display: flex; align-items: center; gap: 6px; }
+  .lvl-out-tag .hue { width: 9px; height: 9px; border-radius: 2px; flex-shrink: 0; }
+  .lvl-out-num { font-family: var(--font-display); font-size: 16px; font-weight: 700; color: var(--text); font-variant-numeric: tabular-nums; }
+  .lvl-out-desc { font-size: 11.5px; color: var(--text2); line-height: 1.5; }
+  .conf-flag { color: var(--lvl-charm); font-size: 11px; margin-left: 4px; }
+
+  /* plays */
+  .play-item { background: var(--bg3); border: 1px solid var(--border); border-left: 2px solid var(--pcol, var(--brand)); border-radius: 2px; padding: 15px 18px; margin-bottom: 10px; }
+  .play-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 8px; }
+  .play-name { font-family: var(--font-display); font-size: 14px; font-weight: 700; color: var(--text); }
+  .play-code { font-size: 10px; color: var(--text3); letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap; }
+  .play-desc { font-size: 12.5px; color: var(--text2); line-height: 1.65; }
+  .play-desc b { color: var(--text); font-weight: 700; }
+  .play-tell { font-size: 11.5px; color: var(--text3); line-height: 1.55; margin-top: 7px; }
+  .play-tell .lbl { color: var(--text3); text-transform: uppercase; font-size: 9px; letter-spacing: 0.06em; font-weight: 700; margin-right: 5px; }
+  .odds { font-family: var(--font-display); font-size: 9px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; padding: 3px 7px; border-radius: 2px; white-space: nowrap; }
+  .odds.high { background: #08251c; color: var(--success); border: 1px solid var(--brand-soft); }
+  .odds.med  { background: var(--warn-soft); color: var(--warn-strong); border: 1px solid #4a380f; }
+  .odds.low  { background: var(--bg); color: var(--text3); border: 1px solid var(--border2); }
+  .odds.ctx  { background: var(--bg4); color: var(--text2); border: 1px solid var(--border2); }
+
+  /* session clock */
+  .pb-clock { display: grid; grid-template-columns: 92px 1fr; background: var(--bg3); border: 1px solid var(--border); border-radius: 2px; overflow: hidden; }
+  .clk-row { display: contents; }
+  .clk-row:not(:last-child) .clk-t, .clk-row:not(:last-child) .clk-c { border-bottom: 1px solid var(--divider); }
+  .clk-t { padding: 11px 14px; font-size: 11px; color: var(--text3); background: var(--bg4); display: flex; align-items: center; letter-spacing: 0.03em; font-variant-numeric: tabular-nums; }
+  .clk-c { padding: 11px 16px; font-size: 12px; color: var(--text2); display: flex; align-items: center; gap: 9px; line-height: 1.5; }
+  .clk-c strong { color: var(--text); font-weight: 700; }
+  .clk-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .clk-dot.g { background: var(--gamma); } .clk-dot.c { background: var(--charm); } .clk-dot.off { background: var(--text3); }
+  .clk-row.now .clk-t { background: var(--brand-softer); color: var(--brand-strong); }
+  .clk-row.now .clk-c { background: var(--brand-softer); color: var(--text); }
+  .clk-now-tag { font-family: var(--font-display); font-size: 8px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--brand-strong); border: 1px solid var(--brand-soft); border-radius: 2px; padding: 1px 5px; margin-left: auto; }
+
+  /* invalidations + watch */
+  .invalid-card { background: var(--danger-soft); border: 1px solid #4a0e20; border-radius: 2px; padding: 15px 18px; }
+  .invalid-card .il { font-family: var(--font-display); font-size: 11px; color: var(--danger-strong); letter-spacing: 0.04em; text-transform: uppercase; font-weight: 700; margin-bottom: 4px; }
+  .invalid-card .iv { font-size: 12px; color: var(--text2); line-height: 1.7; }
+  .invalid-card .iv strong { color: var(--text); font-weight: 700; }
+  .watch-list { background: var(--bg3); border: 1px solid var(--border); border-radius: 2px; padding: 16px 20px; }
+  .watch-item { font-size: 12px; color: var(--text2); margin-bottom: 9px; padding-left: 15px; position: relative; line-height: 1.6; }
+  .watch-item:last-child { margin-bottom: 0; }
+  .watch-item::before { content: '>'; position: absolute; left: 0; color: var(--warn-strong); font-weight: 700; }
+  .watch-item strong { color: var(--text); font-weight: 700; }
+
+  .empty-state { text-align: center; padding: 48px 20px; color: var(--text3); font-size: 13px; line-height: 1.7; border: 1px dashed var(--border2); border-radius: 2px; }
+  .empty-state b { color: var(--text2); font-weight: 700; }
+
+  /* actions */
+  .actions { display: flex; gap: 8px; padding-top: 22px; margin-top: 26px; border-top: 1px solid var(--divider); flex-wrap: wrap; }
+  .btn { background: var(--bg3); border: 1px solid var(--border2); color: var(--text2); padding: 9px 16px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; cursor: pointer; border-radius: 2px; transition: border-color 0.15s, color 0.15s; }
+  .btn:hover { border-color: var(--border3); color: var(--text); }
+  .btn.primary { background: var(--brand-softer); border-color: var(--brand-soft); color: var(--brand-strong); }
+
+  @media (max-width: 720px) {
+    .lvl-groups { grid-template-columns: 1fr; }
+    .choice-row { grid-template-columns: 1fr; }
+    .day-picker { grid-template-columns: repeat(5, 1fr); gap: 4px; }
+    .day-btn { padding: 10px 4px; }
+    .pb-clock { grid-template-columns: 76px 1fr; }
+  }
+
+  /* print: plan only, drop the chrome */
+  @media print {
+    nav, .hero, footer, .pb-inputs, .actions, .dt-override, .pb-lead { display: none !important; }
+    .plan-section { margin: 0; padding: 0; border: none; }
+    body { background: #fff; color: #000; }
+    .regime-card, .lvl-table, .pb-clock, .play-item, .watch-list, .invalid-card { border-color: #ccc; background: #fff; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-brand">8Bit<span class="accent">Trading</span> Academy</a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="01-gamma.html" class="gamma">Gamma</a>
+    <a href="02-vanna.html" class="vanna">Vanna</a>
+    <a href="03-charm.html" class="charm">Charm</a>
+    <a href="04-levels.html">Levels</a>
+    <a href="05-plays.html">Plays</a>
+    <a href="06-indicators.html">Indicators</a>
+    <a href="07-playbook.html" class="active">Playbook</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-label">Section 07 · The Playbook · your morning, mapped</div>
+    <h1>Put it all<br><span class="g">together</span></h1>
+    <p class="hero-sub">The capstone. Drop in <strong style="color:var(--text)">this morning's ES levels</strong> off your Discord post, and the playbook builds the plan the way the six lessons teach it — the <span class="g">day type</span>, the plays that fit, the charm clock, and what kills the thesis. Nothing here computes a signal for you; it just lays out the read so you can trade it. <strong style="color:var(--text)">ES only</strong> — the numbers you already have.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-inner">
+
+    <div class="pb-lead">
+      <p class="lede">Fill in what your board shows — only <strong>current ES</strong> and the <strong>ramp</strong> are needed; everything else sharpens the plan. This is a decision aid, not advice.</p>
+    </div>
+
+    <div class="pb-inputs">
+
+      <!-- STEP 01 · DAY -->
+      <div class="pb-step">
+        <div class="pb-step-head"><span class="pb-step-num">01 /</span><span class="pb-step-title">Today</span></div>
+        <div class="pb-step-help">Auto-detected. Sets the day's <em>accents</em> — which expiries and events tend to dominate — not the primary read. Click another to plan ahead.</div>
+        <div class="day-picker" id="day-picker">
+          <button class="day-btn" data-day="mon"><span class="d-name">Mon</span><span class="d-sub">GEX</span></button>
+          <button class="day-btn" data-day="tue"><span class="d-name">Tue</span><span class="d-sub">GEX+VEX</span></button>
+          <button class="day-btn" data-day="wed"><span class="d-name">Wed</span><span class="d-sub">GEX→Charm</span></button>
+          <button class="day-btn" data-day="thu"><span class="d-name">Thu</span><span class="d-sub">Vanna</span></button>
+          <button class="day-btn" data-day="fri"><span class="d-name">Fri</span><span class="d-sub">GEX→Charm</span></button>
+        </div>
+      </div>
+
+      <!-- STEP 02 · RAMP -->
+      <div class="pb-step">
+        <div class="pb-step-head"><span class="pb-step-num">02 /</span><span class="pb-step-title">The gamma ramp</span></div>
+        <div class="pb-step-help">Read your board's structure ahead of price. This <strong>derives the Day Type</strong> below — you can confirm or override it.</div>
+        <div class="choice-row" id="ramp-picker">
+          <button class="choice-btn" data-ramp="fwd-pos"><span class="ic">↑+</span><span>Forward positive ramp</span></button>
+          <button class="choice-btn" data-ramp="bwd-pos"><span class="ic">+↓</span><span>Backward positive ramp</span></button>
+          <button class="choice-btn" data-ramp="fwd-neg"><span class="ic">↓−</span><span>Forward negative slide</span></button>
+          <button class="choice-btn" data-ramp="bwd-neg"><span class="ic">−↑</span><span>Backward negative slide</span></button>
+        </div>
+      </div>
+
+      <!-- STEP 03 · VANNA -->
+      <div class="pb-step">
+        <div class="pb-step-head"><span class="pb-step-num">03 /</span><span class="pb-step-title">Net vanna sign</span></div>
+        <div class="pb-step-help">One glance at the VEX sign on your post. Context only — it tilts how you hold the gamma trade, never its own level.</div>
+        <div class="seg" id="vanna-toggle">
+          <button data-vanna="pos" class="pos">+ Positive</button>
+          <button data-vanna="neg" class="neg">− Negative</button>
+        </div>
+      </div>
+
+      <!-- STEP 04 · VIX -->
+      <div class="pb-step">
+        <div class="pb-step-head"><span class="pb-step-num">04 /</span><span class="pb-step-title">VIX, if it's moving</span><span class="pb-req" style="color:var(--text3);border-color:var(--border2);background:var(--bg3);">optional</span></div>
+        <div class="pb-step-help">No threshold — you'll know one when you see it. This only surfaces the advanced VIX-timing plays and, on a genuine vol event, a stand-aside note. Leave blank on a calm day.</div>
+        <div class="seg" id="vix-toggle">
+          <button data-vix="falling">↓ Falling</button>
+          <button data-vix="flat">Flat</button>
+          <button data-vix="rising">↑ Rising</button>
+          <button data-vix="spiking">⚡ Spiking</button>
+        </div>
+      </div>
+
+      <!-- STEP 05 · LEVELS -->
+      <div class="pb-step">
+        <div class="pb-step-head"><span class="pb-step-num">05 /</span><span class="pb-step-title">Levels (ES)</span><button class="pb-clear" id="clear-board" type="button" title="Clear all levels, current ES and the paste box (keeps day / ramp / vanna / VIX)">Clear levels</button></div>
+        <div class="pb-step-help">Straight off your post — all optional except current ES. Tap 🧿 on any level where gamma and charm agree (confluence — your highest-conviction zones).</div>
+
+        <div class="paste-box">
+          <div class="paste-head">Paste from Discord</div>
+          <span class="paste-sub">Drop the daily pipe block (the <code>price|tag|…</code> lines) and it fills the fields below. One slot per level type — the strongest of each is kept; you can adjust any field afterward.</span>
+          <textarea id="paste-ta" class="paste-ta" rows="4" placeholder="7658|vol-zone+charm-pin|extreme|+|conf|63&#10;7568|ceiling|extreme|+|gex|53&#10;7553|floor|extreme|+|gex|97&#10;…paste your block here"></textarea>
+          <div class="paste-actions">
+            <button class="btn primary" id="paste-btn" type="button">Populate levels</button>
+            <span class="paste-result" id="paste-result"></span>
+          </div>
+        </div>
+
+        <div class="lvl-current">
+          <label for="lv-current">Current ES <span class="pb-req">needed</span></label>
+          <input type="number" id="lv-current" data-level="current" placeholder="e.g. 6800" step="0.25">
+        </div>
+
+        <div class="lvl-groups">
+          <div class="lvl-group walls">
+            <div class="lvl-group-label">Walls</div>
+            <div class="lvl-field"><label><span class="hue" style="background:var(--lvl-ceiling)"></span>Ceiling</label><input type="number" data-level="ceiling" placeholder="+γ wall above" step="0.25"><button class="conf-btn" data-conf="ceiling" title="Mark confluence">🧿</button></div>
+            <div class="lvl-field"><label><span class="hue" style="background:var(--lvl-floor)"></span>Floor</label><input type="number" data-level="floor" placeholder="+γ wall below" step="0.25"><button class="conf-btn" data-conf="floor" title="Mark confluence">🧿</button></div>
+            <div class="lvl-field"><label><span class="hue" style="background:var(--lvl-magnet)"></span>Magnet</label><input type="number" data-level="magnet" placeholder="secondary pin" step="0.25"><button class="conf-btn" data-conf="magnet" title="Mark confluence">🧿</button></div>
+          </div>
+          <div class="lvl-group regime">
+            <div class="lvl-group-label">Regime</div>
+            <div class="lvl-field"><label><span class="hue" style="background:var(--lvl-flip)"></span>Flip</label><input type="number" data-level="flip" placeholder="regime line" step="0.25"><button class="conf-btn" data-conf="flip" title="Mark confluence">🧿</button></div>
+          </div>
+          <div class="lvl-group vol">
+            <div class="lvl-group-label">Vol</div>
+            <div class="lvl-field"><label><span class="hue" style="background:var(--lvl-trapdoor)"></span>Trapdoor</label><input type="number" data-level="trapdoor" placeholder="−γ below spot" step="0.25"><button class="conf-btn" data-conf="trapdoor" title="Mark confluence">🧿</button></div>
+            <div class="lvl-field"><label><span class="hue" style="background:var(--lvl-trapdoor)"></span>Squeeze</label><input type="number" data-level="squeeze" placeholder="−γ above spot" step="0.25"><button class="conf-btn" data-conf="squeeze" title="Mark confluence">🧿</button></div>
+            <div class="lvl-field"><label><span class="hue" style="background:var(--lvl-volzone)"></span>Vol zone</label><input type="number" data-level="volzone" placeholder="interior −γ" step="0.25"><button class="conf-btn" data-conf="volzone" title="Mark confluence">🧿</button></div>
+          </div>
+          <div class="lvl-group charm">
+            <div class="lvl-group-label">Charm</div>
+            <div class="lvl-field"><label><span class="hue" style="background:var(--lvl-charm)"></span>Charm pin</label><input type="number" data-level="charmpin" placeholder="+charm target" step="0.25"><button class="conf-btn" data-conf="charmpin" title="Mark confluence">🧿</button></div>
+            <div class="lvl-field"><label><span class="hue" style="background:var(--lvl-charm)"></span>Charm fade</label><input type="number" data-level="charmfade" placeholder="−charm push" step="0.25"><button class="conf-btn" data-conf="charmfade" title="Mark confluence">🧿</button></div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /.pb-inputs -->
+
+    <!-- PLAN -->
+    <div class="plan-section" id="plan">
+      <div class="plan-header">
+        <h2 class="plan-title">Today's <span style="color:var(--brand-strong)">plan</span></h2>
+        <div class="plan-meta" id="plan-meta">fill the board to build it</div>
+      </div>
+      <div id="plan-content"></div>
+
+      <div class="actions">
+        <button class="btn primary" onclick="window.print()">Save / print</button>
+        <button class="btn" onclick="loadExample()">Load example</button>
+        <button class="btn" onclick="resetAll()">Reset</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">8BitTrading Academy · The Playbook</div>
+    <div class="footer-note">Educational — not financial advice · stored locally in your browser · <a href="https://discord.gg/usRSrWm7" target="_blank" rel="noopener">Join the Discord</a></div>
+  </div>
+</footer>
+
+<script>
+"use strict";
+
+/* ── STATE (ES-only) ─────────────────────────────────────────── */
+const LEVELS = ['ceiling','floor','magnet','flip','trapdoor','squeeze','volzone','charmpin','charmfade'];
+const state = {
+  day: null, ramp: null, vanna: null, vix: null,
+  current: null,
+  lv: {},        // level -> ES value
+  conf: {},      // level -> bool (confluence flag)
+  dtOverride: null
+};
+LEVELS.forEach(l => { state.lv[l] = null; state.conf[l] = false; });
+
+/* ── ET time helpers (DST-correct via Intl) ──────────────────── */
+function etParts() {
+  const s = new Date().toLocaleString('en-US', { timeZone: 'America/New_York', hour12: false, weekday: 'short', hour: '2-digit', minute: '2-digit' });
+  // e.g. "Wed, 14:07"
+  const m = s.match(/([A-Za-z]{3}),?\s+(\d{1,2}):(\d{2})/);
+  if (!m) return { wd: 'mon', hour: 10 };
+  let h = parseInt(m[2], 10); if (h === 24) h = 0;
+  return { wd: m[1].toLowerCase(), hour: h + parseInt(m[3], 10) / 60 };
+}
+function autoDay() {
+  const wd = etParts().wd;
+  return ['mon','tue','wed','thu','fri'].includes(wd) ? wd : 'mon';
+}
+function charmPhase() {
+  const h = etParts().hour;
+  if (h < 12) return 'am';
+  if (h < 15.75) return 'pm';
+  return 'late';
+}
+
+/* ── DAY-TYPE derivation + color ─────────────────────────────── */
+// Canonical ramp → Day Type (gexgreeks SKILL.md §8): the default label; user confirms.
+const RAMP = {
+  'fwd-pos': { name: 'Forward positive ramp',  dt: 'Grind',    clause: 'stacked +γ ahead — stabilizing, rotational; fade the edges' },
+  'bwd-pos': { name: 'Backward positive ramp', dt: 'Reversal', clause: '+γ behind, vacuum ahead — range-expansion or reversal risk' },
+  'fwd-neg': { name: 'Forward negative slide', dt: 'Trend',    clause: 'stacked −γ in price’s path — accelerating; the trend-day setup' },
+  'bwd-neg': { name: 'Backward negative slide',dt: 'Grind',    clause: '−γ behind, escape into +γ — relief / recovery grind' }
+};
+const DAY_TYPES = ['Trend','Grind','Range','Reversal','Chop','Volatile'];
+// Mirror gex-pipeline format.py _regime_color: precedence red > green > yellow.
+function dtColor(label) {
+  const b = String(label).toLowerCase();
+  if (/\b(chop|whip|reversal|volatile|two-?sided)/.test(b)) return '#E74C3C';
+  if (/\b(trend|directional|squeeze|break-?out|accelerat)/.test(b)) return '#2ECC71';
+  return '#F1C40F'; // grind / range / neutral / unrecognized
+}
+function regimeBucket(label) { const c = dtColor(label); return c === '#2ECC71' ? 'green' : c === '#E74C3C' ? 'red' : 'yellow'; }
+
+function deriveDayType() {
+  if (!state.ramp) return null;
+  const r = RAMP[state.ramp];
+  let dt = r.dt, clause = r.clause;
+  // light judgment: a near-spot trapdoor under a positive ramp adds two-sided risk
+  if ((state.ramp === 'fwd-pos' || state.ramp === 'bwd-neg') && (state.lv.trapdoor || state.lv.squeeze)) {
+    clause += '; trapdoor in play — two-sided if it breaks';
+  }
+  return { dt, clause, ramp: r.name };
+}
+function effectiveDayType() {
+  const d = deriveDayType();
+  if (!d) return null;
+  return state.dtOverride || d.dt;
+}
+
+/* ── VANNA one-line read (02-vanna.html §2.2) ────────────────── */
+function vannaLine() {
+  if (state.vanna === 'pos') return 'Net vanna <strong>positive</strong> — an IV pop tends to add spot support (a mechanical tailwind up). Hold longs a touch longer into a floor.';
+  if (state.vanna === 'neg') return 'Net vanna <strong>negative</strong> — an IV pop tends to pressure spot (vol flows lean against you). Don’t overstay longs; respect ceilings.';
+  return null;
+}
+
+/* ── LEVEL metadata (index glossary — canonical short defs) ──── */
+const LMETA = {
+  current:   { tag: 'Current ES', hue: null,            desc: 'Reference for everything below.' },
+  flip:      { tag: 'Gamma flip', hue: 'var(--lvl-flip)',    desc: 'The regime line — bullish above, bearish below. Fade above it, follow below.' },
+  ceiling:   { tag: 'Ceiling',    hue: 'var(--lvl-ceiling)', desc: 'Strongest +γ wall above — likely cap. Fade rallies into it.' },
+  floor:     { tag: 'Floor',      hue: 'var(--lvl-floor)',   desc: 'Strongest +γ wall below — likely support. Buy dips into it.' },
+  magnet:    { tag: 'Magnet',     hue: 'var(--lvl-magnet)',  desc: 'Secondary pin. Price gravitates toward it on calm days.' },
+  trapdoor:  { tag: 'Trapdoor',   hue: 'var(--lvl-trapdoor)',desc: 'Strongest −γ just below spot. Break it and the move accelerates down.' },
+  squeeze:   { tag: 'Squeeze',    hue: 'var(--lvl-trapdoor)',desc: 'Strongest −γ just above spot. Break it and the move accelerates up.' },
+  volzone:   { tag: 'Vol zone',   hue: 'var(--lvl-volzone)', desc: 'Interior −γ air-pocket — fast and whippy. Cross it, don’t camp in it.' },
+  charmpin:  { tag: 'Charm pin',  hue: 'var(--lvl-charm)',   desc: '+charm — decay pulls price toward it and holds. The afternoon target.' },
+  charmfade: { tag: 'Charm fade', hue: 'var(--lvl-charm)',   desc: '−charm — decay pushes price away from it. Directional, doesn’t hold.' }
+};
+const LORDER = ['flip','ceiling','magnet','squeeze','charmpin','current','trapdoor','floor','volzone','charmfade'];
+function fmt(n) { return (Math.round(n * 4) / 4).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 2 }); }
+
+/* ── PLAY SELECTION (mapped 1:1 to 05-plays) ─────────────────── */
+// pcol: left-bar color. odds: high/med/low/ctx (qualitative — never a stat).
+function selectPlays() {
+  const P = [];
+  const dt = effectiveBucket();               // green / yellow / red
+  const has = l => state.lv[l] != null;
+  const conf = l => state.conf[l] && has(l);
+  const phase = charmPhase();
+  const GC = 'var(--brand)', TC = 'var(--lvl-trapdoor)', CC = 'var(--lvl-charm)', VC = 'var(--lvl-flip)', MC = 'var(--lvl-magnet)';
+
+  // ── Starters (the beginner framing) ──
+  if (dt === 'yellow' && (has('ceiling') || has('floor'))) {
+    P.push({ code:'Starter ①', name:'Fade the wall', pcol:GC, odds:(conf('ceiling')||conf('floor'))?'high':'med',
+      desc:'Calm, rotational day. Short the <b>ceiling</b> / buy the <b>floor</b> after a confirmation candle; exit back toward the flip.',
+      tell:'A confirmation candle at the wall — enter after it prints, and stop on a close through (not a wick).' });
+  }
+  if (dt === 'green' && has('trapdoor')) {
+    P.push({ code:'Starter ②', name:'Follow the break', pcol:TC, odds:'high',
+      desc:'Trend day, below the flip. Go <b>with</b> the trapdoor break — never fade it. Target the next level down.',
+      tell:'Trapdoor breaks with no wall to catch it; stop if price reclaims back above it.' });
+  }
+  if (phase !== 'am' && has('charmpin')) {
+    P.push({ code:'Starter ③', name:'Ride the pin', pcol:CC, odds: phase==='pm'?'high':'med',
+      desc:'Afternoon. Trade small moves back toward the <b>charm pin</b>; exit at the pin — before it, not through it.',
+      tell:'Slow drift toward the pin, low volume, no momentum. That IS the trade.' });
+  }
+
+  // ── Gamma ──
+  if (has('flip')) {
+    P.push({ code:'Play G1', name:'Flip-level reaction', pcol:VC, odds: dt==='yellow'?'high':'med',
+      desc:'Trade the reaction at the <b>gamma flip</b>. Target the first opposing wall; stop on a clean close back through the flip.',
+      tell:'A confirmation candle inside the zone — never pre-enter at the edge.' });
+  }
+  if (state.ramp === 'fwd-neg') {
+    P.push({ code:'Play G3', name:'Trend-day follow', pcol:GC, odds:'high',
+      desc:'Forward Negative Slide board. Buy dips on an up-slide / short rips on a down-slide; target the next trapdoor in the trend direction.',
+      tell:'Any shallow pullback to an intraday level — don’t wait for a deep retrace in trend mode.' });
+  }
+  if (has('trapdoor') && dt !== 'yellow') {
+    P.push({ code:'Play G2', name:'Trapdoor break', pcol:TC, odds: dt==='green'?'high':'med',
+      desc:'−γ adjacent with no +γ catch beyond. Momentum entry on the confirmed break — move amplifies fast, so wider stops and larger size.',
+      tell:'Confirmed break of the last wall before the trapdoor.' });
+  }
+  if (has('magnet') && (state.ramp === 'fwd-pos' || state.ramp === 'bwd-pos') && phase === 'am') {
+    P.push({ code:'Play G4', name:'Pin-gravity fade', pcol:MC, odds: dt==='yellow'?'med':'low',
+      desc:'Price extended from a dominant <b>magnet</b> on a +γ ramp, morning only. Fade the extension back toward the magnet.',
+      tell:'Any extension away from the pin; stop on a break-and-hold beyond the second level away.' });
+  }
+
+  // ── Charm ──
+  if (has('charmpin') && phase === 'am') {
+    P.push({ code:'Play C2', name:'Morning bias filter', pcol:CC, odds:'med',
+      desc:'Keep your gamma entry, but set the <b>charm pin</b> as your target and bias direction toward it. A filter, not an entry.',
+      tell:'Price opens more than ~0.5% from the pin.' });
+  }
+  if (has('charmpin') && phase === 'pm') {
+    P.push({ code:'Play C1', name:'Afternoon pin drift', pcol:CC, odds:'high',
+      desc:'Post-noon, within ~0.5% of the <b>charm pin</b>. Above pin → short rips toward it; below → buy dips toward it. Exit at/just before the pin.',
+      tell:'Slow grind, low volume, no momentum — don’t wait for a breakout candle.' });
+  }
+  if (has('charmpin') && phase === 'late') {
+    P.push({ code:'Play C3', name:'Final-hour unwind', pcol:CC, odds:'low',
+      desc:'Near the pin, calm. Identify which side price is on; small momentum entry that way as 0DTE gamma expires. Tight stops — optional.',
+      tell:'3:45pm, price sitting on/near the pin.' });
+  }
+  if (state.day === 'mon') {
+    P.push({ code:'Play C4', name:'Post-OPEX Monday gap', pcol:CC, odds:'low',
+      desc:'Post-OPEX Mondays only. Gap into a −γ zone → follow; gap into a +γ cluster → fade toward the gap fill. Cleanest fresh gamma of the month.',
+      tell:'Monday after the 3rd-Friday OPEX, gap open — check the γ sign first.' });
+  }
+
+  // ── Vanna lean (always, context) ──
+  if (state.vanna) {
+    P.push({ code:'The lean', name:'Vanna lean', pcol:VC, odds:'ctx',
+      desc: state.vanna === 'pos'
+        ? 'Tailwind up. Hold longs off a <b>floor</b> a little longer; same entries, held longer because the tide’s with you.'
+        : 'Headwind. Don’t overstay longs; respect <b>ceilings</b>. Same entries, shorter leash.',
+      tell:'Context only — no separate entry. It tilts how you hold the gamma trade.' });
+  }
+
+  // ── Advanced VIX-timing (only when VIX is flagged) ──
+  if (state.vix === 'falling' && state.vanna === 'pos' && (has('floor') || has('magnet'))) {
+    P.push({ code:'Play V1', name:'VIX-crush drift', pcol:VC, odds:'med',
+      desc:'Advanced. +vanna board, VIX falling from elevated. Long a pullback to a <b>floor</b>/+γ level; hold until the VIX stops falling. Wide stops.',
+      tell:'VIX falling — not flat. Gamma gives the spot, vanna the direction.' });
+  }
+  if (state.vix === 'spiking') {
+    P.push({ code:'Play V2', name:'VIX-spike reversal', pcol:VC, odds:'med',
+      desc:'Advanced, highest-conviction vanna setup. A sharp VIX spike that stalls and curls down → long ES on the confirmation; target the morning gamma level.',
+      tell:'First 15-min VIX candle closing below its open; ES lower-low while VIX makes a lower-high.' });
+  }
+  if (state.day === 'thu' && (state.vix === 'spiking' || state.vix === 'rising' || state.vix === 'falling')) {
+    P.push({ code:'Play V3', name:'Weekly Thursday reversion', pcol:VC, odds:'low',
+      desc:'Advanced. Big Mon–Wed move + VIX stretched, Thursday still extended. Down week + VIX spiked → buy the open; up week + VIX crushed → fade it. Exit by 2pm.',
+      tell:'Thursday opens still extended; target 50–61.8% of the week’s move.' });
+  }
+  if (state.vix === 'falling' && state.vanna === 'pos' && ['mon','tue','wed','thu'].includes(state.day)) {
+    P.push({ code:'Play V4', name:'OPEX-week vanna window', pcol:VC, odds:'low',
+      desc:'Advanced, OPEX week only. Net +VEX, VIX elevated but falling → buy Monday’s open, hold to Thursday close. The month’s strongest vanna compression.',
+      tell:'Week of the 3rd-Friday monthly; never hold into OPEX Friday — dynamics flip.' });
+  }
+
+  return P;
+}
+function effectiveBucket() { const dt = effectiveDayType(); return dt ? regimeBucket(dt) : 'yellow'; }
+
+/* ── SESSION CLOCK (03-charm.html §3.3 spine + per-day accents) ─ */
+function sessionClock() {
+  const rows = [
+    { t:'9:30 AM',  s:9.5,  e:11,    d:'g',   c:'<strong>GEX dominant.</strong> Trade ramps and flip levels normally. Charm present but weak.' },
+    { t:'11:00 AM', s:11,   e:12,    d:'g',   c:'Identify the <strong>charm pin</strong> now. Start filtering trades toward it. GEX still primary.' },
+    { t:'12:00 PM', s:12,   e:13.5,  d:'c',   c:'<strong>Charm accelerates — the noon switch.</strong> Reduce gamma-level fades. Only take entries aligned with the pin.' },
+    { t:'1:30 PM',  s:13.5, e:15,    d:'c',   c:'Charm dominant. Pin drift active — fade everything moving away from the pin.' },
+    { t:'3:00 PM',  s:15,   e:15.5,  d:'c',   c:'Maximum pin gravity. Exits only — no new entries after this.' },
+    { t:'3:30 PM',  s:15.5, e:16,    d:'off', c:'Exit all charm trades. Into the close, 0DTE gamma runs off — the stabilizer’s gone and unwind risk builds.' }
+  ];
+  // per-day accents
+  const day = state.day;
+  if (day === 'mon') rows[0].c = '<strong>Cleanest gamma of the week.</strong> Fresh board, no expiry hangover — trade ramps and the flip with full confidence.';
+  if (day === 'tue') rows[0].c = '<strong>GEX leads, vanna whispers.</strong> Trade ramps; if price ignores two levels in a row, a 7-DTE VEX cluster may be overriding.';
+  if (day === 'thu') {
+    rows[1].c = 'Vanna’s day — VIX direction at the open matters more than any single level. Gamma is mostly where stops go.';
+    rows[3].c = 'Exit vanna plays by <strong>2:00pm</strong> — don’t hold into Friday’s charm dynamics.';
+  }
+  if (day === 'fri') {
+    rows[2].c = '<strong>The noon switch — Friday’s pin is the firmest of the week</strong> (OPEX Fridays firmest of the month). Trade toward the pin.';
+    rows[4].c = 'Maximum pin window. Exit by <strong>3:30 without exception</strong>; note the unwind direction to prep Monday’s C4.';
+  }
+  if (day === 'wed') rows[4].c = 'Exit by 3:00. Optional 3:45 unwind (C3) with tight stops only.';
+
+  const now = etParts().hour;
+  rows.forEach(r => { r.now = now >= r.s && now < r.e; });
+  return rows;
+}
+
+/* ── INVALIDATIONS ───────────────────────────────────────────── */
+function invalidations() {
+  const out = [];
+  if (state.lv.flip != null)     out.push(`<strong>Flip (${fmt(state.lv.flip)}):</strong> a decisive close through flips the regime — long-bias fades are off below it, follow-plays off above it.`);
+  if (state.lv.trapdoor != null) out.push(`<strong>Trapdoor (${fmt(state.lv.trapdoor)}):</strong> a break accelerates down with no dealer brake — exit any contrary longs immediately.`);
+  if (state.lv.squeeze != null)  out.push(`<strong>Squeeze (${fmt(state.lv.squeeze)}):</strong> a break accelerates up — exit any contrary shorts; don’t fade the push.`);
+  return out;
+}
+
+/* ── WATCH-FOR ───────────────────────────────────────────────── */
+function watchFor() {
+  const out = [];
+  const bucket = effectiveBucket();
+
+  // conflict: vanna vs regime
+  if (bucket === 'green' && state.vanna === 'neg')
+    out.push('<strong>Conflict:</strong> trend/breakout board but net −vanna headwind. Keep leashes short and don’t chase extended longs.');
+  if (bucket === 'yellow' && state.ramp === 'bwd-pos')
+    out.push('<strong>Reversal risk:</strong> a backward positive ramp can flip range-fade into range-expansion — wait for the edge to confirm before fading.');
+  if (bucket === 'red')
+    out.push('<strong>Two-sided tape:</strong> whippy day type — reduce size, demand confirmation, and skip marginal fades.');
+
+  // confluence callouts
+  const confs = LEVELS.filter(l => state.conf[l] && state.lv[l] != null);
+  if (confs.length)
+    out.push('<strong>Confluence 🧿:</strong> ' + confs.map(l => `${LMETA[l].tag} ${fmt(state.lv[l])}`).join(', ') + ' — gamma and charm agree here. Your highest-conviction zones.');
+
+  // pin distance
+  if (state.lv.charmpin != null && state.current != null) {
+    const distPct = Math.abs(state.current - state.lv.charmpin) / state.current * 100;
+    if (distPct > 0.5) out.push(`<strong>Pin distance:</strong> ${distPct.toFixed(2)}% from the charm pin (${fmt(state.lv.charmpin)}). Expect a charm pull toward it into the afternoon.`);
+    else out.push(`<strong>At the pin:</strong> price sits on the charm pin (${fmt(state.lv.charmpin)}). Expect oscillation around it, then a sharper move near the close.`);
+  }
+
+  // vol-event stand-aside (soft — never an override)
+  if (state.vix === 'spiking')
+    out.push('<strong>Vol event:</strong> when the tape is clearly in a vol event, vol flow can run over the walls — stand aside from level fades until it settles. A judgment call, not a threshold.');
+
+  return out;
+}
+
+/* ── RENDER ──────────────────────────────────────────────────── */
+function render() {
+  const meta = document.getElementById('plan-meta');
+  const box = document.getElementById('plan-content');
+
+  if (state.current == null) {
+    box.innerHTML = '<div class="empty-state">Enter <b>current ES</b> to build the plan.<br>Pick a <b>ramp</b> for the day-type read and the plays — add levels, vanna and VIX to sharpen it.</div>';
+    meta.textContent = 'fill the board to build it';
+    return;
+  }
+
+  const d = deriveDayType();          // null until a ramp is picked
+  const dt = effectiveDayType();
+  const DN = { mon:'Monday', tue:'Tuesday', wed:'Wednesday', thu:'Thursday', fri:'Friday' };
+  meta.textContent = [DN[state.day] || '', dt || '', state.vanna ? (state.vanna === 'pos' ? '+vanna' : '−vanna') : '', state.vix ? 'VIX ' + state.vix : ''].filter(Boolean).join(' · ');
+
+  let h = '';
+  const vl = vannaLine();
+
+  // regime read
+  h += '<div class="plan-h">Regime read</div>';
+  if (d) {
+    h += `<div class="regime-card" style="--regime:${dtColor(dt)}">`;
+    h += `<div class="regime-label">Day type · ${d.ramp}</div>`;
+    h += `<div class="regime-value">${dt}</div>`;
+    h += `<div class="regime-detail">${d.clause}.</div>`;
+    if (vl) h += `<div class="regime-detail">${vl}</div>`;
+    h += '<div class="dt-override"><div class="dt-lbl">Confirm or override the day type</div><div class="dt-chips">';
+    DAY_TYPES.forEach(t => {
+      const active = t === dt;
+      h += `<button class="dt-chip${active ? ' active' : ''}" data-dt="${t}" ${active ? `style="background:${dtColor(t)};border-color:${dtColor(t)}"` : ''}>${t}</button>`;
+    });
+    h += '</div></div></div>';
+  } else {
+    h += '<div class="regime-card" style="--regime:var(--border3)">';
+    h += '<div class="regime-label">Day type</div>';
+    h += '<div class="regime-value" style="color:var(--text2)">Pick a ramp</div>';
+    h += '<div class="regime-detail">Choose the gamma ramp above and the playbook derives the day type, its color, and the plays that fit.</div>';
+    if (vl) h += `<div class="regime-detail">${vl}</div>`;
+    h += '</div>';
+  }
+
+  // levels table
+  const present = LORDER.filter(l => l === 'current' ? state.current != null : state.lv[l] != null);
+  if (present.length) {
+    h += '<div class="plan-h">Levels (ES)</div><div class="lvl-table">';
+    present.forEach(l => {
+      const val = l === 'current' ? state.current : state.lv[l];
+      const m = LMETA[l];
+      const flag = (l !== 'current' && state.conf[l]) ? '<span class="conf-flag">🧿</span>' : '';
+      const hue = m.hue ? `<span class="hue" style="background:${m.hue}"></span>` : '';
+      const tagColor = m.hue ? `color:${m.hue}` : 'color:var(--brand-strong)';
+      h += `<div class="lvl-out-row${l === 'current' ? ' current' : ''}">`;
+      h += `<div class="lvl-out-tag" style="${tagColor}">${hue}${m.tag}${flag}</div>`;
+      h += `<div class="lvl-out-num">${fmt(val)}</div>`;
+      h += `<div class="lvl-out-desc">${m.desc}</div>`;
+      h += '</div>';
+    });
+    h += '</div>';
+  }
+
+  // vol-event note (soft)
+  if (state.vix === 'spiking') {
+    h += '<div class="plan-h">Vol-event note</div>';
+    h += '<div class="invalid-card"><div class="il">Judgment call — not a threshold</div><div class="iv">The VIX is spiking. On a genuine vol event vol flow can run straight over your gamma levels — <strong>don’t fade into it</strong>. Stand aside from level fades until the tape settles. The day plan still stands; this is a risk flag, not an abandon-ship.</div></div>';
+  }
+
+  // plays (hang off the day type — need a ramp)
+  const plays = state.ramp ? selectPlays() : [];
+  if (plays.length) {
+    h += '<div class="plan-h">Active plays</div>';
+    plays.forEach(p => {
+      h += `<div class="play-item" style="--pcol:${p.pcol}">`;
+      h += `<div class="play-top"><span class="play-name">${p.name}</span><span style="display:flex;gap:8px;align-items:center"><span class="play-code">${p.code}</span><span class="odds ${p.odds}">${p.odds === 'ctx' ? 'Context' : p.odds}</span></span></div>`;
+      h += `<div class="play-desc">${p.desc}</div>`;
+      h += `<div class="play-tell"><span class="lbl">Tell</span>${p.tell}</div>`;
+      h += '</div>';
+    });
+  }
+
+  // session clock
+  h += '<div class="plan-h">Session clock — every day runs this arc</div><div class="pb-clock">';
+  sessionClock().forEach(r => {
+    h += `<div class="clk-row${r.now ? ' now' : ''}">`;
+    h += `<div class="clk-t">${r.t}</div>`;
+    h += `<div class="clk-c"><span class="clk-dot ${r.d}"></span>${r.c}${r.now ? '<span class="clk-now-tag">now</span>' : ''}</div>`;
+    h += '</div>';
+  });
+  h += '</div>';
+
+  // invalidations
+  const inv = invalidations();
+  if (inv.length) {
+    h += '<div class="plan-h">Invalidations</div><div class="invalid-card"><div class="il">What kills the thesis</div>';
+    inv.forEach(i => { h += `<div class="iv">${i}</div>`; });
+    h += '</div>';
+  }
+
+  // watch-for
+  const w = watchFor();
+  if (w.length) {
+    h += '<div class="plan-h">Watch for</div><div class="watch-list">';
+    w.forEach(x => { h += `<div class="watch-item">${x}</div>`; });
+    h += '</div>';
+  }
+
+  box.innerHTML = h;
+
+  // wire override chips (re-bound each render)
+  box.querySelectorAll('.dt-chip').forEach(c => c.addEventListener('click', () => {
+    state.dtOverride = c.dataset.dt;
+    save(); render();
+  }));
+}
+
+/* ── INPUT WIRING ────────────────────────────────────────────── */
+function pick(sel, key, attr) {
+  document.querySelectorAll(sel).forEach(b => b.addEventListener('click', () => {
+    const v = b.dataset[attr];
+    // toggle off if re-clicking the same (for optional groups)
+    if (state[key] === v && (key === 'vanna' || key === 'vix')) state[key] = null;
+    else state[key] = v;
+    if (key === 'ramp' || key === 'day') state.dtOverride = null; // fresh derivation
+    syncButtons(); save(); render();
+  }));
+}
+pick('#day-picker .day-btn', 'day', 'day');
+pick('#ramp-picker .choice-btn', 'ramp', 'ramp');
+pick('#vanna-toggle button', 'vanna', 'vanna');
+pick('#vix-toggle button', 'vix', 'vix');
+
+document.querySelectorAll('input[data-level]').forEach(inp => {
+  inp.addEventListener('input', () => {
+    const key = inp.dataset.level;
+    const v = inp.value === '' ? null : parseFloat(inp.value);
+    if (key === 'current') state.current = v; else state.lv[key] = v;
+    save(); render();
+  });
+});
+document.querySelectorAll('.conf-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const key = btn.dataset.conf;
+    state.conf[key] = !state.conf[key];
+    btn.classList.toggle('active', state.conf[key]);
+    save(); render();
+  });
+});
+
+function syncButtons() {
+  document.querySelectorAll('#day-picker .day-btn').forEach(b => b.classList.toggle('active', b.dataset.day === state.day));
+  document.querySelectorAll('#ramp-picker .choice-btn').forEach(b => b.classList.toggle('active', b.dataset.ramp === state.ramp));
+  document.querySelectorAll('#vanna-toggle button').forEach(b => b.classList.toggle('active', b.dataset.vanna === state.vanna));
+  document.querySelectorAll('#vix-toggle button').forEach(b => b.classList.toggle('active', b.dataset.vix === state.vix));
+}
+
+/* ── PASTE PARSER (gexgreeks chart-string → level fields) ────── */
+// Format per line: [esPrice]|[tag]|[size]|[sign]|[source]|[strength]
+// Confluence tags join with '+', e.g. vol-zone+charm-pin. '#'-lines are headers.
+const TAGMAP = { 'ceiling':'ceiling', 'floor':'floor', 'magnet':'magnet',
+  'gamma-flip':'flip', 'flip':'flip', 'vol-zone':'volzone', 'volzone':'volzone',
+  'charm-pin':'charmpin', 'charmpin':'charmpin', 'charm-fade':'charmfade', 'charmfade':'charmfade' };
+
+function parseChartString(text) {
+  const lines = String(text || '').split(/\r?\n/);
+  let current = null;
+  const rows = [];
+  for (const raw of lines) {
+    const line = raw.trim();
+    if (!line) continue;
+    if (/^#/.test(line)) continue;                           // #TF, #CHXDRIFT headers
+    const cm = line.match(/current[:\s]+(?:es\s*)?([0-9]+(?:\.[0-9]+)?)/i);
+    if (cm && !line.includes('|')) { current = parseFloat(cm[1]); continue; }
+    if (!line.includes('|')) continue;
+    const f = line.split('|').map(s => s.trim());
+    if (!/^[0-9]+(\.[0-9]+)?$/.test(f[0])) continue;         // first field must be a bare number
+    rows.push({ price: parseFloat(f[0]), tags: (f[1] || '').toLowerCase().split('+').map(t => t.trim()),
+                source: (f[4] || '').toLowerCase(), strength: parseInt(f[5], 10) || 0 });
+  }
+  // pivot for trapdoor(below) vs squeeze(above): current ES, else the gamma-flip, else null
+  const flipRow = rows.find(r => r.tags.includes('gamma-flip') || r.tags.includes('flip'));
+  const pivot = current != null ? current : (flipRow ? flipRow.price : null);
+
+  const lv = {}, conf = {}, best = {};
+  for (const r of rows) {
+    for (const tag of r.tags) {
+      let field = TAGMAP[tag];
+      if (tag === 'trapdoor') field = (pivot != null && r.price > pivot) ? 'squeeze' : 'trapdoor';
+      if (!field) continue;
+      if (best[field] == null || r.strength > best[field]) {
+        best[field] = r.strength;
+        lv[field] = Math.round(r.price * 4) / 4;
+        conf[field] = (r.source === 'conf');
+      }
+    }
+  }
+  return { current, lv, conf, rows: rows.length, fields: Object.keys(lv) };
+}
+
+function applyParsed(res) {
+  if (res.current != null) state.current = res.current;
+  res.fields.forEach(l => { state.lv[l] = res.lv[l]; state.conf[l] = !!res.conf[l]; });
+  document.querySelectorAll('input[data-level]').forEach(inp => {
+    const k = inp.dataset.level;
+    const v = k === 'current' ? state.current : state.lv[k];
+    if (v != null) inp.value = v;
+  });
+  document.querySelectorAll('.conf-btn').forEach(b => b.classList.toggle('active', !!state.conf[b.dataset.conf]));
+  save(); render();
+}
+
+function doParse() {
+  const ta = document.getElementById('paste-ta');
+  const out = document.getElementById('paste-result');
+  const res = parseChartString(ta.value);
+  if (!res.rows) { out.textContent = 'No level lines found — paste the pipe block from your Discord post.'; out.style.color = 'var(--danger-strong)'; return; }
+  applyParsed(res);
+  const nConf = res.fields.filter(f => res.conf[f]).length;
+  const bits = ['✓ Filled ' + res.fields.length + ' levels from ' + res.rows + ' lines'];
+  if (nConf) bits.push('🧿 ' + nConf + ' confluence');
+  if (res.current != null) bits.push('current ES ' + res.current);
+  out.style.color = 'var(--brand-strong)';
+  out.textContent = bits.join(' · ');
+  if (state.current == null) {
+    out.textContent += ' · now enter current ES';
+    const c = document.getElementById('lv-current'); if (c) c.focus();
+  }
+}
+document.getElementById('paste-btn').addEventListener('click', doParse);
+document.getElementById('paste-ta').addEventListener('paste', () => setTimeout(doParse, 30));
+
+// Clear just the board (levels + current ES + confluence + paste) — keeps day/ramp/vanna/VIX.
+function clearBoard() {
+  state.current = null;
+  LEVELS.forEach(l => { state.lv[l] = null; state.conf[l] = false; });
+  document.querySelectorAll('input[data-level]').forEach(i => { i.value = ''; });
+  document.querySelectorAll('.conf-btn').forEach(b => b.classList.remove('active'));
+  const ta = document.getElementById('paste-ta'); if (ta) ta.value = '';
+  const pr = document.getElementById('paste-result'); if (pr) pr.textContent = '';
+  save(); render();
+}
+document.getElementById('clear-board').addEventListener('click', clearBoard);
+
+/* ── PERSISTENCE ─────────────────────────────────────────────── */
+const KEY = 'greeksplaybook';
+function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+function restore() {
+  let s; try { s = JSON.parse(localStorage.getItem(KEY)); } catch (e) { s = null; }
+  if (!s) return false;
+  Object.assign(state, s);
+  if (!state.lv) state.lv = {}; if (!state.conf) state.conf = {};
+  LEVELS.forEach(l => { if (!(l in state.lv)) state.lv[l] = null; if (!(l in state.conf)) state.conf[l] = false; });
+  // hydrate inputs
+  document.querySelectorAll('input[data-level]').forEach(inp => {
+    const k = inp.dataset.level;
+    const v = k === 'current' ? state.current : state.lv[k];
+    if (v != null) inp.value = v;
+  });
+  document.querySelectorAll('.conf-btn').forEach(b => b.classList.toggle('active', !!state.conf[b.dataset.conf]));
+  return true;
+}
+
+/* ── EXAMPLE + RESET ─────────────────────────────────────────── */
+function loadExample() {
+  // Academy-consistent Monday: Forward Negative Slide → Trend, +vanna, VIX falling.
+  Object.assign(state, {
+    day: 'mon', ramp: 'fwd-neg', vanna: 'pos', vix: 'falling', current: 6800, dtOverride: null,
+    lv: { ceiling: 6845, floor: 6740, magnet: 6820, flip: 6785, trapdoor: 6772, squeeze: null, volzone: 6730, charmpin: 6760, charmfade: null },
+    conf: { ceiling:false, floor:false, magnet:false, flip:false, trapdoor:true, squeeze:false, volzone:false, charmpin:true, charmfade:false }
+  });
+  document.querySelectorAll('input[data-level]').forEach(inp => {
+    const k = inp.dataset.level;
+    const v = k === 'current' ? state.current : state.lv[k];
+    inp.value = v == null ? '' : v;
+  });
+  document.querySelectorAll('.conf-btn').forEach(b => b.classList.toggle('active', !!state.conf[b.dataset.conf]));
+  syncButtons(); save(); render();
+}
+function resetAll() {
+  state.day = autoDay(); state.ramp = null; state.vanna = null; state.vix = null; state.current = null; state.dtOverride = null;
+  LEVELS.forEach(l => { state.lv[l] = null; state.conf[l] = false; });
+  document.querySelectorAll('input[data-level]').forEach(i => i.value = '');
+  document.querySelectorAll('.conf-btn').forEach(b => b.classList.remove('active'));
+  const ta = document.getElementById('paste-ta'); if (ta) ta.value = '';
+  const pr = document.getElementById('paste-result'); if (pr) pr.textContent = '';
+  localStorage.removeItem(KEY);
+  syncButtons(); render();
+}
+
+/* ── BOOT ────────────────────────────────────────────────────── */
+if (!restore()) state.day = autoDay();
+syncButtons();
+render();
+</script>
+
+</body>
+</html>
