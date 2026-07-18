@@ -103,7 +103,10 @@ function addBonus(n) {
 
 /* ---------------- terrain ---------------- */
 const terrain = createTerrain($('#terrain'), { animate: !reduced });
-if (terrain && reduced) terrain.setProgress(0.35);
+if (terrain && reduced) terrain.setProgress(0);
+// test hook: ?mix=0..1 pins the morph state (only meaningful with ?solo)
+const mixParam = new URLSearchParams(location.search).get('mix');
+if (terrain && mixParam !== null) terrain.setProgress(parseFloat(mixParam) || 0);
 
 /* ---------------- boot sequence ---------------- */
 const BIOS_LINES = [

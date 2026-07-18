@@ -245,6 +245,7 @@ main { position: relative; z-index: 1; }
   color: var(--cyan);
   letter-spacing: 0.3em;
   margin-bottom: 34px;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.9);
 }
 h1.title {
   font-family: var(--px);
@@ -259,6 +260,7 @@ h1.title .t2 { color: var(--gold); }
   max-width: 480px;
   color: var(--dim);
   font-size: 15px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.95), 0 0 14px rgba(4, 5, 10, 0.9);
 }
 .hero-sub strong { color: var(--text); font-weight: 500; }
 
