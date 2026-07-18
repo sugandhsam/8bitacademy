@@ -494,7 +494,7 @@ else {
     const mx = mouse.sx * halfW;
     const my = camera.position.y + mouse.sy * halfH - group.position.y;
 
-    const offset = t * 2.4; // grid-columns per second; tape marches left → right
+    const offset = t * 2.4; // grid-columns per second; tape streams right → left (new candles enter from the right)
 
     const pAttr = geo.attributes.position;
     const cAttr = geo.attributes.color;
@@ -507,7 +507,7 @@ else {
         const x = (c - COLS / 2) * SPACING;
 
         // which candle covers this grid column right now
-        const gc = Math.floor(((c - offset) % TOTAL + TOTAL) % TOTAL);
+        const gc = Math.floor(((c + offset) % TOTAL + TOTAL) % TOTAL);
         const s = series[Math.floor(gc / CANDLE_W)];
         const pos = gc % CANDLE_W;
 
