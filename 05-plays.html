@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Plays · 8BitTrading Academy</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="academy.css">
+<script src="academy-shell.js" defer></script>
 <link rel="icon" type="image/png" sizes="32x32" href="public/assets/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="public/assets/favicon-32.png">
 <link rel="apple-touch-icon" href="public/assets/apple-touch-icon.png">
@@ -38,7 +38,7 @@
   .week-tab { padding:8px 18px; border-radius:7px; font-size:12px; font-weight:500; cursor:pointer; transition:all 0.2s; color:var(--text3); letter-spacing:0.04em; border:none; background:transparent; font-family:var(--font-mono); }
   .week-tab:hover { color:var(--text2); background:var(--bg4); }
   .week-tab.active { background:var(--bg); color:var(--text); border:1px solid var(--border2); }
-  .week-tab.mon.active { color:var(--gamma); border-color:rgba(31,212,160,0.3); }
+  .week-tab.mon.active { color:var(--gamma); border-color:var(--brand-soft); }
   .week-tab.tue.active { color:#a0d080; border-color:rgba(160,208,128,0.3); }
   .week-tab.wed.active { color:var(--charm); border-color:rgba(171,71,188,0.35); }
   .week-tab.thu.active { color:var(--vanna); border-color:rgba(123,143,255,0.3); }
@@ -62,19 +62,6 @@
 </head>
 <body>
 
-<nav>
-  <a href="academy.html" class="nav-brand">8Bit<span class="accent">Trading</span> Academy</a>
-  <div class="nav-links">
-    <a href="academy.html">Home</a>
-    <a href="01-gamma.html" class="gamma">Gamma</a>
-    <a href="02-vanna.html" class="vanna">Vanna</a>
-    <a href="03-charm.html" class="charm">Charm</a>
-    <a href="04-levels.html">Levels</a>
-    <a href="05-plays.html" class="active">Plays</a>
-    <a href="06-indicators.html">Indicators</a>
-    <a href="07-playbook.html">Playbook</a>
-  </div>
-</nav>
 
 <!-- HERO -->
 <section class="hero">
