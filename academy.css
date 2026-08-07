@@ -288,6 +288,18 @@ body.menu-open .sb-overlay { display: block; }
 .section-inner > ul,
 .section-inner > ol,
 .section-inner > .section-header { max-width: var(--measure); }
+
+/* The opening paragraph of a section gets the callout surface: same
+   background, border and radius, full width. It reads as the section's
+   lead block and lines up with the cards and tables beneath it. */
+.section-inner > p:first-of-type {
+  max-width: none;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin-bottom: 22px;
+}
 .section-header {
   display: flex; align-items: baseline; gap: 14px; margin-bottom: 30px;
 }
