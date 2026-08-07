@@ -93,7 +93,8 @@
   --font-sans: 'Space Mono', ui-monospace, Menlo, monospace;
   --font-mono: 'Space Mono', ui-monospace, Menlo, monospace;
 
-  --maxw: 880px;      /* content column measure */
+  --maxw: 880px;      /* legacy cap — kept for .wrap only */
+  --measure: 72ch;    /* readable prose measure; blocks bleed past it */
   --topbar-h: 60px;
   --sidebar-w: 248px;
 }
@@ -217,7 +218,7 @@ body.menu-open .sb-overlay { display: block; }
 }
 .hero::before { content: none; }
 .hero::after { content: none; }
-.hero-inner { max-width: var(--maxw); margin: 0 auto; position: relative; }
+.hero-inner { max-width: none; margin: 0; position: relative; }
 .hero-label {
   font-family: var(--font-mono);
   font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
@@ -244,7 +245,15 @@ body.menu-open .sb-overlay { display: block; }
 
 /* ── SECTIONS ───────────────────────────────────────────── */
 .section { padding: 56px 48px; border-bottom: 1px solid var(--divider); }
-.section-inner { max-width: var(--maxw); margin: 0 auto; }
+.section-inner { max-width: none; margin: 0; }
+
+/* Prose keeps a readable measure; structural blocks (grids, tables,
+   mechanic boxes, flow chains) deliberately bleed to full width. */
+.section-inner > p,
+.section-inner > ul,
+.section-inner > ol,
+.section-inner > .callout,
+.section-inner > .section-header { max-width: var(--measure); }
 .section-header {
   display: flex; align-items: baseline; gap: 14px; margin-bottom: 30px;
 }
@@ -547,7 +556,7 @@ footer {
   border-top: 1px solid var(--hairline); padding: 30px 48px;
   display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;
 }
-.footer-inner { max-width: var(--maxw); margin: 0 auto; width: 100%; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.footer-inner { max-width: none; margin: 0; width: 100%; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
 .footer-brand {
   font-family: var(--font-mono); font-size: 11px; font-weight: 700;
   letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3);
@@ -604,8 +613,15 @@ footer {
 }
 
 /* ── PUBLISHED INDICATORS (06-indicators.html · image-led card grid) ───── */
-.ind-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+.ind-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px; }
 @media (max-width: 760px) { .ind-grid { grid-template-columns: 1fr; } }
+
+/* jump target must clear the fixed topbar */
+.ind-card { scroll-margin-top: calc(var(--topbar-h) + 20px); }
+
+/* sidebar list of indicator names — 14 items, so tighten it up */
+.sb-link.sb-compact { padding: 5px 10px; font-size: 12.5px; }
+.sb-link.sb-compact .sb-num { font-size: 9.5px; min-width: 18px; }
 
 /* toolbar: section title left, sort control right */
 .ind-toolbar { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 30px; }

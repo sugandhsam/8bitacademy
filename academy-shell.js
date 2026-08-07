@@ -16,11 +16,14 @@
     { href: 'academy.html',                 label: 'Academy'    },
     { href: '06-indicators.html',           label: 'Indicators' },
     { href: 'https://discord.gg/usRSrWm7',  label: 'Community', ext: true },
-    { href: '07-playbook.html',             label: 'The Edge'   }
+    { href: 'tools.html',                   label: 'Tools'      }
   ];
 
-  /* sidebar menu — the academy map */
-  var GROUPS = [
+  /* ── sidebars ──────────────────────────────────────────────
+     Each section of the site owns its own menu. The academy is
+     standalone: its sidebar lists lessons only, no tools.       */
+
+  var ACADEMY_SIDEBAR = [
     { head: 'Start here', links: [
       { href: 'academy.html',       label: 'Overview',       num: ''   }
     ]},
@@ -32,19 +35,68 @@
     { head: 'The system', links: [
       { href: '04-levels.html',     label: 'The Levels',     num: '04' },
       { href: '05-plays.html',      label: 'The Plays',      num: '05' }
-    ]},
-    { head: 'Tools', links: [
-      { href: '06-indicators.html', label: 'Indicators',     num: '06' },
-      { href: '07-playbook.html',   label: 'The Playbook',   num: '07' }
     ]}
   ];
 
+  var TOOLS_SIDEBAR = [
+    { head: 'Tools', links: [
+      { href: 'tools.html',         label: 'All tools',      num: ''   },
+      { href: '07-playbook.html',   label: 'The Edge',       num: '01' }
+    ]}
+  ];
+
+  /* indicators page — one entry per published script, jumping to its
+     card. Prefers window.IND_DATA (set by 06-indicators.html from the
+     same array it renders the grid with). Falls back to reading the
+     rendered cards, so a stale cached copy of either file still gives
+     a populated menu instead of an empty heading. */
+  function indicatorsSidebar() {
+    var data = window.IND_DATA;
+    if (!data || !data.length) {
+      data = [].slice.call(document.querySelectorAll('.ind-card')).map(function (el, i) {
+        var title = el.querySelector('.ind-title');
+        var name = title ? title.textContent.replace(/^\s*\[8B\]\s*/, '').trim() : 'Indicator ' + (i + 1);
+        return { slug: (el.id || '').replace(/^ind-/, ''), name: name, el: el };
+      });
+    }
+    var items = data.map(function (d, i) {
+      var slug = d.slug;
+      if (!slug) {                       /* cached markup with no id — mint one */
+        slug = 'card-' + (i + 1);
+        if (d.el) d.el.id = 'ind-' + slug;
+      }
+      return {
+        href: '#ind-' + slug,
+        label: d.name,
+        num: ('0' + (i + 1)).slice(-2),
+        compact: true
+      };
+    });
+    return [{ head: 'Indicators', links: items }];
+  }
+
+  var TOOLS_PAGES = ['tools.html', '07-playbook.html'];
+
+  var section = file === '06-indicators.html' ? 'indicators'
+              : TOOLS_PAGES.indexOf(file) !== -1 ? 'tools'
+              : 'academy';
+
+  function groups() {
+    return section === 'indicators' ? indicatorsSidebar()
+         : section === 'tools'      ? TOOLS_SIDEBAR
+         : ACADEMY_SIDEBAR;
+  }
+
   /* which topbar link is "current" for this page */
-  var navActive = file === '06-indicators.html' ? 'Indicators'
-                : file === '07-playbook.html'   ? 'The Edge'
+  var navActive = section === 'indicators' ? 'Indicators'
+                : section === 'tools'      ? 'Tools'
                 : 'Academy';
 
   function build() {
+    /* 0 — resolve the menu FIRST: step 1 moves the page content into a
+       detached node, after which the DOM fallback could not see it */
+    var GROUPS = groups();
+
     /* 1 — lift the page's own content into the .doc column */
     var doc = document.createElement('main');
     doc.className = 'doc';
@@ -75,8 +127,9 @@
     sidebar.innerHTML = siteGroup + GROUPS.map(function (g) {
       var items = g.links.map(function (l) {
         var active = l.href === file ? ' active' : '';
+        var compact = l.compact ? ' sb-compact' : '';
         var num = l.num ? '<span class="sb-num">' + l.num + '</span>' : '<span class="sb-num"></span>';
-        return '<a class="sb-link' + active + '" href="' + l.href + '">' + num + l.label + '</a>';
+        return '<a class="sb-link' + compact + active + '" href="' + l.href + '">' + num + l.label + '</a>';
       }).join('');
       return '<div class="sb-group"><div class="sb-head">' + g.head + '</div>' + items + '</div>';
     }).join('');

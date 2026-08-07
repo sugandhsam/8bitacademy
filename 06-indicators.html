@@ -111,7 +111,7 @@ const DATA = [
 const ACC_LABEL = { protected:"Protected", open:"Open-source" };
 
 const card = d => `
-  <a class="ind-card" href="${d.url}" target="_blank" rel="noopener">
+  <a class="ind-card" id="ind-${d.slug}" href="${d.url}" target="_blank" rel="noopener">
     <div class="ind-shot">
       <img src="public/shots/${d.slug}.png" alt="${d.name} chart" loading="lazy" onerror="this.remove()">
       <div class="ind-badges">
@@ -135,6 +135,9 @@ function render(mode) {
 }
 sortSel.addEventListener('change', e => render(e.target.value));
 render('new');
+
+// academy-shell.js builds this page's sidebar from the same array.
+window.IND_DATA = DATA;
 </script>
 
 </body>
