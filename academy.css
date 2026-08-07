@@ -284,20 +284,29 @@ body.menu-open .sb-overlay { display: block; }
 /* Prose keeps a readable measure; every bordered/filled block —
    grids, tables, mechanic boxes, callouts — bleeds to full width so
    they line up with each other rather than stopping short. */
-.section-inner > p,
 .section-inner > ul,
 .section-inner > ol,
 .section-inner > .section-header { max-width: var(--measure); }
 
-/* The opening paragraph of a section gets the callout surface: same
-   background, border and radius, full width. It reads as the section's
-   lead block and lines up with the cards and tables beneath it. */
-.section-inner > p:first-of-type {
+/* Body paragraphs take the callout surface at full width, so a section
+   reads as one aligned stack of blocks instead of narrow text columns
+   sitting beside full-width tables and grids. */
+.section-inner > p {
   max-width: none;
   background: var(--bg3);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 16px 20px;
+  margin-bottom: 14px;
+}
+
+/* Quiet asides — the small caveat notes that follow a table — stay
+   unboxed so the hierarchy survives. Full width, just no surface. */
+.section-inner > p.muted {
+  background: none;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
   margin-bottom: 22px;
 }
 .section-header {
