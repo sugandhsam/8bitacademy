@@ -35,6 +35,11 @@
     { head: 'The system', links: [
       { href: '04-levels.html',     label: 'The Levels',     num: '04' },
       { href: '05-plays.html',      label: 'The Plays',      num: '05' }
+    ]},
+    { head: 'Entry models', links: [
+      { href: 'entry-tier-1.html',  label: 'Tier 1 · Beginner',     num: '06' },
+      { href: 'entry-tier-2.html',  label: 'Tier 2 · Intermediate', num: '07' },
+      { href: 'entry-tier-3.html',  label: 'Tier 3 · Advanced',     num: '08' }
     ]}
   ];
 

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entry Models · Tier 2 · 8BitTrading Academy</title>
+<meta name="description" content="Tier 2 of the entry-model ladder — Sweep &amp; Reclaim and Flow Pullback. Script access unlocks here.">
+<link rel="stylesheet" href="academy.css">
+<script src="academy-shell.js" defer></script>
+<link rel="icon" type="image/png" sizes="32x32" href="public/assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="public/assets/favicon-32.png">
+<link rel="apple-touch-icon" href="public/assets/apple-touch-icon.png">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="8BitTrading Academy">
+<meta property="og:title" content="Entry Models · Tier 2 · Intermediate">
+<meta property="og:description" content="Sweep &amp; Reclaim and Flow Pullback — liquidity and trend-flow models. Script access unlocks here.">
+<meta property="og:url" content="https://8bittrading.com/entry-tier-2.html">
+<meta property="og:image" content="https://8bittrading.com/public/assets/avat-big.png">
+<meta property="og:image:width" content="1024">
+<meta property="og:image:height" content="1024">
+<meta property="og:image:alt" content="8BitTrading 8B logo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Entry Models · Tier 2 · Intermediate">
+<meta name="twitter:description" content="Sweep &amp; Reclaim and Flow Pullback — liquidity and trend-flow models.">
+<meta name="twitter:image" content="https://8bittrading.com/public/assets/avat-big.png">
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-label">Entry Models · Tier 2 · Intermediate</div>
+    <h1>Liquidity and <span class="g">trend flow</span></h1>
+    <p class="hero-sub">Two models: the liquidity raid generalized beyond the opening range, and the rung where you stop fighting trend days. Script access unlocks here — the 8BF toolset is earned, not given.</p>
+  </div>
+</section>
+
+<!-- 07.1 MODEL 3 -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header"><span class="section-num">07.1</span><h2 class="section-title">Model 3 · Sweep &amp; Reclaim</h2></div>
+    <div class="em-chips">
+      <span class="em-chip brand">Tier 2 · Intermediate</span>
+      <span class="em-chip">ES + NQ</span>
+      <span class="em-chip">3m trigger · 1m entry</span>
+      <span class="em-chip">09:30–11:30 ET</span>
+      <span class="em-chip">liquidity pools</span>
+    </div>
+
+    <p class="lede"><strong>Why it works.</strong> Obvious levels grow stops behind them. The market is an engine for finding that liquidity: a spike through PDL fills institutional buys with the stops of trapped longs — then price leaves. The <em>sweep</em> is the liquidity event; the <em>reclaim</em> is proof it was a raid and not a genuine break. This is Model 2's logic generalized from the opening range to every pool on the map — the new skill is recognizing pools and reading reclaim strength.</p>
+
+    <table class="tbl">
+      <thead><tr><th>Card</th><th>Rule</th></tr></thead>
+      <tbody>
+        <tr><td>Bias</td><td>With the reclaim — away from the swept pool, toward the opposite pool</td></tr>
+        <tr><td>Setup</td><td>A visible pool: PDH/PDL, ONH/ONL, session extreme, or equal highs/lows. Price trades <strong>through</strong> it (the sweep)</td></tr>
+        <tr><td>Trigger</td><td>Reclaim: a 3m close back on the original side of the level <strong>within 3 bars</strong> of the sweep. The faster and bigger the reclaim bar, the better</td></tr>
+        <tr><td>Entry</td><td>Aggressive: reclaim-bar close. Conservative: limit at the level on the retest (fewer fills, better R). Pick one per session and journal it</td></tr>
+        <tr><td>Stop</td><td>Beyond the sweep extreme + buffer</td></tr>
+        <tr><td>Invalidation</td><td>No reclaim within 3 bars, or a second sweep deeper than the first → the pool is being accepted through, not raided</td></tr>
+        <tr><td>Target</td><td>The opposite pool (range high for a low sweep). Natural geometry ≈ 2R; sub-1.5R = skip</td></tr>
+        <tr><td>Management</td><td>½ at +1R, BE; runner to the opposite pool. Exit runner if price stalls &gt; 15 min at mid-range</td></tr>
+        <tr><td>Skip when</td><td>Sweep is driven by a scheduled print (let it settle) · trend day already established through multiple pools · reclaim bar itself is &gt; 1.5R tall (stop too far — wait for retest or pass)</td></tr>
+      </tbody>
+    </table>
+
+    <figure class="em-schem">
+      <svg viewBox="0 0 740 300" role="img" aria-label="Sweep and Reclaim schematic — sweep of PDL and reclaim long">
+        <line class="lvl" x1="24" y1="210" x2="656" y2="210"/>
+        <text x="28" y="202">PDL · equal lows — pool below</text>
+        <text x="28" y="288">resting sell stops (liquidity)</text>
+        <line class="tgt" x1="24" y1="92" x2="656" y2="92"/>
+        <text x="28" y="84" class="hot">target · opposite pool (range high / ONH)</text>
+        <line class="wu" x1="70"  y1="130" x2="70"  y2="186"/><rect class="cu" x="63"  y="138" width="14" height="40"/>
+        <line class="wd" x1="100" y1="140" x2="100" y2="206"/><rect class="cd" x="93"  y="148" width="14" height="50"/>
+        <line class="wu" x1="130" y1="132" x2="130" y2="190"/><rect class="cu" x="123" y="140" width="14" height="42"/>
+        <line class="wd" x1="160" y1="150" x2="160" y2="207"/><rect class="cd" x="153" y="158" width="14" height="38"/>
+        <line class="wu" x1="190" y1="120" x2="190" y2="176"/><rect class="cu" x="183" y="128" width="14" height="40"/>
+        <line class="wd" x1="220" y1="136" x2="220" y2="192"/><rect class="cd" x="213" y="144" width="14" height="40"/>
+        <line class="wu" x1="250" y1="126" x2="250" y2="180"/><rect class="cu" x="243" y="134" width="14" height="38"/>
+        <line class="wd" x1="280" y1="142" x2="280" y2="198"/><rect class="cd" x="273" y="150" width="14" height="40"/>
+        <line class="wd" x1="310" y1="150" x2="310" y2="208"/><rect class="cd" x="303" y="158" width="14" height="42"/>
+        <line class="wd" x1="344" y1="168" x2="344" y2="262"/><rect class="cd" x="337" y="176" width="14" height="40"/>
+        <circle class="badge" cx="344" cy="278" r="9"/><text class="badge-n" x="344" y="282">1</text>
+        <line class="wu" x1="376" y1="150" x2="376" y2="252"/><rect class="cu" x="369" y="158" width="14" height="80"/>
+        <circle class="badge" cx="398" cy="146" r="9"/><text class="badge-n" x="398" y="150">2</text>
+        <line class="wd" x1="408" y1="168" x2="408" y2="216"/><rect class="cd" x="401" y="174" width="14" height="34"/>
+        <circle class="badge" cx="408" cy="232" r="9"/><text class="badge-n" x="408" y="236">3</text>
+        <line class="entry" x1="420" y1="200" x2="488" y2="200"/>
+        <text x="494" y="204" class="hot">entry · reclaim close or level retest</text>
+        <line class="stop" x1="320" y1="268" x2="500" y2="268"/>
+        <text x="506" y="272" class="bad">stop · below sweep low</text>
+        <line class="wu" x1="440" y1="122" x2="440" y2="206"/><rect class="cu" x="433" y="130" width="14" height="68"/>
+        <line class="wu" x1="470" y1="94"  x2="470" y2="146"/><rect class="cu" x="463" y="102" width="14" height="38"/>
+      </svg>
+      <figcaption>① Sweep — the wick trades through the pool and takes the stops. ② Reclaim bar closes back above the level within 3 bars → aggressive entry. ③ Retest of the level = conservative entry. Stop below the sweep low; target the opposite pool.</figcaption>
+    </figure>
+
+    <div class="callout tip"><span class="ic">↯</span><div class="body"><strong>With the tool (Tier 2+):</strong> <code>htf-raids</code> marks sweeps of the higher-timeframe pools so you're never hunting levels mid-session; <code>fractal</code> maps the minor liquidity (equal highs/lows) between them; <code>lqabs</code> adds the absorption read at the extreme — heavy volume with no downside progress during the sweep is the strongest reclaim precursor there is.</div></div>
+
+    <h3 class="block">Playing it with our levels</h3>
+    <p class="lede">The A+ version: a sweep <strong>through a public pool into a gexpro wall</strong> that then reclaims — e.g. PDL swept, the flush dies exactly at the put wall from the daily drop, reclaim follows. The pool supplied the fuel, the wall supplied the floor. With <code>8bfzonepro</code>: a sweep through a zone's far edge that reclaims the near edge is the zone-native version of this trade. Ramp-read gate: on strong negative-gamma days, downside sweeps tend to <em>extend</em> rather than reclaim — halve size or demand the retest entry.</p>
+
+    <div class="em-cap">
+      <div class="em-cap-title">Capture spec — v1.1 screenshots</div>
+      <ul>
+        <li>3m ES: PDL sweep → 1-bar reclaim → opposite-pool target hit. Mark pool, sweep wick, reclaim close, both entries, stop.</li>
+        <li>3m ES: sweep dying on a put wall from the daily drop — annotate wall price + drop text.</li>
+        <li>Counter-example: sweep with no reclaim inside 3 bars → acceptance and continuation lower. Captioned "no reclaim, no trade".</li>
+      </ul>
+    </div>
+
+    <div class="em-jcard">
+      <div class="em-j-title">Journal card · Model 3 — Sweep &amp; Reclaim</div>
+      <ul>
+        <li>Pool identified and marked before the sweep, not after</li>
+        <li>Sweep actually traded through the level (not just near it)</li>
+        <li>Reclaim close came within 3 bars — otherwise no trade, no exceptions</li>
+        <li>Entry style (reclaim close vs retest) declared for the session and followed</li>
+        <li>Stop beyond the sweep extreme before entry, never widened</li>
+        <li>Target = opposite pool, ≥ 1.5R at entry</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 07.2 MODEL 4 -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header"><span class="section-num">07.2</span><h2 class="section-title">Model 4 · Flow Pullback</h2></div>
+    <div class="em-chips">
+      <span class="em-chip brand">Tier 2 · Intermediate</span>
+      <span class="em-chip">NQ primary</span>
+      <span class="em-chip">5m regime · 1m/3m entry</span>
+      <span class="em-chip">09:45–11:30 ET</span>
+      <span class="em-chip">VWAP + flow</span>
+    </div>
+
+    <p class="lede"><strong>Why it works.</strong> Models 1–3 are counter-trades; this is the rung where students learn to stop fighting trend days. On a real trend day, every pullback to VWAP is institutions reloading at fair price. The model has three independent gates — <em>regime</em> (5m says trend), <em>location</em> (pullback into VWAP/band, not mid-air), <em>flow</em> (participation returns with the trend) — and all three must agree. Most student losses on this model come from trading it on rotation days; the regime gate exists to make that impossible by rule.</p>
+
+    <table class="tbl">
+      <thead><tr><th>Card</th><th>Rule</th></tr></thead>
+      <tbody>
+        <tr><td>Bias</td><td>Continuation — with the established trend only, never counter</td></tr>
+        <tr><td>Setup</td><td><strong>Regime gate (5m):</strong> price one side of a sloping VWAP with structure agreeing (higher lows for longs) — post-access, the MMB-Elite regime read is this gate. <strong>Location:</strong> first or second pullback into VWAP / the first band</td></tr>
+        <tr><td>Trigger</td><td>Pullback stalls at the zone (small bars, wicks holding), then a <strong>resumption bar</strong>: 1m/3m close back in trend direction with flow flipping with it</td></tr>
+        <tr><td>Entry</td><td>Close of the resumption bar</td></tr>
+        <tr><td>Stop</td><td>Beyond the pullback swing low/high (whichever side the trade is), i.e. just past VWAP</td></tr>
+        <tr><td>Invalidation</td><td>Close through VWAP against the trend during the stall → regime is in question, stand down and re-gate</td></tr>
+        <tr><td>Target</td><td>T1 = prior swing extreme · runner = trail behind 3m swings or the band. Trend legs pay 2R+ when the regime is real</td></tr>
+        <tr><td>Management</td><td>½ at T1, BE; trail the runner — this is the one model where the runner is the point</td></tr>
+        <tr><td>Skip when</td><td>VWAP flat / price whipping both sides (rotation day) · third+ pullback of the same leg (trend is aging) · pullback comes on <em>expanding</em> counter-flow (that's distribution, not a pullback)</td></tr>
+      </tbody>
+    </table>
+
+    <figure class="em-schem">
+      <svg viewBox="0 0 740 300" role="img" aria-label="Flow Pullback schematic — trend continuation entry at VWAP">
+        <text x="28" y="40" class="hot">5m regime: UP — longs only</text>
+        <path class="vwap" d="M 40 240 C 220 216, 400 190, 640 130"/>
+        <text x="44" y="258">session VWAP · rising</text>
+        <line class="wu" x1="90"  y1="196" x2="90"  y2="240"/><rect class="cu" x="83"  y="202" width="14" height="30"/>
+        <line class="wu" x1="125" y1="178" x2="125" y2="224"/><rect class="cu" x="118" y="184" width="14" height="32"/>
+        <line class="wu" x1="160" y1="158" x2="160" y2="206"/><rect class="cu" x="153" y="166" width="14" height="32"/>
+        <line class="wu" x1="195" y1="140" x2="195" y2="188"/><rect class="cu" x="188" y="148" width="14" height="32"/>
+        <line class="wu" x1="230" y1="122" x2="230" y2="168"/><rect class="cu" x="223" y="130" width="14" height="32"/>
+        <line class="wu" x1="265" y1="108" x2="265" y2="152"/><rect class="cu" x="258" y="116" width="14" height="30"/>
+        <line class="wd" x1="300" y1="118" x2="300" y2="162"/><rect class="cd" x="293" y="124" width="14" height="32"/>
+        <line class="wd" x1="330" y1="134" x2="330" y2="180"/><rect class="cd" x="323" y="140" width="14" height="34"/>
+        <line class="wd" x1="360" y1="150" x2="360" y2="196"/><rect class="cd" x="353" y="156" width="14" height="34"/>
+        <circle class="badge" cx="360" cy="212" r="9"/><text class="badge-n" x="360" y="216">1</text>
+        <line class="wu" x1="390" y1="158" x2="390" y2="198"/><rect class="cu" x="383" y="168" width="14" height="16"/>
+        <line class="wu" x1="420" y1="108" x2="420" y2="186"/><rect class="cu" x="413" y="116" width="14" height="62"/>
+        <circle class="badge" cx="420" cy="92" r="9"/><text class="badge-n" x="420" y="96">2</text>
+        <line class="entry" x1="432" y1="116" x2="500" y2="116"/>
+        <text x="506" y="120" class="hot">entry · resumption close</text>
+        <line class="stop" x1="340" y1="206" x2="520" y2="206"/>
+        <text x="526" y="210" class="bad">stop · below pullback low</text>
+        <line class="wu" x1="455" y1="92" x2="455" y2="150"/><rect class="cu" x="448" y="100" width="14" height="42"/>
+        <line class="wu" x1="490" y1="76" x2="490" y2="126"/><rect class="cu" x="483" y="84" width="14" height="34"/>
+        <line class="tgt" x1="24" y1="64" x2="656" y2="64"/>
+        <text x="28" y="56" class="hot">T1 · prior swing high → trail the runner</text>
+      </svg>
+      <figcaption>Regime gate first: 5m trend up, VWAP rising. ① Pullback into VWAP on cooling flow — small bars, wicks holding the zone. ② Flow flips back with the trend, resumption bar closes strong → entry. Stop below the pullback low; take T1 at the prior swing, trail the rest.</figcaption>
+    </figure>
+
+    <div class="callout tip"><span class="ic">↯</span><div class="body"><strong>With the tool (Tier 2+):</strong> <code>vwap-flow</code> is this model's chart: session VWAP + bands with the up/down-volume flow read underneath — the "flow flips back" trigger is literally its histogram turning. <code>mm-b-elite</code> on 5m is the regime gate (KAMA-ER regime read, ~30-min windows); <code>rollingvwap</code> adds slope-aware VWAP lines if you want the trail rail. Pair the 5m regime with a 15m context chart, nothing exotic.</div></div>
+
+    <h3 class="block">Playing it with our levels</h3>
+    <p class="lede">The level map decides whether the trend has <strong>air</strong>. A regime-approved pullback entry with the next gexpro wall 40+ NQ points away is a runner trade; the same entry directly beneath a wall is a scalp to the wall and out. Rule of thumb from the drop: <em>enter at fair price (VWAP), pay yourself at the wall</em>. On positive-gamma pin days the trend gate will simply keep you out — that's the system working, not a missed trade. 8bfzonepro zones act as the pullback's backstop: a pullback that holds zone + VWAP confluence is the highest-grade location this model produces.</p>
+
+    <div class="em-cap">
+      <div class="em-cap-title">Capture spec — v1.1 screenshots</div>
+      <ul>
+        <li>1m NQ + vwap-flow pane: trend leg, pullback on cooling flow, flow flip + resumption entry. Mark all three gates.</li>
+        <li>5m NQ with MMB-Elite: the regime read that authorized the session's longs.</li>
+        <li>Counter-example: flat VWAP whip day where the regime gate said no — captioned "no regime, no model".</li>
+      </ul>
+    </div>
+
+    <div class="em-jcard">
+      <div class="em-j-title">Journal card · Model 4 — Flow Pullback</div>
+      <ul>
+        <li>Regime gate passed on 5m before looking for entries (logged the read)</li>
+        <li>Entry only in trend direction — zero counter-trend entries</li>
+        <li>Pullback reached VWAP / first band — no mid-air entries</li>
+        <li>Waited for the resumption bar with flow agreeing — no knife-catching the pullback</li>
+        <li>Stop beyond the pullback swing, never widened</li>
+        <li>Runner managed by trail rule, not by feelings; third-pullback entries skipped</li>
+      </ul>
+    </div>
+
+    <div class="pager">
+      <a href="entry-tier-1.html" class="prev"><div class="pg-dir">← Previous</div><div class="pg-name">Tier 1 · Beginner</div></a>
+      <a href="entry-tier-3.html" class="next"><div class="pg-dir">Next →</div><div class="pg-name">Tier 3 · Advanced</div></a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">8BitTrading Academy · Entry Models · Tier 2</div>
+    <div class="footer-note">Educational — not financial advice · <a href="https://discord.gg/usRSrWm7" target="_blank" rel="noopener">Join the Discord</a></div>
+  </div>
+</footer>
+
+</body>
+</html>
