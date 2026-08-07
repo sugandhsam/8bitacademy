@@ -146,6 +146,29 @@ a { color: inherit; }
 .topbar .nav-links a:hover { color: var(--text); }
 .topbar .nav-links a.active { color: var(--text); }
 
+/* right cluster — nav links + text size + hamburger */
+.topbar-right { display: flex; align-items: center; gap: 24px; }
+
+/* ── TEXT SIZE CONTROL (accessibility) ───────────────────── */
+.fs-ctl {
+  display: flex; align-items: center; gap: 2px;
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 2px; background: var(--bg3);
+}
+.fs-btn {
+  font-family: var(--font-mono); font-size: 10.5px; font-weight: 700;
+  line-height: 1; letter-spacing: 0.04em;
+  background: none; border: 0; border-radius: var(--radius-xs);
+  color: var(--text2); cursor: pointer;
+  padding: 6px 8px; min-width: 28px;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+.fs-btn:hover:not(:disabled) { color: var(--text); background: var(--bg4); }
+.fs-btn:focus-visible { outline: 2px solid var(--brand); outline-offset: 1px; }
+.fs-btn:disabled { color: var(--text3); opacity: 0.45; cursor: default; }
+.fs-btn.fs-reset { min-width: 42px; color: var(--text3); }
+.fs-btn.fs-reset:hover { color: var(--brand-strong); }
+
 /* hamburger — mobile only */
 .menu-btn {
   display: none;
@@ -204,11 +227,22 @@ a { color: inherit; }
 body.menu-open .sb-overlay { display: block; }
 
 /* ── CONTENT COLUMN ──────────────────────────────────────── */
+/* Flex column so the footer can be pinned to the bottom of the
+   viewport on short pages instead of floating mid-screen. */
 .doc {
   margin-left: var(--sidebar-w);
   padding-top: var(--topbar-h);
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
+.doc > footer { margin-top: auto; }
+
+/* Text-size control scales the content, not the chrome. Applied to the
+   children rather than .doc itself so .doc's 100vh stays in real pixels
+   and the sticky footer keeps working at every step. */
+.doc > section,
+.doc > footer { zoom: var(--fs-zoom, 1); }
 
 /* ── HERO (page intro, inside the content column) ────────── */
 .hero {
@@ -590,12 +624,15 @@ footer {
   body.menu-open { overflow: hidden; }
   .menu-btn { display: inline-flex; }
   .topbar { padding: 0 20px; }
+  .topbar-right { gap: 14px; }
   .topbar .nav-links { gap: 18px; }
   .topbar .nav-links a { font-size: 12.5px; }
 }
 
 @media (max-width: 720px) {
   .topbar .nav-links { display: none; }
+  .fs-btn { padding: 5px 6px; min-width: 24px; }
+  .fs-btn.fs-reset { min-width: 38px; }
   .sb-group.sb-site { display: block; }
   .card-grid, .card-grid.three, .gloss { grid-template-columns: 1fr; }
   .hero { padding: 56px 22px 40px; }

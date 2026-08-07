@@ -28,7 +28,7 @@
     { head: 'Start here', links: [
       { href: 'academy.html',       label: 'Overview',       num: ''   }
     ]},
-    { head: '8B Gamma Zones', links: [
+    { head: '8B GammaZones', links: [
       { href: 'gammazones.html',    label: 'Overview',       num: '01' },
       { href: '01-gamma.html',      label: 'Gamma',          num: '02' },
       { href: '02-vanna.html',      label: 'Vanna',          num: '03' },
@@ -40,9 +40,10 @@
       { href: 'battlezones.html',   label: 'Overview',       num: '01' }
     ]},
     { head: 'Entry models', links: [
-      { href: 'entry-tier-1.html',  label: 'Tier 1 · Beginner',     num: '01' },
-      { href: 'entry-tier-2.html',  label: 'Tier 2 · Intermediate', num: '02' },
-      { href: 'entry-tier-3.html',  label: 'Tier 3 · Advanced',     num: '03' }
+      { href: 'entry-models.html',  label: 'Overview',              num: '01' },
+      { href: 'entry-tier-1.html',  label: 'Tier 1 · Beginner',     num: '02' },
+      { href: 'entry-tier-2.html',  label: 'Tier 2 · Intermediate', num: '03' },
+      { href: 'entry-tier-3.html',  label: 'Tier 3 · Advanced',     num: '04' }
     ]}
   ];
 
@@ -120,8 +121,15 @@
     }).join('');
     topbar.innerHTML =
       '<a class="wordmark" href="index.html">8bit <span>trading</span></a>' +
-      '<div class="nav-links">' + links + '</div>' +
-      '<button class="menu-btn" type="button" aria-label="Toggle academy menu" aria-expanded="false">☰</button>';
+      '<div class="topbar-right">' +
+        '<div class="nav-links">' + links + '</div>' +
+        '<div class="fs-ctl" role="group" aria-label="Text size">' +
+          '<button class="fs-btn" type="button" data-fs="-1" aria-label="Decrease text size">A&minus;</button>' +
+          '<button class="fs-btn fs-reset" type="button" aria-label="Reset text size to default">100%</button>' +
+          '<button class="fs-btn" type="button" data-fs="1" aria-label="Increase text size">A+</button>' +
+        '</div>' +
+        '<button class="menu-btn" type="button" aria-label="Toggle academy menu" aria-expanded="false">☰</button>' +
+      '</div>';
 
     /* 3 — sidebar */
     var sidebar = document.createElement('aside');
@@ -151,7 +159,42 @@
     document.body.appendChild(overlay);
     document.body.appendChild(doc);
 
-    /* 5 — mobile drawer */
+    /* 5 — text size control. Everything in academy.css is sized in px,
+       so a root font-size change would do nothing; we scale the content
+       column instead and persist the choice across pages. */
+    var STEPS = [0.9, 1, 1.1, 1.25, 1.45];
+    var DEFAULT_STEP = 1;
+    var STORE = '8bt-fs';
+
+    function readStep() {
+      var v = null;
+      try { v = localStorage.getItem(STORE); } catch (e) { /* private mode */ }
+      var n = parseInt(v, 10);
+      return (isNaN(n) || n < 0 || n >= STEPS.length) ? DEFAULT_STEP : n;
+    }
+    var step = readStep();
+
+    function applyStep() {
+      doc.style.setProperty('--fs-zoom', STEPS[step]);
+      var pct = Math.round(STEPS[step] * 100) + '%';
+      var label = topbar.querySelector('.fs-reset');
+      label.textContent = pct;
+      label.setAttribute('aria-label', 'Text size ' + pct + ' — click to reset to default');
+      topbar.querySelector('[data-fs="-1"]').disabled = step === 0;
+      topbar.querySelector('[data-fs="1"]').disabled = step === STEPS.length - 1;
+      try { localStorage.setItem(STORE, String(step)); } catch (e) { /* ignore */ }
+    }
+
+    topbar.querySelector('.fs-ctl').addEventListener('click', function (e) {
+      var b = e.target.closest('.fs-btn');
+      if (!b) return;
+      if (b.classList.contains('fs-reset')) step = DEFAULT_STEP;
+      else step = Math.min(STEPS.length - 1, Math.max(0, step + Number(b.dataset.fs)));
+      applyStep();
+    });
+    applyStep();
+
+    /* 6 — mobile drawer */
     var btn = topbar.querySelector('.menu-btn');
     function setMenu(open) {
       document.body.classList.toggle('menu-open', open);
