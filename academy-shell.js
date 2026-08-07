@@ -23,23 +23,26 @@
      Each section of the site owns its own menu. The academy is
      standalone: its sidebar lists lessons only, no tools.       */
 
+  /* numbering restarts inside each category */
   var ACADEMY_SIDEBAR = [
     { head: 'Start here', links: [
       { href: 'academy.html',       label: 'Overview',       num: ''   }
     ]},
-    { head: 'The greeks', links: [
-      { href: '01-gamma.html',      label: 'Gamma',          num: '01' },
-      { href: '02-vanna.html',      label: 'Vanna',          num: '02' },
-      { href: '03-charm.html',      label: 'Charm',          num: '03' }
+    { head: '8B Gamma Zones', links: [
+      { href: 'gammazones.html',    label: 'Overview',       num: '01' },
+      { href: '01-gamma.html',      label: 'Gamma',          num: '02' },
+      { href: '02-vanna.html',      label: 'Vanna',          num: '03' },
+      { href: '03-charm.html',      label: 'Charm',          num: '04' },
+      { href: '04-levels.html',     label: 'The Levels',     num: '05' },
+      { href: '05-plays.html',      label: 'The Plays',      num: '06' }
     ]},
-    { head: 'The system', links: [
-      { href: '04-levels.html',     label: 'The Levels',     num: '04' },
-      { href: '05-plays.html',      label: 'The Plays',      num: '05' }
+    { head: '8B BattleZones', links: [
+      { href: 'battlezones.html',   label: 'Overview',       num: '01' }
     ]},
     { head: 'Entry models', links: [
-      { href: 'entry-tier-1.html',  label: 'Tier 1 · Beginner',     num: '06' },
-      { href: 'entry-tier-2.html',  label: 'Tier 2 · Intermediate', num: '07' },
-      { href: 'entry-tier-3.html',  label: 'Tier 3 · Advanced',     num: '08' }
+      { href: 'entry-tier-1.html',  label: 'Tier 1 · Beginner',     num: '01' },
+      { href: 'entry-tier-2.html',  label: 'Tier 2 · Intermediate', num: '02' },
+      { href: 'entry-tier-3.html',  label: 'Tier 3 · Advanced',     num: '03' }
     ]}
   ];
 
