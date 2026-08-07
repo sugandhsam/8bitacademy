@@ -28,8 +28,8 @@
     { head: 'Start here', links: [
       { href: 'academy.html',       label: 'Overview',       num: ''   }
     ]},
-    { head: '8B GammaZones', links: [
-      { href: 'gammazones.html',    label: 'Overview',       num: '01' },
+    { head: '8B GreekZones', links: [
+      { href: 'greekzones.html',    label: 'Overview',       num: '01' },
       { href: '01-gamma.html',      label: 'Gamma',          num: '02' },
       { href: '02-vanna.html',      label: 'Vanna',          num: '03' },
       { href: '03-charm.html',      label: 'Charm',          num: '04' },
