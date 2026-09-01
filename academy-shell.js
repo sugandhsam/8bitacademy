@@ -120,7 +120,7 @@
       return '<a href="' + l.href + '"' + active + ext + '>' + l.label + '</a>';
     }).join('');
     topbar.innerHTML =
-      '<a class="wordmark" href="index.html">8bit <span>trading</span></a>' +
+      '<a class="wordmark" href="index.html"><img src="/public/assets/8bitlogo.svg" alt="8BitTrading" class="logo-mark"></a>' +
       '<div class="topbar-right">' +
         '<div class="nav-links">' + links + '</div>' +
         '<div class="fs-ctl" role="group" aria-label="Text size">' +
