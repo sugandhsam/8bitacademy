@@ -136,7 +136,7 @@ h1 .line > span { display: inline-block; }
   color: var(--muted);
   max-width: 33rem;
 }
-.sub strong { color: var(--text); font-weight: 700; }
+.sub strong { color: var(--text); font-weight: 700; display: block; margin-top: 0.5em; }
 
 .cta-row {
   margin-top: 40px;
