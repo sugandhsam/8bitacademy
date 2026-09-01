@@ -12,6 +12,15 @@
   max-width: 1280px;
   margin: 0 auto;
 }
+
+/* Academy pages: the content column is full-width with 48px gutters
+   (.section padding), so the footer matches it rather than the landing
+   page's 1280px cap — otherwise it reads as inset from the card grid. */
+.doc > .site-footer {
+  max-width: none;
+  padding-left: 48px;
+  padding-right: 48px;
+}
 .site-footer .footer-inner {
   display: flex;
   align-items: center;
@@ -54,6 +63,7 @@
 
 @media (max-width: 720px) {
   .site-footer { padding: 36px 22px 32px; }
+  .doc > .site-footer { padding-left: 22px; padding-right: 22px; }
   .site-footer .footer-inner { gap: 18px; }
   .site-footer .footer-links { gap: 20px; }
 }
