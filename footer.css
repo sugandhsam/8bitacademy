@@ -15,11 +15,12 @@
 .site-footer .footer-inner {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  /* logo hard left, then links and icons as one right-aligned run */
+  justify-content: flex-end;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 28px;
 }
-.site-footer .footer-logo { display: inline-flex; align-items: center; text-decoration: none; }
+.site-footer .footer-logo { display: inline-flex; align-items: center; text-decoration: none; margin-right: auto; }
 .site-footer .logo-mark { height: 22px; width: auto; display: block; }
 
 .site-footer .footer-links { display: flex; flex-wrap: wrap; gap: 28px; }
@@ -32,7 +33,7 @@
 }
 .site-footer .footer-links a:hover { color: var(--text); }
 
-.site-footer .footer-social { display: flex; align-items: center; gap: 14px; }
+.site-footer .footer-social { display: flex; align-items: center; gap: 20px; }
 .site-footer .footer-social a {
   display: inline-flex;
   color: var(--muted, var(--text3));
