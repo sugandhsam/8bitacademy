@@ -1,0 +1,54 @@
+/* ── SITE FOOTER (shared by the landing page and every academy page) ──────
+   Tokens are read with fallbacks so this file works against both
+   landing.css (--muted/--faint/--accent/--pad-x) and academy.css
+   (--text2/--text3/--brand-strong). */
+.site-footer {
+  border-top: 1px solid var(--hairline);
+  padding: 48px var(--pad-x, 48px) 40px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+.site-footer .footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.site-footer .footer-logo { display: inline-flex; align-items: center; text-decoration: none; }
+.site-footer .logo-mark { height: 22px; width: auto; display: block; }
+
+.site-footer .footer-links { display: flex; flex-wrap: wrap; gap: 28px; }
+.site-footer .footer-links a {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--muted, var(--text3));
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+.site-footer .footer-links a:hover { color: var(--text); }
+
+.site-footer .footer-social { display: flex; align-items: center; gap: 14px; }
+.site-footer .footer-social a {
+  display: inline-flex;
+  color: var(--muted, var(--text3));
+  transition: color 0.25s ease;
+}
+.site-footer .footer-social a:hover { color: var(--accent, var(--brand-strong)); }
+.site-footer .footer-social svg { width: 16px; height: 16px; display: block; fill: currentColor; }
+
+.site-footer .footer-note {
+  margin-top: 28px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  line-height: 1.8;
+  color: var(--faint, var(--text3));
+}
+.site-footer .footer-note span { display: block; }
+
+@media (max-width: 720px) {
+  .site-footer { padding: 36px 22px 32px; }
+  .site-footer .footer-inner { gap: 18px; }
+  .site-footer .footer-links { gap: 20px; }
+}
