@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>8BitTrading · Published Indicators</title>
 <meta name="description" content="Every published 8B TradingView indicator — the tools that plot the dealer-exposure levels this academy teaches.">
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="academy.css">
+<script src="academy-shell.js" defer></script>
 <link rel="icon" type="image/png" sizes="32x32" href="public/assets/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="public/assets/favicon-32.png">
 <link rel="apple-touch-icon" href="public/assets/apple-touch-icon.png">
@@ -26,19 +26,6 @@
 </head>
 <body>
 
-<nav>
-  <a href="index.html" class="nav-brand">8Bit<span class="accent">Trading</span> Academy</a>
-  <div class="nav-links">
-    <a href="index.html">Home</a>
-    <a href="01-gamma.html" class="gamma">Gamma</a>
-    <a href="02-vanna.html" class="vanna">Vanna</a>
-    <a href="03-charm.html" class="charm">Charm</a>
-    <a href="04-levels.html">Levels</a>
-    <a href="05-plays.html">Plays</a>
-    <a href="06-indicators.html" class="active">Indicators</a>
-    <a href="07-playbook.html">Playbook</a>
-  </div>
-</nav>
 
 <!-- HERO -->
 <section class="hero">
@@ -67,7 +54,7 @@
 
 <footer>
   <div class="footer-inner">
-    <div class="footer-brand">8BitTrading Academy · Indicators</div>
+    <div class="footer-brand"><img src="/public/assets/8bitlogo.svg" alt="8BitTrading" class="logo-mark"><span>Academy · Indicators</span></div>
     <div class="footer-note">Educational — not financial advice</div>
     <div class="footer-social">
       <a href="/discord/" target="_blank" rel="noopener" aria-label="Join the 8BitTrading Discord" title="Discord">
@@ -132,7 +119,7 @@ const DATA = [
 const ACC_LABEL = { protected:"Protected", open:"Open-source" };
 
 const card = d => `
-  <a class="ind-card" href="${d.url}" target="_blank" rel="noopener">
+  <a class="ind-card" id="ind-${d.slug}" href="${d.url}" target="_blank" rel="noopener">
     <div class="ind-shot">
       <img src="public/shots/${d.slug}.png" alt="${d.name} chart" loading="lazy" onerror="this.remove()">
       <div class="ind-badges">
@@ -156,6 +143,9 @@ function render(mode) {
 }
 sortSel.addEventListener('change', e => render(e.target.value));
 render('new');
+
+// academy-shell.js builds this page's sidebar from the same array.
+window.IND_DATA = DATA;
 </script>
 
 </body>

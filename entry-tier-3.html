@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entry Models · Tier 3 · 8BitTrading Academy</title>
+<meta name="description" content="Tier 3 of the entry-model ladder — CISD, the progression and journal protocol, the indicator roster, glossary and self-check.">
+<link rel="stylesheet" href="academy.css">
+<script src="academy-shell.js" defer></script>
+<link rel="icon" type="image/png" sizes="32x32" href="public/assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="public/assets/favicon-32.png">
+<link rel="apple-touch-icon" href="public/assets/apple-touch-icon.png">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="8BitTrading Academy">
+<meta property="og:title" content="Entry Models · Tier 3 · Advanced">
+<meta property="og:description" content="CISD — the structural read — plus the progression protocol, indicator roster, glossary and self-check.">
+<meta property="og:url" content="https://8bittrading.com/entry-tier-3.html">
+<meta property="og:image" content="https://8bittrading.com/public/assets/avat-big.png">
+<meta property="og:image:width" content="1024">
+<meta property="og:image:height" content="1024">
+<meta property="og:image:alt" content="8BitTrading 8B logo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Entry Models · Tier 3 · Advanced">
+<meta name="twitter:description" content="CISD, the progression protocol, indicator roster, glossary and self-check.">
+<meta name="twitter:image" content="https://8bittrading.com/public/assets/avat-big.png">
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-label">Entry Models · Tier 3 · Advanced</div>
+    <h1>The full <span class="g">stack</span></h1>
+    <p class="hero-sub">Levels plus liquidity plus displacement, in one structural model — then the protocol that turns reps into evidence, the indicator bench, and the self-check that tells you whether any of it landed.</p>
+  </div>
+</section>
+
+<!-- 08.1 MODEL 5 -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header"><span class="section-num">08.1</span><h2 class="section-title">Model 5 · CISD</h2></div>
+    <div class="em-chips">
+      <span class="em-chip brand">Tier 3 · Advanced</span>
+      <span class="em-chip">ES + NQ</span>
+      <span class="em-chip">1m/3m</span>
+      <span class="em-chip">NY am · session variants open</span>
+      <span class="em-chip">ICT · structural</span>
+    </div>
+
+    <p class="lede"><strong>Why it works.</strong> CISD — <em>change in the state of delivery</em> — is the structural read of the same event Models 1–3 trade behaviorally. Price is delivered in one direction by a series of candles; when a level is swept and price then closes back through <strong>the opening price of that delivery series</strong>, the algorithmic delivery has objectively flipped. Everything is structural: a specific open, a specific close, a specific displacement. No thresholds, no ATR knobs, no statistics — the chart either printed the sequence or it didn't. That's also why it's last: it presumes fluency in levels, sweeps, and displacement.</p>
+
+    <table class="tbl">
+      <thead><tr><th>Card</th><th>Rule</th></tr></thead>
+      <tbody>
+        <tr><td>Bias</td><td>Reversal — against the old delivery, after the state change is proven</td></tr>
+        <tr><td>Setup</td><td>A <strong>delivery leg</strong> (consecutive same-direction candles) runs into / sweeps a meaningful level (PDL, ONH, pool, wall tap). Mark the <strong>CISD line</strong>: the open of the first candle of that leg</td></tr>
+        <tr><td>Trigger</td><td>A candle <strong>closes through the CISD line</strong> with displacement (an energetic body, typically leaving an FVG) — the state of delivery has changed</td></tr>
+        <tr><td>Entry</td><td>On the retrace into the displacement's origin — the FVG or the CISD line itself. Limit order, no chasing the displacement</td></tr>
+        <tr><td>Stop</td><td>Beyond the sweep extreme (the leg's terminal wick)</td></tr>
+        <tr><td>Invalidation</td><td>Retrace closes back through the CISD line in the old direction → the "change" failed; full reset, wait for a new sequence</td></tr>
+        <tr><td>Target</td><td>Opposing liquidity: the pool the new delivery should draw toward (ONH/PDH for a long). 2–3R is the natural geometry</td></tr>
+        <tr><td>Management</td><td>½ at +1R, BE; runner to the opposing pool. If the retrace never comes (price runs without you) — no trade, that's the model's cost of precision</td></tr>
+        <tr><td>Skip when</td><td>The "close through" happens without displacement (grinding closes = no conviction) · the delivery leg swept nothing (a CISD in the middle of nowhere is noise) · major print inside the sequence</td></tr>
+      </tbody>
+    </table>
+
+    <figure class="em-schem">
+      <svg viewBox="0 0 740 300" role="img" aria-label="CISD schematic — sweep, close above the CISD line, retrace entry">
+        <line class="lvl" x1="24" y1="228" x2="656" y2="228"/>
+        <text x="28" y="220">level · PDL / wall tap</text>
+        <line class="soft" x1="24" y1="108" x2="656" y2="108"/>
+        <text x="452" y="102" class="hot">CISD line · open of the down-leg</text>
+        <line class="tgt" x1="24" y1="56" x2="656" y2="56"/>
+        <text x="28" y="48" class="hot">target · opposing liquidity (ONH / prior high)</text>
+        <line class="wu" x1="70" y1="92" x2="70" y2="140"/><rect class="cu" x="63" y="100" width="14" height="34"/>
+        <line class="wd" x1="105" y1="100" x2="105" y2="162"/><rect class="cd" x="98"  y="108" width="14" height="48"/>
+        <line class="wd" x1="140" y1="146" x2="140" y2="206"/><rect class="cd" x="133" y="152" width="14" height="46"/>
+        <line class="wd" x1="175" y1="188" x2="175" y2="242"/><rect class="cd" x="168" y="194" width="14" height="40"/>
+        <line class="wd" x1="210" y1="220" x2="210" y2="266"/><rect class="cd" x="203" y="226" width="14" height="26"/>
+        <circle class="badge" cx="210" cy="282" r="9"/><text class="badge-n" x="210" y="286">1</text>
+        <line class="wu" x1="245" y1="190" x2="245" y2="256"/><rect class="cu" x="238" y="196" width="14" height="52"/>
+        <line class="wu" x1="280" y1="124" x2="280" y2="206"/><rect class="cu" x="273" y="130" width="14" height="70"/>
+        <rect class="fvg" x="262" y="152" width="200" height="34"/>
+        <text x="470" y="174">FVG / origin — entry zone</text>
+        <line class="wu" x1="315" y1="90" x2="315" y2="142"/><rect class="cu" x="308" y="96" width="14" height="40"/>
+        <circle class="badge" cx="315" cy="74" r="9"/><text class="badge-n" x="315" y="78">2</text>
+        <line class="wd" x1="350" y1="118" x2="350" y2="164"/><rect class="cd" x="343" y="124" width="14" height="34"/>
+        <line class="wd" x1="385" y1="146" x2="385" y2="186"/><rect class="cd" x="378" y="152" width="14" height="30"/>
+        <circle class="badge" cx="385" cy="202" r="9"/><text class="badge-n" x="385" y="206">3</text>
+        <line class="entry" x1="397" y1="176" x2="458" y2="176"/>
+        <text x="464" y="196" class="hot">entry · retrace into FVG / CISD line</text>
+        <line class="stop" x1="180" y1="272" x2="360" y2="272"/>
+        <text x="366" y="276" class="bad">stop · below sweep low</text>
+        <line class="wu" x1="420" y1="114" x2="420" y2="172"/><rect class="cu" x="413" y="122" width="14" height="42"/>
+        <line class="wu" x1="455" y1="82"  x2="455" y2="134"/><rect class="cu" x="448" y="90" width="14" height="36"/>
+        <line class="wu" x1="490" y1="60"  x2="490" y2="102"/><rect class="cu" x="483" y="66" width="14" height="30"/>
+      </svg>
+      <figcaption>① The delivery leg sweeps the level — mark the open of its first candle (CISD line). ② Displacement closes above the CISD line, leaving an FVG → state of delivery changed. ③ Retrace into the FVG / line = entry. Stop below the sweep low; target the opposing pool.</figcaption>
+    </figure>
+
+    <div class="callout tip"><span class="ic">↯</span><div class="body"><strong>With the tool (Tier 3):</strong> <code>cisd</code> marks delivery legs, CISD lines, and the qualifying close so the sequence is never mis-read live; <code>fcz-ict</code> adds the compression-zone context ICT entries key from; <code>8bf-open-lines</code> supplies the ICT session opens (midnight / 08:30) that advanced variants anchor to. Everything stays structural — that's an academy invariant, not a preference.</div></div>
+
+    <h3 class="block">Playing it with our levels</h3>
+    <p class="lede">This is the model the whole stack was built for. The daily drop tells you <em>which</em> level's sweep matters: a delivery leg that terminates into a <strong>gexpro put wall or gamma wall tap</strong> and then prints CISD is the house A+ — structure and dealer mechanics agreeing on the same price. 8bfzonepro zones refine the entry: when the FVG overlaps a zone, the retrace entry sits at the zone's near edge. Session variants (Tier 3): the same sequence off the London sweep of Asia's range, or the 02:00–05:00 leg into the NY open — same rules, different liquidity map.</p>
+
+    <div class="em-cap">
+      <div class="em-cap-title">Capture spec — v1.1 screenshots</div>
+      <ul>
+        <li>1m ES: full sequence — leg, sweep of PDL, CISD close with FVG, retrace fill, opposing pool hit. Number all three events.</li>
+        <li>1m ES: CISD off a put-wall tap from the daily drop, wall price annotated.</li>
+        <li>Counter-example: close through the CISD line with no displacement, grinding straight back — captioned "no displacement, no change".</li>
+      </ul>
+    </div>
+
+    <div class="em-jcard">
+      <div class="em-j-title">Journal card · Model 5 — CISD</div>
+      <ul>
+        <li>Delivery leg swept a real, pre-marked level (logged which one)</li>
+        <li>CISD line marked at the leg's first open before the trigger printed</li>
+        <li>Trigger close had displacement (FVG left behind) — grinding closes skipped</li>
+        <li>Entry was a resting limit at the FVG / line — never chased the displacement</li>
+        <li>Stop beyond the sweep extreme, never widened</li>
+        <li>Missed retrace = no trade, logged as a valid no-fill rep</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 08.2 PROGRESSION -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header"><span class="section-num">08.2</span><h2 class="section-title">Progression &amp; journal protocol</h2></div>
+    <p class="lede">Advancement runs on <strong>evidence of rule-compliance, never on P&amp;L</strong>. A green week of broken rules is worse than a red week of perfect execution — one is luck, the other is a trader being built. This mirrors how real capital is won: allocators buy process logs, not screenshots of one good day.</p>
+
+    <h3 class="block">The rep</h3>
+    <p class="lede">One rep = one journaled trade <em>or valid no-trade</em> (a setup that completed but was correctly skipped, e.g. CISD with no retrace). Each rep records: date · instrument · model · screenshot at entry time · the model's journal card ticked · outcome in R · self-grade.</p>
+
+    <table class="tbl">
+      <thead><tr><th>Grade</th><th>Definition</th><th>Counts toward compliance?</th></tr></thead>
+      <tbody>
+        <tr><td>A</td><td>Every card item ticked, executed exactly per plan</td><td>yes</td></tr>
+        <tr><td>B</td><td>Valid setup, minor execution slip (late entry, early partial) — noted</td><td>yes</td></tr>
+        <tr><td>C</td><td>Any rule broken: no setup, widened stop, size change, revenge trade</td><td>no</td></tr>
+      </tbody>
+    </table>
+
+    <h3 class="block">The gate</h3>
+    <p class="lede">Per model: <strong>20 reps minimum · (A+B)/total ≥ 80% · at least 12 A-grades · all models of the tier gated before moving up</strong>. Exception: <strong>Model 0 gates at 10 reps</strong> — its card is fully binary, so there is nothing to judge, only to obey. Screenshots are mandatory — a rep without a chart is a story, not evidence. P&amp;L is recorded but plays no role in the gate. Tier 2 graduation is also where 8BF script access is granted.</p>
+
+    <div class="callout key"><span class="ic">◎</span><div class="body"><strong>Why 20 and 80:</strong> twenty reps won't prove an edge — that's not their job. They prove the student can <strong>see the setup and obey the model under fire</strong>, which is the only thing the next tier builds on. Edge gets proven later, with the same journal, at 100+ reps. Start the habit now.</div></div>
+
+    <h3 class="block">Grading integrity</h3>
+    <p class="lede">Self-graded, spot-checked. Random reps get pulled for review; a C self-graded as A is worth a conversation, a pattern of them ends the ladder. The journal is the student's future track record — teaching them to falsify it would be teaching the one unrecoverable habit.</p>
+  </div>
+</section>
+
+<!-- 08.3 ROSTER -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header"><span class="section-num">08.3</span><h2 class="section-title">Indicator roster</h2></div>
+    <p class="lede">The full 8BF bench and where each piece serves. <em>Access</em>: T1 = everyone (or via the daily drop), T2/T3 = unlocked at that tier.</p>
+
+    <table class="tbl">
+      <thead><tr><th>Indicator</th><th>Role</th><th>Serves</th><th>Access</th></tr></thead>
+      <tbody>
+        <tr><td>gexpro / gexpro-multi</td><td>GEX walls &amp; HVL from the daily greek string (ES-native)</td><td>All models — the level map</td><td>drop T1 · script T2</td></tr>
+        <tr><td>8bfzonepro (v1)</td><td>Auto supply/demand zones with depth</td><td>M1 · M3 · M5 locations</td><td>T2</td></tr>
+        <tr><td>gex-anchor-zones</td><td>GEX anchor zones drawn on-chart</td><td>Level confluence</td><td>T2</td></tr>
+        <tr><td>8bf-open-lines</td><td>ICT session opening lines (midnight / 08:30)</td><td>M5 anchors</td><td>T3</td></tr>
+        <tr><td>orb-raid</td><td>Opening range + raid/breakout state</td><td>M2</td><td>T2</td></tr>
+        <tr><td>htf-raids</td><td>HTF pool sweep marker</td><td>M3</td><td>T2</td></tr>
+        <tr><td>fractal</td><td>Fractal liquidity map (equal highs/lows)</td><td>M3 pools</td><td>T2</td></tr>
+        <tr><td>lqabs</td><td>Liquidity absorption read (range-chart NQ)</td><td>M3 confirmation</td><td>T3</td></tr>
+        <tr><td>vwap-flow</td><td>Session VWAP + bands + up/down-volume flow</td><td>M4 — its home chart</td><td>T2</td></tr>
+        <tr><td>rollingvwap</td><td>Rolling VWAP lines with slope</td><td>M4 trail rail</td><td>T2</td></tr>
+        <tr><td>mm-b-elite (5m)</td><td>Regime / momentum read (KAMA-ER)</td><td>M4 regime gate</td><td>T2</td></tr>
+        <tr><td>mm-a-elite</td><td>Companion momentum read (frozen ranking)</td><td>M4 alt gate</td><td>T2</td></tr>
+        <tr><td>cisd</td><td>Delivery legs, CISD lines, qualifying closes</td><td>M5</td><td>T3</td></tr>
+        <tr><td>fcz-ict</td><td>Fractal compression zones (ICT context)</td><td>M5 confluence</td><td>T3</td></tr>
+        <tr><td>vix-range</td><td>σ expected-move bands + USED/PACE day-type read</td><td>Day-type gate for all models</td><td>T2</td></tr>
+        <tr><td>auction-map-us</td><td>Auction context map</td><td>Context, all models</td><td>T3</td></tr>
+        <tr><td>fhm-system / fhm-scalp</td><td>Footprint Δ-heatmap (traps, springs, absorption)</td><td>Advanced overlay on M1/M3/M5</td><td>T3 · TV Premium only</td></tr>
+      </tbody>
+    </table>
+
+    <p class="lede muted">FHM is deliberately outside the core five: it requires TradingView Premium (footprint data), so no model <em>depends</em> on it. It upgrades reads for those who have it; the models must work without it.</p>
+  </div>
+</section>
+
+<!-- 08.4 GLOSSARY -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header"><span class="section-num">08.4</span><h2 class="section-title">Glossary</h2></div>
+    <dl class="gloss">
+      <dt>R</dt><dd>One unit of planned risk — entry to stop. All results are journaled in R, not dollars.</dd>
+      <dt>Trigger candle</dt><dd>Model 0's unit: one candle at a marked line that touches it, closes back, and engulfs the prior body — defining the whole trade at its close.</dd>
+      <dt>OCO bracket</dt><dd>One-cancels-other order set: entry + stop + target placed together. Filling the target cancels the stop and vice versa — management without decisions.</dd>
+      <dt>OR / ORH / ORL</dt><dd>Opening range (09:30–09:45 ET) and its extremes.</dd>
+      <dt>PDH / PDL · ONH / ONL</dt><dd>Prior day RTH high/low · overnight (Globex) high/low.</dd>
+      <dt>Liquidity pool</dt><dd>A price where stops cluster — beyond obvious highs/lows and equal extremes.</dd>
+      <dt>Sweep / raid</dt><dd>A push through a pool that takes its stops. Becomes a raid (tradeable) only if price fails back.</dd>
+      <dt>Reclaim</dt><dd>The close back on the original side of a swept level — proof the break was a liquidity event.</dd>
+      <dt>Acceptance</dt><dd>Two consecutive closes beyond a level — the level has flipped roles. The universal invalidation.</dd>
+      <dt>Displacement</dt><dd>An energetic, directional candle sequence that leaves imbalance (FVG) behind — conviction made visible.</dd>
+      <dt>FVG</dt><dd>Fair value gap — the unfilled gap a displacement leaves between candle 1's extreme and candle 3's.</dd>
+      <dt>CISD</dt><dd>Change in the state of delivery — a close through the open of the delivery leg that made the extreme.</dd>
+      <dt>Delivery leg</dt><dd>The consecutive same-direction candle series that ran price into a level.</dd>
+      <dt>Regime</dt><dd>The higher-timeframe answer to "trend or rotation?" — gates Model 4.</dd>
+      <dt>Gamma wall / put wall / call wall / HVL</dt><dd>Dealer-hedging levels from the gexpro greek extraction — where mechanical flows defend or accelerate price.</dd>
+      <dt>Confluence</dt><dd>Two independent level sources within ticks of each other. The quality multiplier.</dd>
+      <dt>Rep</dt><dd>One journaled trade or valid no-trade with screenshot, card, and grade. The unit of progression.</dd>
+    </dl>
+  </div>
+</section>
+
+<!-- 08.5 SELF-CHECK -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header"><span class="section-num">08.5</span><h2 class="section-title">Self-check</h2></div>
+    <p class="lede">If any answer surprises you, reread that chapter before the next session.</p>
+
+    <details class="em-quiz">
+      <summary>A perfect Model 0 trigger candle closes, you place the bracket — but the next candle never touches your entry. What do you do, and what goes in the journal?</summary>
+      <div class="em-a">Cancel the order at that candle's close. It's a valid no-trade rep — journal it with the screenshot and grade it like any other. Chasing the move that leaves without you is the C-grade the model exists to train out.</div>
+    </details>
+    <details class="em-quiz">
+      <summary>Price touches PDH for the third time today. First Touch trade?</summary>
+      <div class="em-a">No. The model is <em>first</em> touch — a third test means the level's resting orders are spent and it's being eaten. If anything, the map is hinting at acceptance and a breakout.</div>
+    </details>
+    <details class="em-quiz">
+      <summary>09:52, price pokes above ORH and prints two full closes above it. Your OR Raid short trigger?</summary>
+      <div class="em-a">There isn't one — two consecutive closes outside is acceptance, the breakout case. The model stands down. No trade is a valid rep; journal it.</div>
+    </details>
+    <details class="em-quiz">
+      <summary>PDL is swept. Four bars later price is still below the level. Entry?</summary>
+      <div class="em-a">No. The reclaim window is 3 bars. A late crawl back is not a reclaim — the pool was accepted through, and the second sweep that often follows would be aimed at you.</div>
+    </details>
+    <details class="em-quiz">
+      <summary>Model 4 setup looks perfect on the 1m, but 5m VWAP is flat and price has crossed it five times. What now?</summary>
+      <div class="em-a">The regime gate failed — there is no Model 4 today, no matter how pretty the 1m looks. Rotation days belong to Models 1–3.</div>
+    </details>
+    <details class="em-quiz">
+      <summary>A candle closes through your CISD line, but it's a small grinding body with no FVG. State changed?</summary>
+      <div class="em-a">Not tradeably. The close must come with displacement — no energy, no conviction, no entry. Skip it and log the sequence.</div>
+    </details>
+    <details class="em-quiz">
+      <summary>You're +2R on the day after 2 trades, and a mediocre B-setup appears. The skeleton says?</summary>
+      <div class="em-a">You have one trade left of three — but the skeleton never obliges you to use it. Marginal setups after a good day are how green days end red. The journal rewards the skip.</div>
+    </details>
+    <details class="em-quiz">
+      <summary>Week 3, you're down −4R overall but 17 of 19 reps graded A/B. Are you failing?</summary>
+      <div class="em-a">You're succeeding at the only thing the gate measures: execution under fire. Variance owns 20-rep P&amp;L; you own compliance. Finish the reps, then evaluate the model — not yourself — with the data.</div>
+    </details>
+
+    <div class="em-footnote">
+      Entry Models v1.0 · 2026-07-12 · adapted for the academy from the BlackBook Entry Models Handbook. Schematics are idealized geometry — real captures land in v1.1 per each chapter's capture spec. Model↔indicator sync applies: behavior changes in orb-raid, htf-raids, lqabs, vwap-flow, mm-b-elite, cisd, fcz-ict, or the gexpro/8bfzonepro level engines must update these pages in the same change set.
+    </div>
+
+    <div class="pager">
+      <a href="entry-tier-2.html" class="prev"><div class="pg-dir">← Previous</div><div class="pg-name">Tier 2 · Intermediate</div></a>
+      <a href="academy.html" class="next"><div class="pg-dir">Back to →</div><div class="pg-name">Academy index</div></a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand"><img src="/public/assets/8bitlogo.svg" alt="8BitTrading" class="logo-mark"><span>Academy · Entry Models · Tier 3</span></div>
+    <div class="footer-note">Educational — not financial advice</div>
+    <div class="footer-social">
+      <a href="/discord/" target="_blank" rel="noopener" aria-label="Join the 8BitTrading Discord" title="Discord">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg>
+      </a>
+      <a href="https://x.com/8bitfuturist" target="_blank" rel="noopener" aria-label="8BitTrading on X" title="X">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>
+      </a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
