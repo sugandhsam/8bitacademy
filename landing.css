@@ -442,8 +442,15 @@ main {
   .nav-toggle { display: block; }
   .nav-links {
     position: fixed;
-    inset: 0;
-    z-index: 1;
+    /* long-hand rather than `inset: 0` — older WebKit ignores the shorthand
+       and falls back to the static position, which put the panel in the bar */
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 60;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -465,7 +472,14 @@ main {
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
     border-bottom-color: transparent;
+    transition: none;
+    /* the bar outranks the reparented panel so the logo and the close
+       button stay visible on top of it */
+    z-index: 70;
   }
+  /* while open the panel is reparented to <body> (see nav.js) so no ancestor
+     filter or transform can capture it; it still needs to clear the bar */
+  body.nav-open > .nav-links { z-index: 60; }
 }
 
 @media (max-width: 860px) {
