@@ -93,7 +93,13 @@ body.nav-open .nav-toggle-bar::after { transform: rotate(-90deg) translateX(6px)
   text-decoration: none;
 }
 .wordmark span { color: var(--muted); font-weight: 400; }
-.wordmark { display: inline-flex; align-items: center; }
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  /* positioned so it paints above the mobile overlay, same as .nav-toggle */
+  position: relative;
+  z-index: 2;
+}
 .wordmark .logo-mark { height: 22px; width: auto; display: block; }
 
 .nav-links { display: flex; gap: 32px; }
@@ -450,6 +456,16 @@ main {
   .nav-links a { font-size: 20px; letter-spacing: 0.02em; color: var(--text); }
   body.nav-open .nav-links { opacity: 1; visibility: visible; }
   body.nav-open { overflow: hidden; }
+  /* nav.scrolled's backdrop-filter makes the bar a containing block for its
+     position:fixed children, which traps the overlay inside the ~70px bar and
+     pushes the centred links off the top of the screen. Drop the filter while
+     the menu is open — the opaque overlay is what you see anyway. */
+  body.nav-open nav {
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-bottom-color: transparent;
+  }
 }
 
 @media (max-width: 860px) {
