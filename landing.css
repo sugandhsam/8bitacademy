@@ -57,6 +57,34 @@ nav.scrolled {
   border-bottom: 1px solid var(--hairline);
 }
 
+/* ---------- mobile menu toggle ---------- */
+.nav-toggle {
+  display: none;
+  position: relative;
+  z-index: 2;
+  background: none;
+  border: 0;
+  padding: 8px;
+  margin: -8px;
+  cursor: pointer;
+  color: var(--text);
+}
+.nav-toggle-box { display: block; width: 22px; height: 14px; position: relative; }
+.nav-toggle-bar, .nav-toggle-bar::before, .nav-toggle-bar::after {
+  position: absolute;
+  left: 0;
+  width: 22px;
+  height: 2px;
+  background: currentColor;
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s ease;
+}
+.nav-toggle-bar { top: 6px; }
+.nav-toggle-bar::before { content: ''; top: -6px; }
+.nav-toggle-bar::after  { content: ''; top: 6px; }
+body.nav-open .nav-toggle-bar { transform: rotate(45deg); }
+body.nav-open .nav-toggle-bar::before { opacity: 0; }
+body.nav-open .nav-toggle-bar::after { transform: rotate(-90deg) translateX(6px); }
+
 .wordmark {
   font-size: 15px;
   font-weight: 700;
@@ -387,35 +415,7 @@ main {
   color: var(--muted);
 }
 
-/* ---------- footer ---------- */
-footer {
-  border-top: 1px solid var(--hairline);
-  padding: 48px var(--pad-x) 40px;
-  max-width: 1280px;
-  margin: 0 auto;
-}
-.footer-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-.footer-links { display: flex; gap: 28px; }
-.footer-links a {
-  font-size: 13px;
-  color: var(--muted);
-  text-decoration: none;
-  transition: color 0.25s ease;
-}
-.footer-links a:hover { color: var(--text); }
-.footer-note {
-  margin-top: 28px;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.06em;
-  color: var(--faint);
-}
+/* footer lives in footer.css — shared with every academy page */
 
 /* ---------- reveal (JS adds .in) ---------- */
 .reveal { opacity: 0; transform: translateY(24px); }
@@ -430,6 +430,29 @@ footer {
   :root { --pad-x: 24px; }
   .nav-links { gap: 18px; }
   .nav-links a { font-size: 12.5px; }
+}
+
+@media (max-width: 720px) {
+  .nav-toggle { display: block; }
+  .nav-links {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    background: var(--bg);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.28s ease, visibility 0.28s ease;
+  }
+  .nav-links a { font-size: 20px; letter-spacing: 0.02em; color: var(--text); }
+  body.nav-open .nav-links { opacity: 1; visibility: visible; }
+  body.nav-open { overflow: hidden; }
+}
+
+@media (max-width: 860px) {
   .feature {
     grid-template-columns: 1fr;
     gap: 36px;

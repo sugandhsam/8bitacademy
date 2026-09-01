@@ -608,25 +608,7 @@ table.tbl td:first-child { color: var(--text); font-weight: 700; }
 }
 .source-note strong { color: var(--text2); font-weight: 700; }
 
-/* ── FOOTER ─────────────────────────────────────────────── */
-footer {
-  border-top: 1px solid var(--hairline); padding: 30px 48px;
-  display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;
-}
-.footer-inner { max-width: none; margin: 0; width: 100%; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
-.footer-brand {
-  font-family: var(--font-mono); font-size: 11px; font-weight: 700;
-  letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3);
-  display: flex; align-items: center; gap: 10px;
-}
-.footer-brand .logo-mark { height: 16px; width: auto; display: block; opacity: 0.85; }
-.footer-note { font-size: 12px; color: var(--text3); }
-.footer-note a { color: var(--brand-strong); text-decoration: underline; text-underline-offset: 2px; }
-.footer-note a:hover { text-decoration: none; }
-.footer-social { display: flex; align-items: center; gap: 14px; }
-.footer-social a { display: inline-flex; color: var(--text3); transition: color 0.15s ease; }
-.footer-social a:hover { color: var(--brand-strong); }
-.footer-social svg { width: 16px; height: 16px; display: block; fill: currentColor; }
+/* footer lives in footer.css — shared with the landing page */
 
 /* ── GLOSSARY ───────────────────────────────────────────── */
 .gloss { display: grid; grid-template-columns: 1fr 1fr; gap: 0 32px; }
