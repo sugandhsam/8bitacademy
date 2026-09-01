@@ -5,6 +5,10 @@
 .site-footer {
   border-top: 1px solid var(--hairline);
   padding: 48px var(--pad-x, 48px) 40px;
+  /* width:100% is load-bearing — academy pages put the footer in a flex
+     column (.doc), where the auto side margins would otherwise cancel
+     align-items:stretch and shrink the footer to its content. */
+  width: 100%;
   max-width: 1280px;
   margin: 0 auto;
 }
