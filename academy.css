@@ -136,7 +136,7 @@ a { color: inherit; }
 }
 .topbar .wordmark span { color: var(--text2); font-weight: 400; }
 .topbar .wordmark { display: inline-flex; align-items: center; }
-.topbar .wordmark .logo-mark { height: 17px; width: auto; display: block; }
+.topbar .wordmark .logo-mark { height: 22px; width: auto; display: block; }
 .topbar .nav-links { display: flex; gap: 32px; }
 .topbar .nav-links a {
   font-size: 13.5px;
@@ -619,7 +619,7 @@ footer {
   letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3);
   display: flex; align-items: center; gap: 10px;
 }
-.footer-brand .logo-mark { height: 12px; width: auto; display: block; opacity: 0.85; }
+.footer-brand .logo-mark { height: 16px; width: auto; display: block; opacity: 0.85; }
 .footer-note { font-size: 12px; color: var(--text3); }
 .footer-note a { color: var(--brand-strong); text-decoration: underline; text-underline-offset: 2px; }
 .footer-note a:hover { text-decoration: none; }

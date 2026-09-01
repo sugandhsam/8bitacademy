@@ -66,7 +66,7 @@ nav.scrolled {
 }
 .wordmark span { color: var(--muted); font-weight: 400; }
 .wordmark { display: inline-flex; align-items: center; }
-.wordmark .logo-mark { height: 17px; width: auto; display: block; }
+.wordmark .logo-mark { height: 22px; width: auto; display: block; }
 
 .nav-links { display: flex; gap: 32px; }
 .nav-links a {
