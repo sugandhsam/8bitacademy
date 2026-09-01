@@ -15,7 +15,7 @@
   var NAV = [
     { href: 'academy.html',                 label: 'Academy'    },
     { href: '06-indicators.html',           label: 'Indicators' },
-    { href: 'https://discord.gg/usRSrWm7',  label: 'Community', ext: true },
+    { href: '/discord/',  label: 'Community', ext: true },
     { href: 'tools.html',                   label: 'Tools'      }
   ];
 
