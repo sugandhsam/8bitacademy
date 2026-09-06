@@ -76,7 +76,7 @@
 
 <script>
 // Ordered newest-updated first. access: "protected" | "open" · hot: true => ★ Popular
-// shot: /public/shots/<slug>.png (falls back to placeholder until the image exists)
+// shot: /public/shots/<slug>.webp (falls back to placeholder until the image exists)
 // dates = real "last updated" from TradingView. descriptions = draft (edit freely).
 const BRAND = "[8B]";
 const DATA = [
@@ -128,7 +128,7 @@ const ACC_LABEL = { protected:"Protected", open:"Open-source" };
 const card = d => `
   <a class="ind-card" id="ind-${d.slug}" href="${d.url}" target="_blank" rel="noopener">
     <div class="ind-shot">
-      <img src="public/shots/${d.slug}.png" alt="${d.name} chart" loading="lazy" onerror="this.remove()">
+      <img src="public/shots/${d.slug}.webp" alt="${d.name} chart" loading="lazy" onerror="this.remove()">
       <div class="ind-badges">
         ${d.hot ? '<span class="ind-hot">★ Popular</span>' : '<span></span>'}
         <span class="ind-access ${d.access}">${ACC_LABEL[d.access]}</span>
