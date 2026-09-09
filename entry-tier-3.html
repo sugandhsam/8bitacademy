@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Entry Models · Tier 3 · 8BitTrading Academy</title>
-<meta name="description" content="Tier 3 of the entry-model ladder — CISD, the progression and journal protocol, the indicator roster, glossary and self-check.">
+<meta name="description" content="Tier 3 of the entry-model ladder — CISD, the progression and journal protocol, glossary and self-check.">
 <link rel="stylesheet" href="academy.css">
 <link rel="stylesheet" href="footer.css">
 <script src="academy-shell.js" defer></script>
@@ -14,7 +14,7 @@
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="8BitTrading Academy">
 <meta property="og:title" content="Entry Models · Tier 3 · Advanced">
-<meta property="og:description" content="CISD — the structural read — plus the progression protocol, indicator roster, glossary and self-check.">
+<meta property="og:description" content="CISD — the structural read — plus the progression protocol, glossary and self-check.">
 <meta property="og:url" content="https://8bittrading.com/entry-tier-3.html">
 <meta property="og:image" content="https://8bittrading.com/public/assets/avat-big.png">
 <meta property="og:image:width" content="1024">
@@ -22,7 +22,7 @@
 <meta property="og:image:alt" content="8BitTrading 8B logo">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Entry Models · Tier 3 · Advanced">
-<meta name="twitter:description" content="CISD, the progression protocol, indicator roster, glossary and self-check.">
+<meta name="twitter:description" content="CISD, the progression protocol, glossary and self-check.">
 <meta name="twitter:image" content="https://8bittrading.com/public/assets/avat-big.png">
 </head>
 <body>
@@ -99,10 +99,10 @@
       <figcaption>① The delivery leg sweeps the level — mark the open of its first candle (CISD line). ② Displacement closes above the CISD line, leaving an FVG → state of delivery changed. ③ Retrace into the FVG / line = entry. Stop below the sweep low; target the opposing pool.</figcaption>
     </figure>
 
-    <div class="callout tip"><span class="ic">↯</span><div class="body"><strong>With the tool (Tier 3):</strong> <code>cisd</code> marks delivery legs, CISD lines, and the qualifying close so the sequence is never mis-read live; <code>fcz-ict</code> adds the compression-zone context ICT entries key from; <code>8bf-open-lines</code> supplies the ICT session opens (midnight / 08:30) that advanced variants anchor to. Everything stays structural — that's an academy invariant, not a preference.</div></div>
+    <div class="callout tip"><span class="ic">↯</span><div class="body"><strong>With the tool (Tier 3):</strong> ICT Opening Lines supplies the ICT session opens (midnight / 08:30) that advanced variants anchor to. Everything stays structural — that's an academy invariant, not a preference.</div></div>
 
     <h3 class="block">Playing it with our levels</h3>
-    <p class="lede">This is the model the whole stack was built for. The daily drop tells you <em>which</em> level's sweep matters: a delivery leg that terminates into a <strong>gexpro put wall or gamma wall tap</strong> and then prints CISD is the house A+ — structure and dealer mechanics agreeing on the same price. 8bfzonepro zones refine the entry: when the FVG overlaps a zone, the retrace entry sits at the zone's near edge. Session variants (Tier 3): the same sequence off the London sweep of Asia's range, or the 02:00–05:00 leg into the NY open — same rules, different liquidity map.</p>
+    <p class="lede">This is the model the whole stack was built for. The daily drop tells you <em>which</em> level's sweep matters: a delivery leg that terminates into a <strong>GreekZonesPro put wall or gamma wall tap</strong> and then prints CISD is the house A+ — structure and dealer mechanics agreeing on the same price. Battle Zones refine the entry: when the FVG overlaps a zone, the retrace entry sits at the zone's near edge. Session variants (Tier 3): the same sequence off the London sweep of Asia's range, or the 02:00–05:00 leg into the NY open — same rules, different liquidity map.</p>
 
     <div class="em-cap">
       <div class="em-cap-title">Capture spec — v1.1 screenshots</div>
@@ -155,43 +155,10 @@
   </div>
 </section>
 
-<!-- 08.3 ROSTER -->
+<!-- 08.3 GLOSSARY -->
 <section class="section">
   <div class="section-inner">
-    <div class="section-header"><span class="section-num">08.3</span><h2 class="section-title">Indicator roster</h2></div>
-    <p class="lede">The full 8BF bench and where each piece serves. <em>Access</em>: T1 = everyone (or via the daily drop), T2/T3 = unlocked at that tier.</p>
-
-    <table class="tbl">
-      <thead><tr><th>Indicator</th><th>Role</th><th>Serves</th><th>Access</th></tr></thead>
-      <tbody>
-        <tr><td>gexpro / gexpro-multi</td><td>GEX walls &amp; HVL from the daily greek string (ES-native)</td><td>All models — the level map</td><td>drop T1 · script T2</td></tr>
-        <tr><td>8bfzonepro (v1)</td><td>Auto supply/demand zones with depth</td><td>M1 · M3 · M5 locations</td><td>T2</td></tr>
-        <tr><td>gex-anchor-zones</td><td>GEX anchor zones drawn on-chart</td><td>Level confluence</td><td>T2</td></tr>
-        <tr><td>8bf-open-lines</td><td>ICT session opening lines (midnight / 08:30)</td><td>M5 anchors</td><td>T3</td></tr>
-        <tr><td>orb-raid</td><td>Opening range + raid/breakout state</td><td>M2</td><td>T2</td></tr>
-        <tr><td>htf-raids</td><td>HTF pool sweep marker</td><td>M3</td><td>T2</td></tr>
-        <tr><td>fractal</td><td>Fractal liquidity map (equal highs/lows)</td><td>M3 pools</td><td>T2</td></tr>
-        <tr><td>lqabs</td><td>Liquidity absorption read (range-chart NQ)</td><td>M3 confirmation</td><td>T3</td></tr>
-        <tr><td>vwap-flow</td><td>Session VWAP + bands + up/down-volume flow</td><td>M4 — its home chart</td><td>T2</td></tr>
-        <tr><td>rollingvwap</td><td>Rolling VWAP lines with slope</td><td>M4 trail rail</td><td>T2</td></tr>
-        <tr><td>mm-b-elite (5m)</td><td>Regime / momentum read (KAMA-ER)</td><td>M4 regime gate</td><td>T2</td></tr>
-        <tr><td>mm-a-elite</td><td>Companion momentum read (frozen ranking)</td><td>M4 alt gate</td><td>T2</td></tr>
-        <tr><td>cisd</td><td>Delivery legs, CISD lines, qualifying closes</td><td>M5</td><td>T3</td></tr>
-        <tr><td>fcz-ict</td><td>Fractal compression zones (ICT context)</td><td>M5 confluence</td><td>T3</td></tr>
-        <tr><td>vix-range</td><td>σ expected-move bands + USED/PACE day-type read</td><td>Day-type gate for all models</td><td>T2</td></tr>
-        <tr><td>auction-map-us</td><td>Auction context map</td><td>Context, all models</td><td>T3</td></tr>
-        <tr><td>fhm-system / fhm-scalp</td><td>Footprint Δ-heatmap (traps, springs, absorption)</td><td>Advanced overlay on M1/M3/M5</td><td>T3 · TV Premium only</td></tr>
-      </tbody>
-    </table>
-
-    <p class="lede muted">FHM is deliberately outside the core five: it requires TradingView Premium (footprint data), so no model <em>depends</em> on it. It upgrades reads for those who have it; the models must work without it.</p>
-  </div>
-</section>
-
-<!-- 08.4 GLOSSARY -->
-<section class="section">
-  <div class="section-inner">
-    <div class="section-header"><span class="section-num">08.4</span><h2 class="section-title">Glossary</h2></div>
+    <div class="section-header"><span class="section-num">08.3</span><h2 class="section-title">Glossary</h2></div>
     <dl class="gloss">
       <dt>R</dt><dd>One unit of planned risk — entry to stop. All results are journaled in R, not dollars.</dd>
       <dt>Trigger candle</dt><dd>Model 0's unit: one candle at a marked line that touches it, closes back, and engulfs the prior body — defining the whole trade at its close.</dd>
@@ -207,17 +174,17 @@
       <dt>CISD</dt><dd>Change in the state of delivery — a close through the open of the delivery leg that made the extreme.</dd>
       <dt>Delivery leg</dt><dd>The consecutive same-direction candle series that ran price into a level.</dd>
       <dt>Regime</dt><dd>The higher-timeframe answer to "trend or rotation?" — gates Model 4.</dd>
-      <dt>Gamma wall / put wall / call wall / HVL</dt><dd>Dealer-hedging levels from the gexpro greek extraction — where mechanical flows defend or accelerate price.</dd>
+      <dt>Gamma wall / put wall / call wall / HVL</dt><dd>Dealer-hedging levels from the GreekZonesPro greek extraction — where mechanical flows defend or accelerate price.</dd>
       <dt>Confluence</dt><dd>Two independent level sources within ticks of each other. The quality multiplier.</dd>
       <dt>Rep</dt><dd>One journaled trade or valid no-trade with screenshot, card, and grade. The unit of progression.</dd>
     </dl>
   </div>
 </section>
 
-<!-- 08.5 SELF-CHECK -->
+<!-- 08.4 SELF-CHECK -->
 <section class="section">
   <div class="section-inner">
-    <div class="section-header"><span class="section-num">08.5</span><h2 class="section-title">Self-check</h2></div>
+    <div class="section-header"><span class="section-num">08.4</span><h2 class="section-title">Self-check</h2></div>
     <p class="lede">If any answer surprises you, reread that chapter before the next session.</p>
 
     <details class="em-quiz">
@@ -254,7 +221,7 @@
     </details>
 
     <div class="em-footnote">
-      Entry Models v1.0 · 2026-07-12 · adapted for the academy from the BlackBook Entry Models Handbook. Schematics are idealized geometry — real captures land in v1.1 per each chapter's capture spec. Model↔indicator sync applies: behavior changes in orb-raid, htf-raids, lqabs, vwap-flow, mm-b-elite, cisd, fcz-ict, or the gexpro/8bfzonepro level engines must update these pages in the same change set.
+      Entry Models v1.0 · 2026-07-12 · adapted for the academy from the BlackBook Entry Models Handbook. Schematics are idealized geometry — real captures land in v1.1 per each chapter's capture spec. Model↔indicator sync applies: behavior changes in Dynamic ORB PitRaids, HTF Raids, Market Maker Series 3, or the GreekZonesPro / Battle Zones level engines must update these pages in the same change set.
     </div>
 
     <div class="pager">

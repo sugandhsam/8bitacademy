@@ -116,9 +116,9 @@
     <table class="tbl">
       <thead><tr><th>Source</th><th>What it gives</th><th>How students get it</th></tr></thead>
       <tbody>
-        <tr><td>Daily level drop</td><td>gexpro chart string + 3-line ramp read, posted pre-open</td><td>Everyone, Tier 1 up — draw the lines by hand</td></tr>
-        <tr><td>gexpro walls</td><td>Gamma wall, call/put walls, HVL from UW greek exposure — ES-native</td><td>Levels via the drop; script at Tier 2</td></tr>
-        <tr><td>8bfzonepro zones</td><td>Auto supply/demand zones with defined depth — a level with a body</td><td>Script at Tier 2</td></tr>
+        <tr><td>Daily level drop</td><td>GreekZonesPro chart string + 3-line ramp read, posted pre-open</td><td>Everyone, Tier 1 up — draw the lines by hand</td></tr>
+        <tr><td>GreekZonesPro walls</td><td>Gamma wall, call/put walls, HVL from UW greek exposure — ES-native</td><td>Levels via the drop; script at Tier 2</td></tr>
+        <tr><td>Battle Zones</td><td>Auto supply/demand zones with defined depth — a level with a body</td><td>Script at Tier 2</td></tr>
       </tbody>
     </table>
 
@@ -271,10 +271,10 @@
       <figcaption>① Stretched approach tags the fresh level — wick rejection, no close beyond. ② Confirmation bar closes back past the touch bar's midpoint → entry. Stop beyond the wick; target the first opposing level. Idealized geometry — real ones are uglier.</figcaption>
     </figure>
 
-    <div class="callout tip"><span class="ic">↯</span><div class="body"><strong>With the tool (Tier 2+):</strong> no signal painter for this model — that's deliberate. Tier 2 adds <code>8bfzonepro</code>, which turns the line into a <strong>zone with depth</strong>: trigger at the near edge, stop beyond the far edge, and the zone's fresh/tested state read off the chart instead of your memory.</div></div>
+    <div class="callout tip"><span class="ic">↯</span><div class="body"><strong>With the tool (Tier 2+):</strong> no signal painter for this model — that's deliberate. Tier 2 adds Battle Zones, which turns the line into a <strong>zone with depth</strong>: trigger at the near edge, stop beyond the far edge, and the zone's fresh/tested state read off the chart instead of your memory.</div></div>
 
     <h3 class="block">Playing it with our levels</h3>
-    <p class="lede">The daily drop upgrades this model the most: a <strong>gamma wall first touch</strong> is the single highest-quality fade in the catalog — dealers are mechanically hedging against you crossing it. Priority order when several levels are fresh: <em>gamma wall &gt; call/put wall confluent with PDH/PDL &gt; 8bfzonepro zone edge &gt; naked PDH/PDL &gt; ONH/ONL</em>. On positive-gamma days from the ramp read, first-touch fades are the day's bread; on negative-gamma days, demand extra confirmation or stand down — walls break on those days.</p>
+    <p class="lede">The daily drop upgrades this model the most: a <strong>gamma wall first touch</strong> is the single highest-quality fade in the catalog — dealers are mechanically hedging against you crossing it. Priority order when several levels are fresh: <em>gamma wall &gt; call/put wall confluent with PDH/PDL &gt; Battle Zones edge &gt; naked PDH/PDL &gt; ONH/ONL</em>. On positive-gamma days from the ramp read, first-touch fades are the day's bread; on negative-gamma days, demand extra confirmation or stand down — walls break on those days.</p>
 
     <div class="em-cap">
       <div class="em-cap-title">Capture spec — v1.1 screenshots</div>
@@ -359,10 +359,10 @@
       <figcaption>① Push pokes above the OR high — stops beyond the extreme get raided. ② Failure bar closes back inside the range → entry. Stop beyond the raid wick; T1 mid, T2 opposite extreme. The mirror image below the OR low is the same trade, long.</figcaption>
     </figure>
 
-    <div class="callout tip"><span class="ic">↯</span><div class="body"><strong>With the tool (Tier 2+):</strong> <code>orb-raid</code> draws the OR automatically and marks raid vs breakout states, so the acceptance judgment isn't eyeballed. Until then: two horizontal lines at 09:45 and your own eyes — the model is fully tradeable naked, which is why it's a Tier 1 rung.</div></div>
+    <div class="callout tip"><span class="ic">↯</span><div class="body"><strong>With the tool (Tier 2+):</strong> Dynamic ORB PitRaids draws the OR automatically and marks raid vs breakout states, so the acceptance judgment isn't eyeballed. Until then: two horizontal lines at 09:45 and your own eyes — the model is fully tradeable naked, which is why it's a Tier 1 rung.</div></div>
 
     <h3 class="block">Playing it with our levels</h3>
-    <p class="lede">Raid quality jumps when the OR extreme is <strong>confluent with an outside level</strong>: an OR high sitting just under ONH, PDH, or a gexpro wall means the poke sweeps <em>two</em> pools before failing — more trapped traders, cleaner unwind. Best variant: the raid extreme tags a gamma wall from the daily drop and rejects — that's a First Touch and an OR Raid in one candle, and it's an automatic A-grade. If the ramp read calls a trend day (negative gamma, one-sided), skip raids entirely: acceptance is the base case on those days.</p>
+    <p class="lede">Raid quality jumps when the OR extreme is <strong>confluent with an outside level</strong>: an OR high sitting just under ONH, PDH, or a GreekZonesPro wall means the poke sweeps <em>two</em> pools before failing — more trapped traders, cleaner unwind. Best variant: the raid extreme tags a gamma wall from the daily drop and rejects — that's a First Touch and an OR Raid in one candle, and it's an automatic A-grade. If the ramp read calls a trend day (negative gamma, one-sided), skip raids entirely: acceptance is the base case on those days.</p>
 
     <div class="em-cap">
       <div class="em-cap-title">Capture spec — v1.1 screenshots</div>

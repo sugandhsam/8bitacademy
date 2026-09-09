@@ -97,10 +97,10 @@
       <figcaption>① Sweep — the wick trades through the pool and takes the stops. ② Reclaim bar closes back above the level within 3 bars → aggressive entry. ③ Retest of the level = conservative entry. Stop below the sweep low; target the opposite pool.</figcaption>
     </figure>
 
-    <div class="callout tip"><span class="ic">↯</span><div class="body"><strong>With the tool (Tier 2+):</strong> <code>htf-raids</code> marks sweeps of the higher-timeframe pools so you're never hunting levels mid-session; <code>fractal</code> maps the minor liquidity (equal highs/lows) between them; <code>lqabs</code> adds the absorption read at the extreme — heavy volume with no downside progress during the sweep is the strongest reclaim precursor there is.</div></div>
+    <div class="callout tip"><span class="ic">↯</span><div class="body"><strong>With the tool (Tier 2+):</strong> HTF Raids marks sweeps of the higher-timeframe pools so you're never hunting levels mid-session; Fractal Liquidity maps the minor liquidity (equal highs/lows) between them. Watch absorption at the extreme — heavy volume with no downside progress during the sweep is the strongest reclaim precursor there is.</div></div>
 
     <h3 class="block">Playing it with our levels</h3>
-    <p class="lede">The A+ version: a sweep <strong>through a public pool into a gexpro wall</strong> that then reclaims — e.g. PDL swept, the flush dies exactly at the put wall from the daily drop, reclaim follows. The pool supplied the fuel, the wall supplied the floor. With <code>8bfzonepro</code>: a sweep through a zone's far edge that reclaims the near edge is the zone-native version of this trade. Ramp-read gate: on strong negative-gamma days, downside sweeps tend to <em>extend</em> rather than reclaim — halve size or demand the retest entry.</p>
+    <p class="lede">The A+ version: a sweep <strong>through a public pool into a GreekZonesPro wall</strong> that then reclaims — e.g. PDL swept, the flush dies exactly at the put wall from the daily drop, reclaim follows. The pool supplied the fuel, the wall supplied the floor. With Battle Zones: a sweep through a zone's far edge that reclaims the near edge is the zone-native version of this trade. Ramp-read gate: on strong negative-gamma days, downside sweeps tend to <em>extend</em> rather than reclaim — halve size or demand the retest entry.</p>
 
     <div class="em-cap">
       <div class="em-cap-title">Capture spec — v1.1 screenshots</div>
@@ -184,15 +184,15 @@
       <figcaption>Regime gate first: 5m trend up, VWAP rising. ① Pullback into VWAP on cooling flow — small bars, wicks holding the zone. ② Flow flips back with the trend, resumption bar closes strong → entry. Stop below the pullback low; take T1 at the prior swing, trail the rest.</figcaption>
     </figure>
 
-    <div class="callout tip"><span class="ic">↯</span><div class="body"><strong>With the tool (Tier 2+):</strong> <code>vwap-flow</code> is this model's chart: session VWAP + bands with the up/down-volume flow read underneath — the "flow flips back" trigger is literally its histogram turning. <code>mm-b-elite</code> on 5m is the regime gate (KAMA-ER regime read, ~30-min windows); <code>rollingvwap</code> adds slope-aware VWAP lines if you want the trail rail. Pair the 5m regime with a 15m context chart, nothing exotic.</div></div>
+    <div class="callout tip"><span class="ic">↯</span><div class="body"><strong>With the tool (Tier 2+):</strong> this model's chart is session VWAP + bands with an up/down-volume flow read underneath — the "flow flips back" trigger is literally the flow histogram turning. Market Maker Series 3 on 5m is the regime gate (~30-min windows); Rolling VWAP &amp; Values Lines adds slope-aware VWAP lines if you want the trail rail. Pair the 5m regime with a 15m context chart, nothing exotic.</div></div>
 
     <h3 class="block">Playing it with our levels</h3>
-    <p class="lede">The level map decides whether the trend has <strong>air</strong>. A regime-approved pullback entry with the next gexpro wall 40+ NQ points away is a runner trade; the same entry directly beneath a wall is a scalp to the wall and out. Rule of thumb from the drop: <em>enter at fair price (VWAP), pay yourself at the wall</em>. On positive-gamma pin days the trend gate will simply keep you out — that's the system working, not a missed trade. 8bfzonepro zones act as the pullback's backstop: a pullback that holds zone + VWAP confluence is the highest-grade location this model produces.</p>
+    <p class="lede">The level map decides whether the trend has <strong>air</strong>. A regime-approved pullback entry with the next GreekZonesPro wall 40+ NQ points away is a runner trade; the same entry directly beneath a wall is a scalp to the wall and out. Rule of thumb from the drop: <em>enter at fair price (VWAP), pay yourself at the wall</em>. On positive-gamma pin days the trend gate will simply keep you out — that's the system working, not a missed trade. Battle Zones act as the pullback's backstop: a pullback that holds zone + VWAP confluence is the highest-grade location this model produces.</p>
 
     <div class="em-cap">
       <div class="em-cap-title">Capture spec — v1.1 screenshots</div>
       <ul>
-        <li>1m NQ + vwap-flow pane: trend leg, pullback on cooling flow, flow flip + resumption entry. Mark all three gates.</li>
+        <li>1m NQ + session VWAP / flow pane: trend leg, pullback on cooling flow, flow flip + resumption entry. Mark all three gates.</li>
         <li>5m NQ with MMB-Elite: the regime read that authorized the session's longs.</li>
         <li>Counter-example: flat VWAP whip day where the regime gate said no — captioned "no regime, no model".</li>
       </ul>
