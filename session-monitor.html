@@ -576,11 +576,12 @@ function buildDay(date, market) {
 
   return {
     date, market, origin, segs, pins, flags, banners, hol,
+    /* ring colours: validated categorical set on #0a0a0b (dataviz validate_palette, all pairs: CVD ΔE 12.8, normal 22.6, ≥3:1) */
     lanes: [
-      { name: 'Tokyo', c: '#92afd7', bars: [[A.tse0, A.tseL0], [A.tseL1, A.tse1]] },
-      { name: 'Shanghai', c: '#6fb7b0', bars: [[A.sh0, A.shL0], [A.shL1, A.sh1]] },
-      { name: 'London', c: '#c3b4e3', bars: [[A.lse0, A.lse1]] },
-      lanesNY && { name: 'New York', c: '#ececf1', bars: [[A.ny0, A.ny1]] }].filter(Boolean),
+      { name: 'Tokyo', c: '#b3237d', bars: [[A.tse0, A.tseL0], [A.tseL1, A.tse1]] },
+      { name: 'Shanghai', c: '#30a4ae', bars: [[A.sh0, A.shL0], [A.shL1, A.sh1]] },
+      { name: 'London', c: '#2858cd', bars: [[A.lse0, A.lse1]] },
+      lanesNY && { name: 'New York', c: '#de6e29', bars: [[A.ny0, A.ny1]] }].filter(Boolean),
     sess: { asia: [0, A.lse0], london: [A.lse0 - 60, A.lse1 + 30], ny: [et(7), et(17)], full: [0, 1440] }
   };
 }
