@@ -698,7 +698,7 @@ function render() {
   }
 
   // session clock
-  h += '<div class="plan-h">Session clock — every day runs this arc</div><div class="pb-clock">';
+  h += '<div class="plan-h">Session clock — every day runs this arc</div><p style="margin:0 0 10px;font-size:12.5px;color:var(--text3)">Exact windows, releases and settles for any date, in ET: <a href="session-monitor.html">Session Monitor</a></p><div class="pb-clock">';
   sessionClock().forEach(r => {
     h += `<div class="clk-row${r.now ? ' now' : ''}">`;
     h += `<div class="clk-t">${r.t}</div>`;

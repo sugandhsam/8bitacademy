@@ -164,6 +164,17 @@
   .c-dia { color: var(--lv); font-size: 20px; line-height: 1; }
   .c-empty { padding: 30px 0; color: var(--text3); }
 
+  /* ── WHY THE CLOCK MATTERS ─────────────────────────────── */
+  .sm-why { padding: 8px 48px 96px; font-size: 18px; line-height: 1.55; color: var(--text2); }
+  .sm-why h2 { font-size: clamp(28px, 2.8vw, 40px); color: var(--text); font-weight: 700; letter-spacing: -.01em; margin: 0 0 12px; }
+  .sm-why .why-lede { margin: 0 0 32px; max-width: 60ch; }
+  .why-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
+  .why-card { padding: 28px 30px; border-radius: 16px; background: var(--bg3); border: 1px solid var(--border); }
+  .why-card .n { font-size: 14px; font-weight: 700; letter-spacing: .12em; color: var(--brand); }
+  .why-card h3 { font-size: 22px; line-height: 1.25; color: var(--text); font-weight: 700; margin: 12px 0 10px; }
+  .why-card p { margin: 0; font-size: 17px; }
+  .why-card code { font-family: var(--font-mono); font-size: .92em; color: var(--text); background: var(--bg4); padding: 1px 6px; border-radius: 4px; }
+
   @media (max-width: 1000px) {
     .c-row { grid-template-columns: 1fr auto; gap: 10px 20px; }
     .c-row .c-time { grid-column: 1; } .c-row .c-left { grid-column: 2; grid-row: 1; }
@@ -179,6 +190,9 @@
     .c-row.now .c-time, .c-cd { font-size: 32px; }
     .c-tabs { gap: 8px 28px; }
     .c-closed { padding: 28px 24px; }
+    .sm-why { padding: 0 22px 72px; font-size: 17px; }
+    .why-grid { grid-template-columns: 1fr; }
+    .why-card { padding: 24px 22px; }
   }
   @media (prefers-reduced-motion: reduce) {
     .live-dot::before { animation: none; }
@@ -195,6 +209,38 @@
 </section>
 
 <section class="sm" id="sm-app" aria-live="off"></section>
+
+<section class="sm-why">
+  <h2>Why the clock matters</h2>
+  <p class="why-lede">Five timing facts that quietly decide where your fills, stops and settles land.</p>
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="n">01</div>
+      <h3>The day starts at 18:00</h3>
+      <p>A CME trade date runs from 18:00 ET to 17:00 ET the next day. Sunday evening already counts as Monday, and a Thursday-night move belongs to Friday’s session.</p>
+    </div>
+    <div class="why-card">
+      <div class="n">02</div>
+      <h3>Settle isn’t the cash close</h3>
+      <p>Your account is marked to the settlement price. ES settles on the 15:59:30–16:00 ET VWAP, gold on 13:29–13:30 and crude on 14:28–14:30 — hours before Globex breaks.</p>
+    </div>
+    <div class="why-card">
+      <div class="n">03</div>
+      <h3>The overlap is the window</h3>
+      <p>When London and New York cash markets are both open, the book is deepest. For ES that runs from the 09:30 cash open to London’s close, and it’s usually where the day’s range gets made.</p>
+    </div>
+    <div class="why-card">
+      <div class="n">04</div>
+      <h3>The DST trap</h3>
+      <p>The US and Europe change clocks on different Sundays, so London opens at 04:00 ET instead of 03:00 for a week or more — 25–31 Oct 2026 and 14–27 Mar 2027. Anchor scripts to New York: in Pine use <code>"America/New_York"</code>, not <code>"GMT-5"</code>.</p>
+    </div>
+    <div class="why-card">
+      <div class="n">05</div>
+      <h3>Expiry and roll</h3>
+      <p>ES and NQ expire on the third Friday of March, June, September and December, settling to the index opening print. Volume moves to the next contract about a week earlier. Crude expires monthly; gold has first notice days before each delivery month.</p>
+    </div>
+  </div>
+</section>
 
 <footer class="site-footer">
   <div class="footer-inner">
