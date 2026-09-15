@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>8BitTrading · Session Monitor</title>
+<meta name="description" content="Which hours are worth your screen time. ES, NQ, gold and crude rated Target, Event, Thin or Closed across the CME trade date — live, in New York time.">
+<link rel="stylesheet" href="academy.css">
+<link rel="stylesheet" href="footer.css">
+<script src="academy-shell.js" defer></script>
+<link rel="icon" type="image/png" sizes="32x32" href="public/assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="public/assets/favicon-32.png">
+<link rel="apple-touch-icon" href="public/assets/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="8BitTrading Academy">
+<meta property="og:title" content="8BitTrading · Session Monitor">
+<meta property="og:description" content="Which hours are worth your screen time. ES, NQ, gold and crude rated Target, Event, Thin or Closed across the CME trade date — live, in New York time.">
+<meta property="og:url" content="https://8bittrading.com/session-monitor.html">
+<meta property="og:image" content="https://8bittrading.com/public/assets/avat-big.png">
+<meta property="og:image:width" content="1024">
+<meta property="og:image:height" content="1024">
+<meta property="og:image:alt" content="8BitTrading 8B logo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="8BitTrading · Session Monitor">
+<meta name="twitter:description" content="Which hours are worth your screen time. ES, NQ, gold and crude rated Target, Event, Thin or Closed across the CME trade date — live, in New York time.">
+<meta name="twitter:image" content="https://8bittrading.com/public/assets/avat-big.png">
+<style>
+  /* ── shared ─────────────────────────────────────────────── */
+  .sm, .sm-hero {
+    --lv-target: var(--brand); --lv-event: var(--warn-strong); --lv-thin: #8b8b95; --lv-closed: #5a5a62;
+    font-size: 18px; line-height: 1.55; color: var(--text2);
+  }
+  .sm-hero { padding: 72px 48px 12px; }
+  .sm { padding: 40px 48px 96px; }
+  .sm b, .sm strong { color: var(--text); font-weight: 700; }
+  .sm p { margin: 0; }
+  .sm a { color: var(--brand-strong); }
+  .lv-target { --lv: var(--lv-target); } .lv-event { --lv: var(--lv-event); }
+  .lv-thin { --lv: var(--lv-thin); }     .lv-closed { --lv: var(--lv-closed); }
+  .tnum { font-variant-numeric: tabular-nums; }
+
+  .kicker { font-size: 14px; letter-spacing: .14em; text-transform: uppercase; color: var(--brand); font-weight: 700; margin-bottom: 18px; }
+  .sm-hero h1 { font-size: clamp(40px, 4.8vw, 72px); line-height: 1.02; letter-spacing: -.02em; color: var(--text); font-weight: 700; margin: 0 0 20px; }
+  .sm-hero h1 .g { color: var(--brand); }
+  .lede { font-size: clamp(18px, 1.5vw, 22px); max-width: 48ch; margin: 0; }
+
+  .ctl-l { font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--text3); margin-bottom: 12px; font-weight: 700; }
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+  .chip { font: inherit; font-size: 17px; font-weight: 700; padding: 12px 22px; border-radius: 999px; border: 1px solid var(--border2); background: transparent; color: var(--text2); cursor: pointer; transition: background .15s, color .15s, border-color .15s; }
+  .chip:hover { border-color: var(--border3); color: var(--text); }
+  .chip.on { background: var(--text); color: var(--bg); border-color: var(--text); }
+
+  .tag { display: inline-flex; align-items: center; gap: 9px; font-size: 14px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--lv); white-space: nowrap; }
+  .tag::before { content: ''; width: 12px; height: 12px; border-radius: 3px; background: var(--lv); flex-shrink: 0; }
+  .tag.lv-closed::before { background: repeating-linear-gradient(135deg, #6a6a72 0 2px, transparent 2px 5px); border: 1px solid #6a6a72; }
+
+  .flags { display: flex; flex-wrap: wrap; gap: 10px; }
+  .flag { font-size: 15px; font-weight: 700; padding: 8px 16px; border-radius: 999px; border: 1px solid var(--border2); color: var(--text2); }
+  .flag.warn { border-color: rgba(240,191,76,.45); color: var(--warn-strong); background: var(--warn-soft); }
+  .flag.hot { border-color: var(--brand-soft); color: var(--brand-strong); background: var(--brand-softer); }
+
+  .banner { margin-top: 24px; padding: 18px 24px; border-radius: 14px; font-size: 17px; border: 1px solid var(--border2); background: var(--bg3); color: var(--text); }
+  .banner.warn { border-color: rgba(240,191,76,.45); background: var(--warn-soft); color: var(--warn-strong); }
+
+  .step { font: inherit; font-size: 22px; width: 54px; height: 54px; border-radius: 50%; border: 1px solid var(--border2); background: transparent; color: var(--text); cursor: pointer; flex-shrink: 0; }
+  .step:hover { border-color: var(--border3); background: var(--bg4); }
+  .live-btn { font: inherit; font-size: 15px; font-weight: 700; padding: 11px 20px; border-radius: 999px; border: 1px solid var(--brand-soft); color: var(--brand-strong); background: var(--brand-softer); cursor: pointer; }
+  .live-dot { display: inline-flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 700; color: var(--brand-strong); letter-spacing: .08em; text-transform: uppercase; }
+  .live-dot::before { content: ''; width: 10px; height: 10px; border-radius: 50%; background: var(--brand); animation: smpulse 2s infinite; }
+  @keyframes smpulse { 0% { box-shadow: 0 0 0 0 rgba(61,214,140,.55); } 70%, 100% { box-shadow: 0 0 0 12px rgba(61,214,140,0); } }
+
+  .legend { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 28px 40px; }
+  .legend p { font-size: 16px; margin-top: 8px; }
+  .sm-foot { margin-top: 64px; padding-top: 44px; border-top: 1px solid var(--border); }
+  .notes { margin: 36px 0 0; padding: 0; list-style: none; display: grid; gap: 8px; font-size: 15px; color: var(--text3); }
+  .notes .warn { color: var(--warn-strong); }
+
+  .vt { display: inline-flex; padding: 4px; border-radius: 999px; border: 1px solid var(--border2); }
+  .vt-b { font: inherit; font-size: 15px; font-weight: 700; padding: 9px 16px; border-radius: 999px; border: 0; background: transparent; color: var(--text3); cursor: pointer; white-space: nowrap; }
+  .vt-b:hover { color: var(--text); }
+  .vt-b.on { background: var(--bg4); color: var(--text); box-shadow: inset 0 0 0 1px var(--border3); }
+
+  /* ── DIAL ───────────────────────────────────────────────── */
+  .b-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(400px, 1fr); gap: 56px; align-items: start; }
+  .b-grid > .b-dial { position: sticky; top: calc(var(--topbar-h) + 32px); }
+  .b-dial { position: relative; width: 100%; max-width: 860px; aspect-ratio: 1; container-type: inline-size; }
+  .b-dial svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; overflow: visible; }
+  .dseg { stroke: var(--bg); stroke-width: 3; }
+  .dseg.lv-target { fill: var(--lv-target); } .dseg.lv-event { fill: var(--lv-event); }
+  .dseg.lv-thin { fill: #26262c; } .dseg.lv-closed { fill: url(#sm-hatch); }
+  .dseg.cur { filter: drop-shadow(0 0 14px color-mix(in srgb, var(--lv) 70%, transparent)); }
+  .dhour { font-family: var(--font-mono); font-size: 21px; fill: var(--text3); }
+  .dhour.key { fill: var(--text); font-weight: 700; }
+  .b-center { position: absolute; inset: 29%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  .b-k { font-size: max(12px, 2.1cqw); color: var(--text3); letter-spacing: .1em; text-transform: uppercase; font-weight: 700; }
+  .b-state { font-size: 9cqw; line-height: 1; font-weight: 700; color: var(--lv, var(--text)); letter-spacing: -.03em; margin: 1.6cqw 0 1cqw; }
+  .b-name { font-size: max(15px, 3.2cqw); color: var(--text); font-weight: 700; line-height: 1.2; overflow-wrap: anywhere; }
+  .b-cd { font-size: 6.6cqw; color: var(--text); font-weight: 700; line-height: 1; margin-top: 2.4cqw; }
+  .b-sub { font-size: max(13px, 2.1cqw); color: var(--text3); margin-top: .8cqw; }
+  .b-side > * + * { margin-top: 40px; }
+  .daybar { display: grid; gap: 18px; }
+  .daybar .c-nav { gap: 10px; }
+  .date { font-size: clamp(22px, 2vw, 30px); font-weight: 700; color: var(--text); line-height: 1.15; }
+  .date-sub { font-size: 15px; color: var(--text3); margin-top: 4px; }
+  .b-list { display: grid; gap: 4px; }
+  .b-item { display: grid; grid-template-columns: 92px minmax(0, 1fr) auto; gap: 18px; align-items: baseline; padding: 18px 0; border-bottom: 1px solid var(--divider); }
+  .b-t { font-size: 22px; font-weight: 700; color: var(--lv); }
+  .b-n { font-size: 20px; font-weight: 700; color: var(--text); line-height: 1.25; }
+  .b-d { font-size: 15px; color: var(--text3); margin-top: 4px; }
+  .b-in { font-size: 17px; color: var(--text2); white-space: nowrap; }
+  .b-rings { display: flex; flex-wrap: wrap; gap: 10px 24px; font-size: 15px; }
+  .b-rings span { display: inline-flex; align-items: center; gap: 9px; }
+  .b-rings i { width: 22px; height: 6px; border-radius: 3px; display: inline-block; }
+  @media (max-width: 1240px) { .b-grid { grid-template-columns: 1fr; } .b-grid > .b-dial { position: relative; top: 0; margin: 0 auto; } }
+  @media (max-width: 720px) { .b-item { grid-template-columns: 64px minmax(0, 1fr) auto; gap: 12px; } .b-t { font-size: 18px; } .b-n { font-size: 18px; } }
+
+  /* ── BOARD ──────────────────────────────────────────────── */
+  .c-top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 28px; margin-bottom: 40px; }
+  .c-kick { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; font-size: 15px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--text3); margin-bottom: 18px; }
+  .c-date { font-size: clamp(44px, 5.6vw, 88px); font-weight: 700; line-height: .95; color: var(--text); letter-spacing: -.03em; }
+  .c-sub { font-size: 17px; color: var(--text3); margin-top: 16px; }
+  .c-nav { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .c-mid { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 24px; align-items: center; margin-bottom: 36px; }
+  .c-tabs { display: flex; flex-wrap: wrap; gap: 8px 44px; border-bottom: 1px solid var(--border); margin-bottom: 30px; }
+  .c-tab { font: inherit; font-size: clamp(22px, 2.5vw, 36px); font-weight: 700; color: var(--text3); background: none; border: 0; padding: 0 0 18px; cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -1px; text-align: left; }
+  .c-tab:hover { color: var(--text2); }
+  .c-tab.on { color: var(--text); border-color: var(--brand); }
+  .c-tab .r { display: block; font-size: 15px; font-weight: 400; color: var(--text3); margin-top: 6px; }
+  .c-mini { position: relative; height: 22px; border-radius: 6px; overflow: hidden; background: var(--bg4); }
+  .c-mini i { position: absolute; top: 0; bottom: 0; }
+  .c-mini i.lv-target { background: var(--lv-target); } .c-mini i.lv-event { background: var(--lv-event); }
+  .c-mini i.lv-thin { background: #2a2a30; } .c-mini i.lv-closed { background: #141417; }
+  .c-mini .dim { position: absolute; top: 0; bottom: 0; background: rgba(10,10,11,.72); }
+  .c-mini .nw { position: absolute; top: -2px; bottom: -2px; width: 3px; margin-left: -1px; background: #fff; box-shadow: 0 0 10px rgba(255,255,255,.7); }
+  .c-mini-h { display: flex; justify-content: space-between; font-size: 13px; color: var(--text3); margin-top: 8px; }
+  .c-closed { margin-top: 36px; padding: 40px; border-radius: 18px; background: var(--bg3); border: 1px solid var(--border2); display: flex; flex-wrap: wrap; gap: 20px 40px; align-items: baseline; justify-content: space-between; }
+  .c-closed .x { font-size: clamp(28px, 3vw, 44px); font-weight: 700; color: var(--text); margin-top: 12px; }
+  .c-closed .cd { font-size: clamp(40px, 4.4vw, 64px); font-weight: 700; color: var(--text); }
+  .c-rows { display: flex; flex-direction: column; gap: 12px; margin-top: 36px; }
+  .c-row { position: relative; overflow: hidden; display: grid; grid-template-columns: 170px 150px minmax(0, 1fr) 150px; gap: 30px; align-items: start; padding: 30px 34px 30px 38px; border-radius: 18px; background: var(--bg3); border: 1px solid var(--border); }
+  .c-row::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 6px; background: var(--lv); }
+  .c-row.lv-thin::before { background: #3a3a42; }
+  .c-row.lv-closed::before { background: repeating-linear-gradient(180deg, #5a5a62 0 4px, transparent 4px 8px); }
+  .c-time { font-size: 32px; font-weight: 700; color: var(--text); line-height: 1.05; }
+  .c-time .to { display: block; font-size: 17px; color: var(--text3); font-weight: 400; margin-top: 8px; }
+  .c-tagc { padding-top: 8px; display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+  .c-nowtag { font-size: 12px; font-weight: 700; letter-spacing: .12em; color: var(--bg); background: var(--lv); padding: 3px 9px; border-radius: 6px; }
+  .c-title { font-size: 26px; font-weight: 700; color: var(--text); line-height: 1.2; margin-bottom: 8px; }
+  .c-note { font-size: 18px; max-width: 60ch; }
+  .c-left { text-align: right; padding-top: 4px; }
+  .c-cd { font-size: 40px; font-weight: 700; color: var(--text); line-height: 1; }
+  .c-cdl, .c-dur { font-size: 16px; color: var(--text3); margin-top: 6px; }
+  .c-in { font-size: 18px; color: var(--text2); font-weight: 700; }
+  .c-row.past { opacity: .4; }
+  .c-row.now { padding-top: 44px; padding-bottom: 48px; background: color-mix(in srgb, var(--lv) 9%, var(--bg3)); border-color: color-mix(in srgb, var(--lv) 45%, transparent); }
+  .c-row.now .c-title { font-size: 36px; }
+  .c-row.now .c-time { font-size: 40px; }
+  .c-prog { position: absolute; left: 0; bottom: 0; height: 5px; width: calc(var(--prog) * 100%); background: var(--lv); }
+  .c-row.c-pin { padding-top: 18px; padding-bottom: 18px; background: transparent; border-style: dashed; }
+  .c-row.c-pin::before { width: 0; }
+  .c-pin .c-time { font-size: 22px; padding-top: 2px; }
+  .c-pin .c-title { font-size: 20px; margin-bottom: 4px; }
+  .c-pin .c-note { font-size: 16px; }
+  .c-dia { color: var(--lv); font-size: 20px; line-height: 1; }
+  .c-empty { padding: 30px 0; color: var(--text3); }
+
+  /* ── WHY THE CLOCK MATTERS ─────────────────────────────── */
+  .sm-why { padding: 8px 48px 96px; font-size: 18px; line-height: 1.55; color: var(--text2); }
+  .sm-why h2 { font-size: clamp(28px, 2.8vw, 40px); color: var(--text); font-weight: 700; letter-spacing: -.01em; margin: 0 0 12px; }
+  .sm-why .why-lede { margin: 0 0 32px; max-width: 60ch; }
+  .why-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
+  .why-card { padding: 28px 30px; border-radius: 16px; background: var(--bg3); border: 1px solid var(--border); }
+  .why-card .n { font-size: 14px; font-weight: 700; letter-spacing: .12em; color: var(--brand); }
+  .why-card h3 { font-size: 22px; line-height: 1.25; color: var(--text); font-weight: 700; margin: 12px 0 10px; }
+  .why-card p { margin: 0; font-size: 17px; }
+  .why-card code { font-family: var(--font-mono); font-size: .92em; color: var(--text); background: var(--bg4); padding: 1px 6px; border-radius: 4px; }
+
+  @media (max-width: 1000px) {
+    .c-row { grid-template-columns: 1fr auto; gap: 10px 20px; }
+    .c-row .c-time { grid-column: 1; } .c-row .c-left { grid-column: 2; grid-row: 1; }
+    .c-row .c-tagc { grid-column: 1 / -1; flex-direction: row; padding-top: 0; }
+    .c-row .c-body { grid-column: 1 / -1; }
+  }
+  @media (max-width: 720px) {
+    .sm-hero { padding: 48px 22px 4px; }
+    .sm { padding: 28px 22px 72px; font-size: 17px; }
+    .c-row { padding: 22px 20px 22px 26px; }
+    .c-row.now { padding-top: 30px; padding-bottom: 34px; }
+    .c-row.now .c-title { font-size: 28px; }
+    .c-row.now .c-time, .c-cd { font-size: 32px; }
+    .c-tabs { gap: 8px 28px; }
+    .c-closed { padding: 28px 24px; }
+    .sm-why { padding: 0 22px 72px; font-size: 17px; }
+    .why-grid { grid-template-columns: 1fr; }
+    .why-card { padding: 24px 22px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .live-dot::before { animation: none; }
+    .chip { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<section class="sm-hero">
+  <div class="kicker">Tools · Session Monitor</div>
+  <h1>Your <span class="g">24 hours</span>, rated.</h1>
+  <p class="lede">Which hours are worth your screen time — for your market, in New York time.</p>
+</section>
+
+<section class="sm" id="sm-app" aria-live="off"></section>
+
+<section class="sm-why">
+  <h2>Why the clock matters</h2>
+  <p class="why-lede">Five timing facts that quietly decide where your fills, stops and settles land.</p>
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="n">01</div>
+      <h3>The day starts at 18:00</h3>
+      <p>A CME trade date runs from 18:00 ET to 17:00 ET the next day. Sunday evening already counts as Monday, and a Thursday-night move belongs to Friday’s session.</p>
+    </div>
+    <div class="why-card">
+      <div class="n">02</div>
+      <h3>Settle isn’t the cash close</h3>
+      <p>Your account is marked to the settlement price. ES settles on the 15:59:30–16:00 ET VWAP, gold on 13:29–13:30 and crude on 14:28–14:30 — hours before Globex breaks.</p>
+    </div>
+    <div class="why-card">
+      <div class="n">03</div>
+      <h3>The overlap is the window</h3>
+      <p>When London and New York cash markets are both open, the book is deepest. For ES that runs from the 09:30 cash open to London’s close, and it’s usually where the day’s range gets made.</p>
+    </div>
+    <div class="why-card">
+      <div class="n">04</div>
+      <h3>The DST trap</h3>
+      <p>The US and Europe change clocks on different Sundays, so London opens at 04:00 ET instead of 03:00 for a week or more — 25–31 Oct 2026 and 14–27 Mar 2027. Anchor scripts to New York: in Pine use <code>"America/New_York"</code>, not <code>"GMT-5"</code>.</p>
+    </div>
+    <div class="why-card">
+      <div class="n">05</div>
+      <h3>Expiry and roll</h3>
+      <p>ES and NQ expire on the third Friday of March, June, September and December, settling to the index opening print. Volume moves to the next contract about a week earlier. Crude expires monthly; gold has first notice days before each delivery month.</p>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <a class="footer-logo" href="index.html"><img src="/public/assets/8bitlogo.svg" alt="8BitTrading" class="logo-mark"></a>
+    <div class="footer-links">
+      <a href="academy.html">Academy</a>
+      <a href="06-indicators.html">Indicators</a>
+      <a href="/discord/" target="_blank" rel="noopener">Community</a>
+      <a href="tools.html">Tools</a>
+    </div>
+    <div class="footer-social">
+      <a href="/discord/" target="_blank" rel="noopener" aria-label="Join the 8BitTrading Discord" title="Discord">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg>
+      </a>
+      <a href="https://x.com/8bitfuturist" target="_blank" rel="noopener" aria-label="8BitTrading on X" title="X">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>
+      </a>
+    </div>
+  </div>
+  <p class="footer-note"><span>&copy; 2026 8bitTrading.</span><span>Education, not financial advice.</span></p>
+</footer>
+
+<script>
+/*
+  Session Monitor — a date-aware ET map of the CME trade date for ES·NQ, Gold, Crude.
+  Rules live here (exchange hours, weekly releases, expiries); dated events live in
+  data/calendar.json (hand-kept, same-origin — serve over http, not file://).
+  Every hard-coded time below cites its source; the fact log is kept locally.
+  Test hooks: ?now=YYYY-MM-DDTHH:MM (fake ET wall clock that keeps ticking),
+              ?market=es|gold|crude  ?session=asia|london|ny|full  ?view=dial|board
+*/
+(function () {
+'use strict';
+
+/* ── time helpers (DST-correct via Intl, no library) ─────── */
+const ET = 'America/New_York';
+const Q = new URLSearchParams(location.search);
+const pad = n => String(n).padStart(2, '0');
+const fmts = {};
+function parts(ms, tz) {
+  const f = fmts[tz] || (fmts[tz] = new Intl.DateTimeFormat('en-US', { timeZone: tz, hourCycle: 'h23', year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' }));
+  const o = {}; for (const p of f.formatToParts(new Date(ms))) o[p.type] = p.value;
+  return { y: +o.year, m: +o.month, d: +o.day, h: (+o.hour) % 24, mi: +o.minute, s: +o.second };
+}
+/* wall time in a zone → epoch ms */
+function zoned(ymd, h, mi, tz) {
+  const target = Date.UTC(ymd.y, ymd.m - 1, ymd.d, h, mi);
+  let g = target;
+  for (let i = 0; i < 3; i++) { const p = parts(g, tz); g += target - Date.UTC(p.y, p.m - 1, p.d, p.h, p.mi); }
+  return g;
+}
+const addDays = (d, n) => { const t = new Date(Date.UTC(d.y, d.m - 1, d.d + n)); return { y: t.getUTCFullYear(), m: t.getUTCMonth() + 1, d: t.getUTCDate() }; };
+const dow = d => new Date(Date.UTC(d.y, d.m - 1, d.d)).getUTCDay();
+const key = d => `${d.y}-${pad(d.m)}-${pad(d.d)}`;
+const hm = s => s.split(':').map(Number);
+const WDN = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const wd3 = d => WDN[dow(d)].slice(0, 3);
+/* axis = minutes since the trade date's 18:00 ET start */
+const hhmm = ax => { const t = ((Math.round(ax) + 1080) % 1440 + 1440) % 1440; return pad(Math.floor(t / 60)) + ':' + pad(t % 60); };
+const dur = m => { m = Math.round(m); return m >= 60 ? `${Math.floor(m / 60)}h${m % 60 ? ' ' + pad(m % 60) + 'm' : ''}` : `${m}m`; };
+const fmtCd = ms => { const s = Math.max(0, Math.floor(ms / 1000)), h = Math.floor(s / 3600), ms_ = `${pad(Math.floor(s % 3600 / 60))}:${pad(s % 60)}`; return h >= 24 ? `${Math.floor(h / 24)}d ${pad(h % 24)}:${ms_}` : h ? `${h}:${ms_}` : `${Math.floor(s / 60)}:${pad(s % 60)}`; };
+const fmtIn = ms => { const m = Math.max(0, Math.ceil(ms / 60000)); return m < 60 ? `in ${m}m` : `in ${Math.floor(m / 60)}h ${pad(m % 60)}m`; };
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+const LOAD = Date.now();
+let fakeBase = null;
+const nq = (Q.get('now') || '').match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})$/);
+if (nq) fakeBase = zoned({ y: +nq[1], m: +nq[2], d: +nq[3] }, +nq[4], +nq[5], ET);
+const nowMs = () => fakeBase !== null ? fakeBase + (Date.now() - LOAD) : Date.now();
+
+/* ── calendar (data/calendar.json) ───────────────────────── */
+let CAL = null, calState = 'loading';
+function indexCal(j) {
+  const ev = {}, hol = {}, moved = {};
+  (j.events || []).forEach(e => (ev[e.date] = ev[e.date] || []).push(e));
+  (j.overrides || []).forEach(o => { (ev[o.date] = ev[o.date] || []).push(o); moved[o.type + ':' + o.replaces] = true; });
+  (j.holidays || []).forEach(h => { hol[h.date] = h; });
+  return { raw: j, ev, hol, moved };
+}
+const holiday = d => (CAL && CAL.hol[key(d)]) || null;
+const isBiz = d => dow(d) % 6 !== 0 && !(holiday(d) && holiday(d).kind === 'closed');
+
+/* which CME trade date is live at this instant (Globex: Sun 18:00 → Fri 17:00 ET, daily break 17:00–18:00) */
+function liveDate(ms) {
+  const p = parts(ms, ET), today = { y: p.y, m: p.m, d: p.d }, wd = dow(today), mins = p.h * 60 + p.mi;
+  let d = wd % 6 === 0 ? today : mins >= (wd === 5 ? 1020 : 1080) ? addDays(today, 1) : today;
+  while (!isBiz(d)) d = addDays(d, 1);
+  return d;
+}
+const stepDate = (d, dir) => { do { d = addDays(d, dir); } while (dow(d) % 6 === 0); return d; };
+
+/* ── rules: expiries (CME) ───────────────────────────────── */
+const nthFriday = (y, m, n) => ({ y, m, d: 1 + ((5 - dow({ y, m, d: 1 }) + 7) % 7) + 7 * (n - 1) });
+/* last business day of month m */
+const lastBiz = (y, m) => { let d = addDays({ y, m: m + 1, d: 1 }, -1); while (!isBiz(d)) d = addDays(d, -1); return d; };
+/* CL last trade date, falling in month m (the month before the contract month):
+   3 business days before the 25th, or 4 if the 25th isn't a business day.
+   ⚠️ agent's reading of CME CL specs — confirm against cmegroup.com contract specs. */
+function clLastTrade(y, m) {
+  let d = { y, m, d: 25 }, n = isBiz(d) ? 3 : 4;
+  while (n > 0) { d = addDays(d, -1); if (isBiz(d)) n--; }
+  return d;
+}
+
+/* ── painting a continuous rating timeline ───────────────── */
+/* T = breakpoints {s, lvl, name, note}; each lasts until the next one */
+function paint(T, s, e, seg) {
+  s = Math.max(0, Math.round(s)); e = Math.min(1440, Math.round(e));
+  if (e <= s) return T;
+  const resume = e < 1440 ? T.filter(b => b.s <= e).pop() : null;
+  const out = T.filter(b => b.s < s || b.s >= e);
+  out.push(Object.assign({}, seg, { s }));
+  if (resume && !out.some(b => b.s === e)) out.push(Object.assign({}, resume, { s: e }));
+  return out.sort((a, b) => a.s - b.s);
+}
+
+/* ── day model: segments (continuous ratings) + pins (moments) ── */
+function buildDay(date, market) {
+  const origin = zoned(addDays(date, -1), 18, 0, ET);
+  const ax = ms => Math.round((ms - origin) / 60000);
+  const et = (h, mi = 0) => ax(zoned(h >= 18 ? addDays(date, -1) : date, h, mi, ET));
+  const ex = (tz, h, mi = 0) => ax(zoned(date, h, mi, tz));
+  const A = {
+    /* TSE 09:00–11:30 / 12:30–15:30 JST — jpx.co.jp */
+    tse0: ex('Asia/Tokyo', 9), tseL0: ex('Asia/Tokyo', 11, 30), tseL1: ex('Asia/Tokyo', 12, 30), tse1: ex('Asia/Tokyo', 15, 30),
+    /* SSE 09:30–11:30 / 13:00–15:00, HKEX opens 09:30 — sse.com.cn, hkex.com.hk */
+    sh0: ex('Asia/Shanghai', 9, 30), shL0: ex('Asia/Shanghai', 11, 30), shL1: ex('Asia/Shanghai', 13), sh1: ex('Asia/Shanghai', 15),
+    /* Shanghai Gold Exchange day session 09:00–11:30 / 13:30–15:30 — en.sge.com.cn */
+    sge0: ex('Asia/Shanghai', 9), sgeL0: ex('Asia/Shanghai', 11, 30),
+    /* LSE 08:00–16:30 (Xetra 09:00 CET opens the same instant) — londonstockexchange.com */
+    lse0: ex('Europe/London', 8), lse1: ex('Europe/London', 16, 30),
+    /* LBMA Gold Price 10:30 + 15:00 London — lbma.org.uk; WM/Reuters 4pm fix — lseg.com */
+    lbmaAM: ex('Europe/London', 10, 30), lbmaPM: ex('Europe/London', 15), wm: ex('Europe/London', 16),
+    ny0: et(9, 30), ny1: et(16)
+  };
+  const wd = dow(date), k = key(date), hol = holiday(date);
+  const evs = CAL ? (CAL.ev[k] || []) : [];
+  const find = t => evs.find(e => e.type === t);
+  const moved = t => !!(CAL && CAL.moved[t + ':' + k]);
+  const evAt = (e, time) => { const [h, mi] = hm(time); return ax(zoned(date, h, mi, e.tz)); };
+
+  const fomc = find('fomc'), minutes = find('fomc-minutes'), cpi = find('cpi'), nfp = find('nfp'), ecb = find('ecb'), boe = find('boe');
+  /* weekly rules; holiday-week moves come from calendar.json overrides.
+     Claims Thu 08:30 — dol.gov; EIA Wed 10:30 — eia.gov; API Tue ~16:30 — api.org;
+     Baker Hughes noon Central on Fridays — rigcount.bakerhughes.com.
+     Claims + rig count are skipped on holidays: their holiday schedule isn't published. */
+  const claims = wd === 4 && !hol;
+  const eia = find('eia') || (wd === 3 && !moved('eia') ? { tz: ET, time: '10:30' } : null);
+  const api = find('api') || (wd === 2 && !moved('api') ? { tz: ET, time: '16:30' } : null);
+  const rigs = wd === 5 && !hol;
+  const prints = [nfp && 'Payrolls', cpi && 'CPI', claims && 'Jobless claims'].filter(Boolean);
+  const dataName = prints.join(' + ');
+
+  /* ES quarterly: 3rd Friday Mar/Jun/Sep/Dec, settles to the index opening print — cmegroup.com.
+     Roll date = 8 calendar days before expiry (convention; ⚠️ confirm on CME roll-dates page). */
+  const qMonth = d => [3, 6, 9, 12].includes(d.m);
+  const expiry = qMonth(date) && key(nthFriday(date.y, date.m, 3)) === k;
+  const in8 = addDays(date, 8), roll = qMonth(in8) && key(nthFriday(in8.y, in8.m, 3)) === key(in8);
+  const clExpiry = key(clLastTrade(date.y, date.m)) === k;
+  /* GC first notice day = last business day of the month before a delivery month — CME rulebook ch. 7.
+     Delivery months Feb/Apr/Jun/Aug/Oct/Dec (⚠️ confirm on CME gold specs). */
+  const gcFnd = date.m % 2 === 1 && key(lastBiz(date.y, date.m)) === k;
+
+  const mismatch = A.lse0 === et(4);   /* London cash open normally lands 03:00 ET */
+  const usStd = A.tse0 === et(19);      /* Tokyo opens 20:00 ET in US summer, 19:00 in winter */
+
+  const afterHoliday = wd !== 1 && !isBiz(addDays(date, -1));
+  const openName = wd === 1 ? 'Sunday reopen' : afterHoliday ? 'Holiday reopen' : 'Globex reopen';
+  const open = [0, 'thin', openName, wd === 1 || afterHoliday ? 'Globex wakes up after the break. Thin book — the gap gets priced here.' : 'A new trade date starts. Thin book — the gap from the close gets set here.'];
+  /* CME Globex daily break 17:00–18:00 ET; weekly close Fri 17:00 — cmegroup.com */
+  let nextDay = addDays(date, 1); while (!isBiz(nextDay)) nextDay = addDays(nextDay, 1);
+  const reopenDay = WDN[dow(addDays(nextDay, -1))], gapHoliday = wd !== 5 || dow(nextDay) !== 1;
+  const close = key(nextDay) === key(addDays(date, 1))
+    ? [et(17), 'closed', 'Daily break', 'CME Globex maintenance break. No orders, no fills, nothing moves.']
+    : [et(17), 'closed', gapHoliday ? 'Holiday close' : 'Weekly close', `Globex shuts for the ${gapHoliday ? 'holiday' : 'weekend'}. It reopens ${reopenDay} 18:00 ET.`];
+  const EDGE = ' See <a href="07-playbook.html">The Edge</a>.';
+
+  let base, pins, dataNote, fomcSeg;
+  const P = (t, lvl, name, note, major) => ({ t, lvl, name, note, major: !!major });
+
+  if (market === 'es') {
+    base = [open,
+      [A.tse0, 'thin', 'Asia cash', 'Tokyo, then Shanghai and Hong Kong, are live. ES mostly drifts, but this builds the Asian high and low that London and New York trade against.'],
+      [A.lse0, 'target', 'London open', 'Europe’s cash open brings the first real volume of the ES day. Watch the Asian range get tested.'],
+      [A.lse0 + 120, 'thin', 'London midday', 'Europe settles in and New York is still asleep. Moves here often get retraced once New York arrives.'],
+      [et(8, 30), 'thin', 'Pre-open', 'Futures digest the morning ahead of the cash open.'],
+      [et(9, 30), 'target', 'Cash open', 'RTH starts with London still live. This overlap is where most of the day’s volume and range get made. The first hour sets the initial balance.'],
+      [A.lse1, 'thin', 'London close', 'Europe squares up and the overlap ends. Momentum often fades.'],
+      [et(12), 'thin', 'Lunch', 'The doldrums — thin liquidity and false breaks. It’s also the charm noon switch: gamma-level fades get less reliable from here.' + EDGE],
+      /* Treasury competitive bids usually close 13:00 ET — treasurydirect.gov */
+      [et(13), 'thin', 'Afternoon', 'Liquidity returns slowly. On Treasury auction days, bidding usually closes at 13:00.'],
+      [et(15), 'event', 'Into the close', 'Closing flows and maximum charm-pin gravity. In the 8B playbook this is exits only — no new entries.' + EDGE],
+      /* NYSE closing imbalances publish 15:50 — nyse.com; ES settles on the 15:59:30–16:00 ET VWAP — cmegroup.com */
+      [et(15, 50), 'event', 'Close + settle', 'NYSE closing imbalances publish at 15:50, then ES settles on the 15:59:30–16:00 VWAP. Fast and mechanical.'],
+      [et(16), 'thin', 'Post-close', 'Futures keep trading after the cash close. Big earnings often land here — NQ can gap.'],
+      /* equity-index halt 16:15–16:30 ET — cmegroup.com */
+      [et(16, 15), 'closed', 'Halt', 'Equity-index futures pause for 15 minutes.'],
+      [et(16, 30), 'thin', 'Evening', 'A short session before the daily break.'],
+      close];
+    dataNote = 'Stand aside for the print; trade the reaction once spreads settle.';
+    fomcSeg = [et(14), et(15), 'Statement at 14:00, press conference at 14:30. Spreads widen and the first move can reverse.'];
+    pins = [
+      P(A.tse0, 'info', 'Tokyo open', 'Asian cash equities open.', true),
+      P(A.sh0, 'info', 'Shanghai + Hong Kong open', 'China cash equities open.'),
+      P(A.tse1, 'info', 'Tokyo close', 'The Asian range is mostly set.'),
+      P(A.lse0, 'info', 'London open', 'LSE and Xetra cash open.', true),
+      expiry && P(et(9, 30), 'event', 'Quarterly expiry', 'The expiring ES and NQ contracts settle to the index opening print.', true),
+      P(et(9, 30), 'info', 'Cash open', 'NYSE and Nasdaq open — RTH begins.', true),
+      P(et(10, 30), 'info', 'Initial balance set', 'The first hour’s high and low (09:30–10:30) — the range the rest of RTH trades against.'),
+      eia && P(evAt(eia, eia.time), 'event', 'EIA crude inventories', 'Cross-market: a big crude surprise can move ES.'),
+      P(A.lse1, 'info', 'London close', 'European cash close — the overlap ends.'),
+      P(et(15, 50), 'event', 'Closing imbalances', 'NYSE closing-auction imbalances publish.'),
+      P(et(16), 'event', 'ES settle', 'Settles on the 15:59:30–16:00 VWAP.', true),
+      P(et(16, 15), 'info', 'Halt', '15-minute equity-index halt.')];
+  } else if (market === 'gold') {
+    base = [open,
+      [A.tse0, 'thin', 'Asia cash', 'Tokyo is live, but gold waits for China.'],
+      [A.sge0, 'target', 'China open', 'The Shanghai Gold Exchange day session brings Asian physical demand — gold’s first real window of the day.'],
+      [A.sgeL0, 'thin', 'Asia afternoon', 'The Shanghai lunch break, then a slower afternoon until Europe arrives.'],
+      [A.lse0, 'target', 'London open', 'London is gold’s home market. Volume builds into the LBMA morning auction.'],
+      [A.lbmaAM + 30, 'thin', 'London midday', 'The morning benchmark is set and Europe drifts until New York arrives.'],
+      /* legacy COMEX gold pit hours 08:20–13:30 ET — cmegroup.com (pits closed; liquidity marker only) */
+      [et(8, 20), 'target', 'COMEX open', 'The old COMEX pit open. New York volume joins London.'],
+      [et(8, 45), 'target', 'New York + London', 'Gold’s deepest liquidity of the day, through the LBMA afternoon auction.'],
+      [A.wm, 'thin', 'London fix + fade', 'The 4pm London FX fix, then Europe goes home.'],
+      /* GC settles on the 13:29–13:30 ET VWAP — cmegroup.com */
+      [et(13, 20), 'event', 'Settlement window', 'Gold settles on the 13:29–13:30 VWAP. Fast and mechanical.'],
+      [et(13, 35), 'thin', 'Afternoon', 'Post-settle drift, thin until the break.'],
+      close];
+    dataNote = 'Gold reacts hard to US data and the dollar. Stand aside for the print.';
+    fomcSeg = [et(14), et(15), 'Statement at 14:00, press conference at 14:30. Gold and the dollar both whip.'];
+    pins = [
+      P(A.sge0, 'info', 'China open · SGE', 'The Shanghai Gold Exchange opens its day session.', true),
+      P(A.lse0, 'info', 'London open', 'Gold’s home market opens.', true),
+      P(A.lbmaAM, 'event', 'LBMA morning auction', 'The London gold benchmark price is set.', true),
+      P(et(8, 20), 'info', 'COMEX open', 'Old pit open — US gold volume steps in.', true),
+      P(A.lbmaPM, 'event', 'LBMA afternoon auction', 'The second London benchmark of the day.', true),
+      P(A.wm, 'event', 'London fix', 'The WM/Reuters 4pm FX benchmark — dollar flows hit gold.'),
+      P(A.lse1, 'info', 'London close', 'European cash close.'),
+      P(et(13, 30), 'event', 'Gold settle', 'Settles on the 13:29–13:30 VWAP.', true)];
+  } else {
+    base = [open,
+      [A.tse0, 'thin', 'Asia', 'Asian demand and headlines can move crude, but liquidity is thin.'],
+      [A.lse0, 'target', 'London open', 'Europe’s open brings crude its first real volume of the day.'],
+      [A.lse0 + 120, 'thin', 'London midday', 'Europe settles in ahead of New York.'],
+      [et(8, 30), 'thin', 'Pre-NYMEX', 'Quiet before the old NYMEX pit open.'],
+      /* legacy NYMEX crude pit hours 09:00–14:30 ET — cmegroup.com (pits closed; liquidity marker only) */
+      [et(9), 'target', 'NYMEX open', 'The old pit open — crude’s main liquidity window begins.'],
+      [et(12), 'thin', 'Midday', 'Liquidity thins out through lunch.'],
+      /* CL settles on the 14:28–14:30 ET VWAP — cmegroup.com */
+      [et(14, 20), 'event', 'Settlement window', 'CL settles on the 14:28–14:30 VWAP. Fast and mechanical.'],
+      [et(14, 35), 'thin', 'Post-settle', 'Volume drops after the settle.'],
+      close];
+    dataNote = 'Macro prints move the dollar and risk appetite. Stand aside for the print.';
+    fomcSeg = [et(14), et(14, 20), 'Statement at 14:00, press conference at 14:30 — right on top of the settle.'];
+    pins = [
+      P(A.lse0, 'info', 'London open', 'European cash open.', true),
+      P(et(9), 'info', 'NYMEX open', 'Old pit open.', true),
+      eia && P(evAt(eia, eia.time), 'event', 'EIA inventories', 'Weekly US crude stocks.', true),
+      rigs && P(ex('America/Chicago', 12), 'info', 'Baker Hughes rig count', 'Weekly US rig count.'),
+      P(et(14, 30), 'event', 'CL settle', 'Settles on the 14:28–14:30 VWAP.', true),
+      api && P(evAt(api, api.time), 'event', 'API inventories', 'Industry crude stocks — an early read on the EIA number.', true)];
+  }
+
+  /* shared pins */
+  pins.push(P(0, 'info', openName, 'A new CME trade date begins.', true));
+  if (prints.length) pins.push(P(et(8, 30), 'event', dataName, 'Scheduled US release.', true));
+  else pins.push(P(et(8, 30), 'info', 'US data slot', 'Many US releases print at 08:30. This page tracks CPI, payrolls and jobless claims only.'));
+  if (boe) pins.push(P(evAt(boe, boe.time), 'event', 'BoE decision', 'UK rate decision and MPC minutes.'));
+  if (ecb) {
+    pins.push(P(evAt(ecb, ecb.time), 'event', 'ECB decision', 'Euro-area rate decision.', true));
+    pins.push(P(evAt(ecb, ecb.presser), 'event', 'ECB press conference', 'The ECB explains the decision.'));
+  }
+  if (fomc) {
+    pins.push(P(evAt(fomc, fomc.time), 'event', 'FOMC decision', 'Rate decision and statement.', true));
+    pins.push(P(evAt(fomc, fomc.presser), 'event', 'FOMC press conference', 'The Chair takes questions — markets can move again.', true));
+  }
+  if (minutes) pins.push(P(evAt(minutes, minutes.time), 'event', 'FOMC minutes', 'Minutes of the last meeting, three weeks on.', true));
+
+  /* timeline: base (later wins on the same minute), then scheduled paints */
+  const byStart = new Map();
+  base.filter(Boolean).forEach(b => byStart.set(Math.round(b[0]), { s: Math.round(b[0]), lvl: b[1], name: b[2], note: b[3] }));
+  let T = [...byStart.values()].sort((a, b) => a.s - b.s);
+  if (prints.length) T = paint(T, et(8, 30), et(8, 45), { lvl: 'event', name: dataName, note: dataNote });
+  if (market === 'crude' && eia) {
+    const t = evAt(eia, eia.time);
+    T = paint(T, t - 5, t + 15, { lvl: 'event', name: 'EIA window', note: `Weekly US crude stocks at ${hhmm(t)} — crude’s main scheduled number of the week.` });
+    if (t + 15 < et(12)) T = paint(T, t + 15, et(12), { lvl: 'target', name: 'Post-EIA', note: 'Trade the reaction once the first spike settles.' });
+  }
+  if (fomc) T = paint(T, fomcSeg[0], fomcSeg[1], { lvl: 'event', name: 'FOMC', note: fomcSeg[2] });
+
+  /* US/CME holidays: halt times per date/product come from calendar.json, never a rule */
+  let lanesNY = true;
+  const banners = [];
+  if (hol && hol.kind === 'closed') {
+    T = [{ s: 0, lvl: 'closed', name: hol.name, note: 'CME Globex is closed for the holiday.' }];
+    pins = [];
+    lanesNY = false;
+    banners.push(['warn', `CME closed — ${esc(hol.name)}. No trade date today.`]);
+  } else if (hol && hol.kind === 'early' && hol.halt && hol.halt[market]) {
+    const [h, mi] = hm(hol.halt[market]), halt = et(h, mi);
+    T = paint(T, halt, 1440, { lvl: 'closed', name: 'Early close', note: `CME halts early for ${esc(hol.name)}.` });
+    pins = pins.filter(p => p && p.t < halt);
+    lanesNY = false;
+    banners.push(['warn', `${esc(hol.name)} — CME halts early at ${hol.halt[market]} ET. Settlement times can differ on holiday schedules; check CME’s holiday advisory.`]);
+  }
+
+  const segs = T.map((b, i) => Object.assign({}, b, { e: i + 1 < T.length ? T[i + 1].s : 1440 })).filter(x => x.e > x.s);
+  pins = pins.filter(Boolean).sort((a, b) => a.t - b.t);
+
+  const flags = [];
+  if (fomc) flags.push([fomc.tentative ? 'FOMC day (tentative)' : 'FOMC day', 'warn']);
+  if (minutes) flags.push(['FOMC minutes', '']);
+  if (cpi) flags.push(['CPI day', 'warn']);
+  if (nfp) flags.push(['Payrolls day', 'warn']);
+  if (ecb) flags.push(['ECB day', '']);
+  if (boe) flags.push(['BoE day', '']);
+  if (market === 'es' && expiry) flags.push(['Quarterly expiry', 'warn']);
+  if (market === 'es' && roll) flags.push(['Roll date', 'hot']);
+  if (market === 'crude' && eia) flags.push([wd === 3 ? 'EIA Wednesday' : `EIA ${WDN[wd]} (holiday week)`, 'warn']);
+  if (market === 'crude' && api) flags.push([wd === 2 ? 'API Tuesday' : `API ${WDN[wd]} (holiday week)`, '']);
+  if (market === 'crude' && clExpiry) flags.push(['CL last trading day', 'warn']);
+  if (market === 'gold' && gcFnd) flags.push(['GC first notice day', 'warn']);
+  if (mismatch) flags.push([`London opens ${hhmm(A.lse0)} ET this week — EU and US clocks out of sync`, 'warn']);
+  if (usStd) flags.push(['US on standard time — Asia opens an hour earlier in ET', '']);
+
+  return {
+    date, market, origin, segs, pins, flags, banners, hol,
+    lanes: [
+      { name: 'Tokyo', c: '#92afd7', bars: [[A.tse0, A.tseL0], [A.tseL1, A.tse1]] },
+      { name: 'Shanghai', c: '#6fb7b0', bars: [[A.sh0, A.shL0], [A.shL1, A.sh1]] },
+      { name: 'London', c: '#c3b4e3', bars: [[A.lse0, A.lse1]] },
+      lanesNY && { name: 'New York', c: '#ececf1', bars: [[A.ny0, A.ny1]] }].filter(Boolean),
+    sess: { asia: [0, A.lse0], london: [A.lse0 - 60, A.lse1 + 30], ny: [et(7), et(17)], full: [0, 1440] }
+  };
+}
+
+function nowState(day, ms) {
+  const a = (ms - day.origin) / 60000;
+  if (a < 0) {
+    const reopen = addDays(day.date, -1), p = parts(ms, ET);
+    let wk = false, hd = false;
+    for (let d = { y: p.y, m: p.m, d: p.d }; key(d) <= key(reopen); d = addDays(d, 1)) { if (dow(d) % 6 === 0) wk = true; else if (!isBiz(d)) hd = true; }
+    const name = hd && wk ? 'Holiday weekend' : hd ? 'Holiday' : 'Weekend';
+    return { a, pre: true, lvl: 'closed', name, note: `Globex is dark. It reopens ${WDN[dow(reopen)]} 18:00 ET.`, reopenDay: WDN[dow(reopen)], untilMs: day.origin };
+  }
+  const i = Math.max(0, day.segs.findIndex(s => a >= s.s && a < s.e));
+  const seg = day.segs[i];
+  return { a, seg, lvl: seg.lvl, name: seg.name, note: seg.note, untilMs: day.origin + seg.e * 60000, next: day.segs[i + 1] || null };
+}
+
+/* first visit: the most recently started session that contains now; weekend/break → Asia */
+function defaultSession(day, now) {
+  if (!now || now.pre) return 'asia';
+  const hit = ['asia', 'london', 'ny'].filter(k => now.a >= day.sess[k][0] && now.a < day.sess[k][1]);
+  return hit.sort((x, y) => day.sess[y][0] - day.sess[x][0])[0] || 'asia';
+}
+
+/* ── UI state + shared bits ──────────────────────────────── */
+const LV = { target: 'Target', event: 'Event', thin: 'Thin', closed: 'Closed' };
+const MARKETS = [['es', 'ES · NQ'], ['gold', 'Gold'], ['crude', 'Crude']];
+const SESSIONS = [['asia', 'Asia'], ['london', 'London'], ['ny', 'New York'], ['full', 'Full day']];
+const LEGEND = [
+  ['target', 'Liquid and range-making. This is your window.'],
+  ['event', 'A scheduled jolt. Trade it or step aside — the note says which.'],
+  ['thin', 'Tradable but low quality. Size down or wait.'],
+  ['closed', 'No trading. Halts, the daily break, the weekend.']];
+const pick = (v, list) => list.some(x => x[0] === v) ? v : null;
+const VIEWS = [['dial', '◴ Dial'], ['board', '☰ Board']];
+/* remembered per device; the page works without storage (private mode) */
+const STORE = '8bt-session-monitor';
+const saved = (() => { try { return JSON.parse(localStorage.getItem(STORE)) || {}; } catch (e) { return {}; } })();
+const remember = (k, v) => { saved[k] = v; try { localStorage.setItem(STORE, JSON.stringify(saved)); } catch (e) { /* ignore */ } };
+const S = {
+  market: pick(Q.get('market'), MARKETS) || pick(saved.market, MARKETS) || 'es',
+  session: pick(Q.get('session'), SESSIONS) || pick(saved.session, SESSIONS),
+  view: pick(Q.get('view'), VIEWS) || pick(saved.view, VIEWS) || (matchMedia('(min-width: 720px)').matches ? 'dial' : 'board'),
+  live: true, date: null };
+const app = document.getElementById('sm-app');
+
+const chips = (list, cur, act, label) => `<div class="chips" role="group" aria-label="${label}">${list.map(([v, l]) => `<button class="chip${v === cur ? ' on' : ''}" data-act="${act}" data-v="${v}" aria-pressed="${v === cur}">${l}</button>`).join('')}</div>`;
+const flagsHtml = day => day.flags.length ? `<div class="flags">${day.flags.map(([t, c]) => `<span class="flag ${c}">${t}</span>`).join('')}</div>` : '';
+const tradeSpan = d => `Trade date · ${wd3(addDays(d, -1))} 18:00 → ${wd3(d)} 17:00 ET`;
+const clock = '<span class="tnum" data-clock></span>';
+const inRange = (r, a, b) => b > r[0] && a < r[1];
+const viewToggle = () => `<div class="vt" role="group" aria-label="View">${VIEWS.map(([v, l]) => `<button class="vt-b${v === S.view ? ' on' : ''}" data-act="view" data-v="${v}" aria-pressed="${v === S.view}">${l}</button>`).join('')}</div>`;
+/* lists: drop a pin that just repeats the window starting at the same minute */
+const listPins = day => day.pins.filter(p => !day.segs.some(s => s.s === p.t && (p.name.startsWith(s.name) || s.name.startsWith(p.name))));
+
+function foot(day) {
+  const legend = `<div class="legend">${LEGEND.map(([k, t]) => `<div><span class="tag lv-${k}">${LV[k]}</span><p>${t}</p></div>`).join('')}</div>`;
+  const notes = [
+    'Every time is New York time (ET). Ratings are qualitative guides, not statistics.',
+    'Standard GC and CL contracts. CME’s 24/7 1-Ounce Gold and 10-Barrel WTI keep trading through breaks and weekends.',
+    'US/CME holidays only — foreign exchange holidays are not shown.'];
+  if (calState === 'loading') notes.push('Loading the release calendar…');
+  else if (calState === 'failed') notes.push('<span class="warn">The release calendar didn’t load — FOMC, CPI, payrolls, ECB and BoE are missing. Check the official sources.</span>');
+  else {
+    const r = CAL.raw, src = r.sources, k = key(day.date);
+    const d = s => { const [y, m, dd] = s.split('-').map(Number); return `${dd} ${MON[m - 1]} ${y}`; };
+    const links = [['Fed', src.fed], ['BLS', src['bls-cpi']], ['ECB', src.ecb], ['BoE', src.boe], ['EIA', src.eia], ['API', src.api], ['CME', src.cme]]
+      .filter(x => x[1]).map(([l, u]) => `<a href="${u}" target="_blank" rel="noopener">${l}</a>`).join(' · ');
+    notes.push(`Release calendar checked ${d(r.checkedFrom)} – ${d(r.checkedThrough)}. Sources: ${links}`);
+    if (k > r.checkedThrough || k < r.checkedFrom) notes.push('<span class="warn">This date is outside the checked calendar — scheduled releases, holiday closures and early halts may be missing. Check the official sources.</span>');
+  }
+  return `<div class="sm-foot">${legend}<ul class="notes">${notes.map(n => `<li>${n}</li>`).join('')}</ul></div>`;
+}
+
+/* ── DIAL ────────────────────────────────────────────────── */
+function dial(day, now) {
+  const C = 420, rad = a => (-90 + a / 1440 * 360) * Math.PI / 180;
+  const pt = (r, a) => [(C + r * Math.cos(rad(a))).toFixed(1), (C + r * Math.sin(rad(a))).toFixed(1)];
+  const arc = (r0, r1, a0, a1) => { const L = (a1 - a0) > 720 ? 1 : 0, [x0, y0] = pt(r1, a0), [x1, y1] = pt(r1, a1), [x2, y2] = pt(r0, a1), [x3, y3] = pt(r0, a0); return `M${x0} ${y0}A${r1} ${r1} 0 ${L} 1 ${x1} ${y1}L${x2} ${y2}A${r0} ${r0} 0 ${L} 0 ${x3} ${y3}Z`; };
+  const r = day.sess[S.session], live = now && !now.pre;
+  let g = `<defs><pattern id="sm-hatch" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="10" height="10" fill="#16161a"/><rect width="5" height="10" fill="#232329"/></pattern></defs>`;
+  g += `<circle cx="${C}" cy="${C}" r="196" fill="none" stroke="rgba(255,255,255,.05)"/>`;
+  /* a full-day single segment can't be drawn as one arc — split it */
+  day.segs.forEach(s => {
+    const cls = `dseg lv-${s.lvl}${live && now.seg === s ? ' cur' : ''}`, t = `<title>${esc(s.name)} · ${hhmm(s.s)}–${hhmm(s.e)} ET · ${LV[s.lvl]}</title>`;
+    if (s.e - s.s >= 1440) g += `<path class="${cls}" d="${arc(206, 300, 0, 720)}">${t}</path><path class="${cls}" d="${arc(206, 300, 720, 1440)}">${t}</path>`;
+    else g += `<path class="${cls}" d="${arc(206, 300, s.s, s.e)}">${t}</path>`;
+  });
+  day.lanes.forEach((l, i) => {
+    const r0 = 316 + i * 13;
+    g += `<circle cx="${C}" cy="${C}" r="${r0 + 3}" fill="none" stroke="rgba(255,255,255,.05)" stroke-width="6"/>`;
+    l.bars.forEach(b => { g += `<path d="${arc(r0, r0 + 6, b[0], b[1])}" fill="${l.c}"><title>${l.name} cash ${hhmm(b[0])}–${hhmm(b[1])} ET</title></path>`; });
+  });
+  for (let h = 0; h < 24; h++) {
+    const x = h * 60, [x0, y0] = pt(372, x), [x1, y1] = pt(h % 3 ? 380 : 388, x);
+    g += `<line x1="${x0}" y1="${y0}" x2="${x1}" y2="${y1}" stroke="rgba(255,255,255,${h % 3 ? .15 : .35})" stroke-width="2"/>`;
+    if (h % 3 === 0) { const [tx, ty] = pt(410 + Math.abs(Math.cos(rad(x))) * 34 + Math.abs(Math.sin(rad(x))) * 13, x);   /* clear the bracket by the label's own width/height */ g += `<text class="dhour${h === 0 ? ' key' : ''}" x="${tx}" y="${ty}" text-anchor="middle" dominant-baseline="central">${hhmm(x)}</text>`; }
+  }
+  day.pins.forEach(p => { const [x, y] = pt(190, p.t); g += `<circle cx="${x}" cy="${y}" r="${p.major ? 6 : 4}" fill="${p.lvl === 'event' ? 'var(--lv-event)' : 'var(--text2)'}"><title>${hhmm(p.t)} · ${esc(p.name)}</title></circle>`; });
+  if (S.session !== 'full') {
+    g += `<path d="${arc(180, 400, 0, r[0])}" fill="rgba(10,10,11,.74)"/><path d="${arc(180, 400, r[1], 1440)}" fill="rgba(10,10,11,.74)"/>`;
+    const [bx0, by0] = pt(398, r[0]), [bx1, by1] = pt(398, r[1]);
+    g += `<path d="M${bx0} ${by0}A398 398 0 ${(r[1] - r[0]) > 720 ? 1 : 0} 1 ${bx1} ${by1}" fill="none" stroke="var(--brand)" stroke-width="4" stroke-linecap="round"/>`;
+  }
+  if (live) {
+    const [x0, y0] = pt(198, now.a), [x1, y1] = pt(312, now.a);
+    g += `<line x1="${x0}" y1="${y0}" x2="${x1}" y2="${y1}" stroke="#fff" stroke-width="5" stroke-linecap="round"/><circle cx="${x1}" cy="${y1}" r="10" fill="#fff" stroke="#0a0a0b" stroke-width="4"/>`;
+  }
+
+  let center;
+  if (now && now.pre) center = `<div class="b-k">${now.name}</div><div class="b-state">Closed</div><div class="b-cd tnum" data-until="${now.untilMs}"></div><div class="b-sub">until ${now.reopenDay} 18:00 ET</div>`;
+  else if (live) center = `<div class="b-k">${clock} ET</div><div class="b-state lv-${now.lvl}">${LV[now.lvl]}</div><div class="b-name">${now.name}</div><div class="b-cd tnum" data-until="${now.untilMs}"></div><div class="b-sub">left in this window</div>`;
+  else center = `<div class="b-k">Planning</div><div class="b-state">${wd3(S.date)} ${S.date.d}</div><div class="b-name">${MON[S.date.m - 1]} ${S.date.y}</div><div class="b-sub">${day.hol && day.hol.kind === 'closed' ? 'CME closed' : `${day.segs.filter(s => s.lvl === 'target').length} target windows`}</div>`;
+
+  let items;
+  if (live) {
+    items = [...day.segs.filter(s => s.s > now.a).map(s => ({ t: s.s, lvl: s.lvl, name: s.name, d: `${LV[s.lvl]} · ${dur(s.e - s.s)}` })),
+             ...listPins(day).filter(p => p.t > now.a).map(p => ({ t: p.t, lvl: p.lvl === 'event' ? 'event' : 'thin', name: p.name, d: p.note }))]
+      .filter(x => S.session === 'full' || (x.t >= r[0] && x.t < r[1])).sort((a, b) => a.t - b.t).slice(0, 7);
+  } else {
+    items = day.segs.filter(s => inRange(r, s.s, s.e)).map(s => ({ t: s.s, lvl: s.lvl, name: s.name, d: `${LV[s.lvl]} · ${hhmm(s.s)}–${hhmm(s.e)}` }));
+  }
+  const listHead = live ? 'Coming up' : `Windows · ${SESSIONS.find(x => x[0] === S.session)[1]}`;
+  const list = items.length
+    ? `<div class="b-list">${items.map(x => `<div class="b-item lv-${x.lvl}"><div class="b-t tnum">${hhmm(x.t)}</div><div><div class="b-n">${x.name}</div><div class="b-d">${x.d}</div></div><div class="b-in tnum"${live ? ` data-until="${day.origin + x.t * 60000}" data-fmt="in"` : ''}></div></div>`).join('')}</div>`
+    : '<p class="c-empty">Nothing left in this session.</p>';
+
+  return `
+  <div class="b-grid">
+    <div class="b-dial"><svg viewBox="-52 -52 944 944" role="img" aria-label="24-hour dial of the trade date, 18:00 ET at the top">${g}</svg><div class="b-center">${center}</div></div>
+    <div class="b-side">
+      <div class="daybar"><div><div class="date">${WDN[dow(S.date)]} ${S.date.d} ${MON[S.date.m - 1]} ${S.date.y}</div><div class="date-sub">${tradeSpan(S.date)}</div></div>
+        <div class="c-nav"><button class="step" data-act="prev" aria-label="Previous trading day">←</button><button class="step" data-act="next" aria-label="Next trading day">→</button>${S.live ? '<span class="live-dot">Live</span>' : '<button class="live-btn" data-act="live">Back to live</button>'}${viewToggle()}</div></div>
+      <div><div class="ctl-l">Market</div>${chips(MARKETS, S.market, 'market', 'Market')}</div>
+      <div><div class="ctl-l">Session</div>${chips(SESSIONS, S.session, 'session', 'Session')}</div>
+      ${flagsHtml(day)}
+      ${day.banners.map(([c, t]) => `<div class="banner ${c}">${t}</div>`).join('')}
+      <div><div class="ctl-l">${listHead}</div>${list}</div>
+      <div><div class="ctl-l">Outer rings · cash hours</div><div class="b-rings">${day.lanes.map(l => `<span><i style="background:${l.c}"></i>${l.name}</span>`).join('')}<span><i style="background:var(--lv-event);width:10px;height:10px;border-radius:50%"></i>Events</span></div></div>
+    </div>
+  </div>`;
+}
+
+/* ── BOARD ───────────────────────────────────────────────── */
+function board(day, now) {
+  const r = day.sess[S.session], live = now && !now.pre;
+  const mini = day.segs.map(s => `<i class="lv-${s.lvl}" style="left:${s.s / 14.4}%;width:${(s.e - s.s) / 14.4}%"></i>`).join('')
+    + (S.session !== 'full' ? `<span class="dim" style="left:0;width:${r[0] / 14.4}%"></span><span class="dim" style="left:${r[1] / 14.4}%;right:0"></span>` : '')
+    + (live ? `<span class="nw" style="left:${now.a / 14.4}%"></span>` : '');
+  const items = [
+    ...day.segs.filter(s => inRange(r, s.s, s.e)).map(s => ({ t: s.s, s })),
+    ...listPins(day).filter(p => p.t >= r[0] && p.t < r[1]).map(p => ({ t: p.t + .01, p }))].sort((a, b) => a.t - b.t);
+  const rows = items.map(it => {
+    if (it.s) {
+      const s = it.s, past = live && s.e <= now.a, cur = live && now.seg === s;
+      const right = cur ? `<div class="c-cd tnum" data-until="${now.untilMs}"></div><div class="c-cdl">left</div>`
+        : live && !past ? `<div class="c-in tnum" data-until="${day.origin + s.s * 60000}" data-fmt="in"></div><div class="c-dur">${dur(s.e - s.s)}</div>`
+        : `<div class="c-dur">${dur(s.e - s.s)}</div>`;
+      return `<div class="c-row lv-${s.lvl}${past ? ' past' : ''}${cur ? ' now' : ''}"${cur ? ` style="--prog:${((now.a - s.s) / (s.e - s.s)).toFixed(3)}"` : ''}>
+        <div class="c-time tnum">${hhmm(s.s)}<span class="to">to ${hhmm(s.e)}</span></div>
+        <div class="c-tagc"><span class="tag lv-${s.lvl}">${LV[s.lvl]}</span>${cur ? '<span class="c-nowtag">NOW</span>' : ''}</div>
+        <div class="c-body"><div class="c-title">${s.name}</div><p class="c-note">${s.note}</p></div>
+        <div class="c-left">${right}</div>${cur ? '<span class="c-prog"></span>' : ''}</div>`;
+    }
+    const p = it.p, past = live && p.t < now.a, lv = p.lvl === 'event' ? 'event' : 'thin';
+    return `<div class="c-row c-pin lv-${lv}${past ? ' past' : ''}"><div class="c-time tnum">${hhmm(p.t)}</div><div class="c-tagc"><span class="c-dia" aria-hidden="true">◆</span></div>
+      <div class="c-body"><div class="c-title">${p.name}</div><p class="c-note">${p.note}</p></div>
+      <div class="c-left">${live && !past ? `<div class="c-in tnum" data-until="${day.origin + p.t * 60000}" data-fmt="in"></div>` : ''}</div></div>`;
+  }).join('');
+
+  const closedCard = now && now.pre
+    ? `<div class="c-closed"><div><span class="tag lv-closed">Closed</span><div class="x">${now.name} — Globex is dark</div></div><div style="text-align:right"><div class="cd tnum" data-until="${now.untilMs}"></div><div class="c-cdl">until ${now.reopenDay} 18:00 ET</div></div></div>` : '';
+
+  return `
+  <div class="c-top">
+    <div><div class="c-kick">${S.live ? `<span class="live-dot">Live</span>${clock} ET` : 'Planning view'}</div>
+      <div class="c-date">${WDN[dow(S.date)]} ${S.date.d} ${MON[S.date.m - 1]}</div>
+      <div class="c-sub">${tradeSpan(S.date)}</div></div>
+    <div class="c-nav"><button class="step" data-act="prev" aria-label="Previous trading day">←</button><button class="step" data-act="next" aria-label="Next trading day">→</button>${S.live ? '' : '<button class="live-btn" data-act="live">Back to live</button>'}${viewToggle()}</div>
+  </div>
+  <div class="c-tabs" role="group" aria-label="Session">${SESSIONS.map(([v, l]) => `<button class="c-tab${v === S.session ? ' on' : ''}" aria-pressed="${v === S.session}" data-act="session" data-v="${v}">${l}<span class="r tnum">${hhmm(day.sess[v][0])}–${hhmm(day.sess[v][1])}</span></button>`).join('')}</div>
+  <div class="c-mid">${chips(MARKETS, S.market, 'market', 'Market')}${flagsHtml(day)}</div>
+  <div class="c-mini" aria-hidden="true">${mini}</div><div class="c-mini-h tnum" aria-hidden="true"><span>18:00</span><span>00:00</span><span>06:00</span><span>12:00</span><span>18:00</span></div>
+  ${day.banners.map(([c, t]) => `<div class="banner ${c}">${t}</div>`).join('')}
+  ${closedCard}
+  <div class="c-rows">${rows || '<p class="c-empty">Nothing scheduled in this session.</p>'}</div>`;
+}
+
+/* ── render loop ─────────────────────────────────────────── */
+let lastMin = -1;
+function render() {
+  const ms = nowMs();
+  if (S.live) S.date = liveDate(ms);
+  const day = buildDay(S.date, S.market);
+  const now = S.live ? nowState(day, ms) : null;
+  if (!S.session) S.session = defaultSession(day, now);
+  const f = document.activeElement && app.contains(document.activeElement) ? document.activeElement : null;
+  const fSel = f && f.dataset.act ? `[data-act="${f.dataset.act}"]${f.dataset.v ? `[data-v="${f.dataset.v}"]` : ''}` : null;
+  app.innerHTML = (S.view === 'dial' ? dial(day, now) : board(day, now)) + foot(day);
+  if (fSel) { const el = app.querySelector(fSel); if (el) el.focus(); }
+  lastMin = Math.floor(ms / 60000);
+  tick();
+}
+function tick() {
+  const ms = nowMs();
+  app.querySelectorAll('[data-until]').forEach(el => { const d = +el.dataset.until - ms; el.textContent = el.dataset.fmt === 'in' ? fmtIn(d) : fmtCd(d); });
+  const p = parts(ms, ET);
+  app.querySelectorAll('[data-clock]').forEach(el => { el.textContent = `${pad(p.h)}:${pad(p.mi)}:${pad(p.s)}`; });
+}
+setInterval(() => { if (S.live && Math.floor(nowMs() / 60000) !== lastMin) render(); else tick(); }, 1000);
+
+app.addEventListener('click', e => {
+  const b = e.target.closest('[data-act]'); if (!b) return;
+  const act = b.dataset.act;
+  if (act === 'market' || act === 'session' || act === 'view') { S[act] = b.dataset.v; remember(act, b.dataset.v); }
+  if (act === 'prev' || act === 'next') {
+    S.date = stepDate(S.date, act === 'prev' ? -1 : 1);
+    S.live = key(S.date) === key(liveDate(nowMs()));
+  }
+  if (act === 'live') S.live = true;
+  render();
+});
+
+fetch('data/calendar.json', { cache: 'no-cache' })
+  .then(r => r.ok ? r.json() : Promise.reject(new Error(r.status)))
+  .then(j => { CAL = indexCal(j); calState = 'ok'; })
+  .catch(() => { calState = 'failed'; })
+  .then(render);
+render();
+})();
+</script>
+</body>
+</html>
