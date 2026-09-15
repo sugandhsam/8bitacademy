@@ -645,7 +645,7 @@ function foot(day) {
     const links = [['Fed', src.fed], ['BLS', src['bls-cpi']], ['ECB', src.ecb], ['BoE', src.boe], ['EIA', src.eia], ['API', src.api], ['CME', src.cme]]
       .filter(x => x[1]).map(([l, u]) => `<a href="${u}" target="_blank" rel="noopener">${l}</a>`).join(' · ');
     notes.push(`Release calendar checked ${d(r.checkedFrom)} – ${d(r.checkedThrough)}. Sources: ${links}`);
-    if (k > r.checkedThrough || k < r.checkedFrom) notes.push('<span class="warn">This date is outside the checked calendar — scheduled releases may be missing. Check the official sources.</span>');
+    if (k > r.checkedThrough || k < r.checkedFrom) notes.push('<span class="warn">This date is outside the checked calendar — scheduled releases, holiday closures and early halts may be missing. Check the official sources.</span>');
   }
   return `<div class="sm-foot">${legend}<ul class="notes">${notes.map(n => `<li>${n}</li>`).join('')}</ul></div>`;
 }
