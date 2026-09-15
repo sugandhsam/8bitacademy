@@ -256,7 +256,7 @@ const wd3 = d => WDN[dow(d)].slice(0, 3);
 /* axis = minutes since the trade date's 18:00 ET start */
 const hhmm = ax => { const t = ((Math.round(ax) + 1080) % 1440 + 1440) % 1440; return pad(Math.floor(t / 60)) + ':' + pad(t % 60); };
 const dur = m => { m = Math.round(m); return m >= 60 ? `${Math.floor(m / 60)}h${m % 60 ? ' ' + pad(m % 60) + 'm' : ''}` : `${m}m`; };
-const fmtCd = ms => { const s = Math.max(0, Math.floor(ms / 1000)); const h = Math.floor(s / 3600); return h ? `${h}:${pad(Math.floor(s % 3600 / 60))}:${pad(s % 60)}` : `${Math.floor(s / 60)}:${pad(s % 60)}`; };
+const fmtCd = ms => { const s = Math.max(0, Math.floor(ms / 1000)), h = Math.floor(s / 3600), ms_ = `${pad(Math.floor(s % 3600 / 60))}:${pad(s % 60)}`; return h >= 24 ? `${Math.floor(h / 24)}d ${pad(h % 24)}:${ms_}` : h ? `${h}:${ms_}` : `${Math.floor(s / 60)}:${pad(s % 60)}`; };
 const fmtIn = ms => { const m = Math.max(0, Math.ceil(ms / 60000)); return m < 60 ? `in ${m}m` : `in ${Math.floor(m / 60)}h ${pad(m % 60)}m`; };
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
@@ -362,10 +362,15 @@ function buildDay(date, market) {
   const mismatch = A.lse0 === et(4);   /* London cash open normally lands 03:00 ET */
   const usStd = A.tse0 === et(19);      /* Tokyo opens 20:00 ET in US summer, 19:00 in winter */
 
-  const openName = wd === 1 ? 'Sunday reopen' : 'Globex reopen';
-  const open = [0, 'thin', openName, wd === 1 ? 'Globex wakes up after the weekend. Thin book — the weekend gap gets priced here.' : 'A new trade date starts. Thin book — the gap from the close gets set here.'];
+  const afterHoliday = wd !== 1 && !isBiz(addDays(date, -1));
+  const openName = wd === 1 ? 'Sunday reopen' : afterHoliday ? 'Holiday reopen' : 'Globex reopen';
+  const open = [0, 'thin', openName, wd === 1 || afterHoliday ? 'Globex wakes up after the break. Thin book — the gap gets priced here.' : 'A new trade date starts. Thin book — the gap from the close gets set here.'];
   /* CME Globex daily break 17:00–18:00 ET; weekly close Fri 17:00 — cmegroup.com */
-  const close = [et(17), 'closed', wd === 5 ? 'Weekly close' : 'Daily break', wd === 5 ? 'Globex shuts for the weekend. It reopens Sunday 18:00 ET.' : 'CME Globex maintenance break. No orders, no fills, nothing moves.'];
+  let nextDay = addDays(date, 1); while (!isBiz(nextDay)) nextDay = addDays(nextDay, 1);
+  const reopenDay = WDN[dow(addDays(nextDay, -1))], gapHoliday = wd !== 5 || dow(nextDay) !== 1;
+  const close = key(nextDay) === key(addDays(date, 1))
+    ? [et(17), 'closed', 'Daily break', 'CME Globex maintenance break. No orders, no fills, nothing moves.']
+    : [et(17), 'closed', gapHoliday ? 'Holiday close' : 'Weekly close', `Globex shuts for the ${gapHoliday ? 'holiday' : 'weekend'}. It reopens ${reopenDay} 18:00 ET.`];
   const EDGE = ' See <a href="07-playbook.html">The Edge</a>.';
 
   let base, pins, dataNote, fomcSeg;
@@ -495,7 +500,7 @@ function buildDay(date, market) {
     T = paint(T, halt, 1440, { lvl: 'closed', name: 'Early close', note: `CME halts early for ${esc(hol.name)}.` });
     pins = pins.filter(p => p && p.t < halt);
     lanesNY = false;
-    banners.push(['warn', `${esc(hol.name)} — CME halts early at ${hol.halt[market]} ET.`]);
+    banners.push(['warn', `${esc(hol.name)} — CME halts early at ${hol.halt[market]} ET. Settlement times can differ on holiday schedules; check CME’s holiday advisory.`]);
   }
 
   const segs = T.map((b, i) => Object.assign({}, b, { e: i + 1 < T.length ? T[i + 1].s : 1440 })).filter(x => x.e > x.s);
@@ -637,7 +642,7 @@ function dial(day, now) {
   let center;
   if (now && now.pre) center = `<div class="b-k">${now.name}</div><div class="b-state">Closed</div><div class="b-cd tnum" data-until="${now.untilMs}"></div><div class="b-sub">until ${now.reopenDay} 18:00 ET</div>`;
   else if (live) center = `<div class="b-k">${clock} ET</div><div class="b-state lv-${now.lvl}">${LV[now.lvl]}</div><div class="b-name">${now.name}</div><div class="b-cd tnum" data-until="${now.untilMs}"></div><div class="b-sub">left in this window</div>`;
-  else center = `<div class="b-k">Planning</div><div class="b-state">${wd3(S.date)} ${S.date.d}</div><div class="b-name">${MON[S.date.m - 1]} ${S.date.y}</div><div class="b-sub">${day.segs.filter(s => s.lvl === 'target').length} target windows</div>`;
+  else center = `<div class="b-k">Planning</div><div class="b-state">${wd3(S.date)} ${S.date.d}</div><div class="b-name">${MON[S.date.m - 1]} ${S.date.y}</div><div class="b-sub">${day.hol && day.hol.kind === 'closed' ? 'CME closed' : `${day.segs.filter(s => s.lvl === 'target').length} target windows`}</div>`;
 
   let items;
   if (live) {
