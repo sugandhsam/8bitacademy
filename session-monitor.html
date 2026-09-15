@@ -75,6 +75,45 @@
   .notes { margin: 36px 0 0; padding: 0; list-style: none; display: grid; gap: 8px; font-size: 15px; color: var(--text3); }
   .notes .warn { color: var(--warn-strong); }
 
+  .vt { display: inline-flex; padding: 4px; border-radius: 999px; border: 1px solid var(--border2); }
+  .vt-b { font: inherit; font-size: 15px; font-weight: 700; padding: 9px 16px; border-radius: 999px; border: 0; background: transparent; color: var(--text3); cursor: pointer; white-space: nowrap; }
+  .vt-b:hover { color: var(--text); }
+  .vt-b.on { background: var(--bg4); color: var(--text); box-shadow: inset 0 0 0 1px var(--border3); }
+
+  /* ── DIAL ───────────────────────────────────────────────── */
+  .b-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(400px, 1fr); gap: 56px; align-items: start; }
+  .b-grid > .b-dial { position: sticky; top: calc(var(--topbar-h) + 32px); }
+  .b-dial { position: relative; width: 100%; max-width: 860px; aspect-ratio: 1; container-type: inline-size; }
+  .b-dial svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; overflow: visible; }
+  .dseg { stroke: var(--bg); stroke-width: 3; }
+  .dseg.lv-target { fill: var(--lv-target); } .dseg.lv-event { fill: var(--lv-event); }
+  .dseg.lv-thin { fill: #26262c; } .dseg.lv-closed { fill: url(#sm-hatch); }
+  .dseg.cur { filter: drop-shadow(0 0 14px color-mix(in srgb, var(--lv) 70%, transparent)); }
+  .dhour { font-family: var(--font-mono); font-size: 21px; fill: var(--text3); }
+  .dhour.key { fill: var(--text); font-weight: 700; }
+  .b-center { position: absolute; inset: 29%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  .b-k { font-size: max(12px, 2.1cqw); color: var(--text3); letter-spacing: .1em; text-transform: uppercase; font-weight: 700; }
+  .b-state { font-size: 9cqw; line-height: 1; font-weight: 700; color: var(--lv, var(--text)); letter-spacing: -.03em; margin: 1.6cqw 0 1cqw; }
+  .b-name { font-size: max(15px, 3.2cqw); color: var(--text); font-weight: 700; line-height: 1.2; overflow-wrap: anywhere; }
+  .b-cd { font-size: 6.6cqw; color: var(--text); font-weight: 700; line-height: 1; margin-top: 2.4cqw; }
+  .b-sub { font-size: max(13px, 2.1cqw); color: var(--text3); margin-top: .8cqw; }
+  .b-side > * + * { margin-top: 40px; }
+  .daybar { display: grid; gap: 18px; }
+  .daybar .c-nav { gap: 10px; }
+  .date { font-size: clamp(22px, 2vw, 30px); font-weight: 700; color: var(--text); line-height: 1.15; }
+  .date-sub { font-size: 15px; color: var(--text3); margin-top: 4px; }
+  .b-list { display: grid; gap: 4px; }
+  .b-item { display: grid; grid-template-columns: 92px minmax(0, 1fr) auto; gap: 18px; align-items: baseline; padding: 18px 0; border-bottom: 1px solid var(--divider); }
+  .b-t { font-size: 22px; font-weight: 700; color: var(--lv); }
+  .b-n { font-size: 20px; font-weight: 700; color: var(--text); line-height: 1.25; }
+  .b-d { font-size: 15px; color: var(--text3); margin-top: 4px; }
+  .b-in { font-size: 17px; color: var(--text2); white-space: nowrap; }
+  .b-rings { display: flex; flex-wrap: wrap; gap: 10px 24px; font-size: 15px; }
+  .b-rings span { display: inline-flex; align-items: center; gap: 9px; }
+  .b-rings i { width: 22px; height: 6px; border-radius: 3px; display: inline-block; }
+  @media (max-width: 1240px) { .b-grid { grid-template-columns: 1fr; } .b-grid > .b-dial { position: relative; top: 0; margin: 0 auto; } }
+  @media (max-width: 720px) { .b-item { grid-template-columns: 64px minmax(0, 1fr) auto; gap: 12px; } .b-t { font-size: 18px; } .b-n { font-size: 18px; } }
+
   /* ── BOARD ──────────────────────────────────────────────── */
   .c-top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 28px; margin-bottom: 40px; }
   .c-kick { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; font-size: 15px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--text3); margin-bottom: 18px; }
@@ -185,7 +224,7 @@
   data/calendar.json (hand-kept, same-origin — serve over http, not file://).
   Every hard-coded time below cites its source; the fact log is kept locally.
   Test hooks: ?now=YYYY-MM-DDTHH:MM (fake ET wall clock that keeps ticking),
-              ?market=es|gold|crude  ?session=asia|london|ny|full
+              ?market=es|gold|crude  ?session=asia|london|ny|full  ?view=dial|board
 */
 (function () {
 'use strict';
@@ -520,7 +559,16 @@ const LEGEND = [
   ['thin', 'Tradable but low quality. Size down or wait.'],
   ['closed', 'No trading. Halts, the daily break, the weekend.']];
 const pick = (v, list) => list.some(x => x[0] === v) ? v : null;
-const S = { market: pick(Q.get('market'), MARKETS) || 'es', session: pick(Q.get('session'), SESSIONS), live: true, date: null };
+const VIEWS = [['dial', '◴ Dial'], ['board', '☰ Board']];
+/* remembered per device; the page works without storage (private mode) */
+const STORE = '8bt-session-monitor';
+const saved = (() => { try { return JSON.parse(localStorage.getItem(STORE)) || {}; } catch (e) { return {}; } })();
+const remember = (k, v) => { saved[k] = v; try { localStorage.setItem(STORE, JSON.stringify(saved)); } catch (e) { /* ignore */ } };
+const S = {
+  market: pick(Q.get('market'), MARKETS) || pick(saved.market, MARKETS) || 'es',
+  session: pick(Q.get('session'), SESSIONS) || pick(saved.session, SESSIONS),
+  view: pick(Q.get('view'), VIEWS) || pick(saved.view, VIEWS) || (matchMedia('(min-width: 720px)').matches ? 'dial' : 'board'),
+  live: true, date: null };
 const app = document.getElementById('sm-app');
 
 const chips = (list, cur, act, label) => `<div class="chips" role="group" aria-label="${label}">${list.map(([v, l]) => `<button class="chip${v === cur ? ' on' : ''}" data-act="${act}" data-v="${v}" aria-pressed="${v === cur}">${l}</button>`).join('')}</div>`;
@@ -528,6 +576,7 @@ const flagsHtml = day => day.flags.length ? `<div class="flags">${day.flags.map(
 const tradeSpan = d => `Trade date · ${wd3(addDays(d, -1))} 18:00 → ${wd3(d)} 17:00 ET`;
 const clock = '<span class="tnum" data-clock></span>';
 const inRange = (r, a, b) => b > r[0] && a < r[1];
+const viewToggle = () => `<div class="vt" role="group" aria-label="View">${VIEWS.map(([v, l]) => `<button class="vt-b${v === S.view ? ' on' : ''}" data-act="view" data-v="${v}" aria-pressed="${v === S.view}">${l}</button>`).join('')}</div>`;
 /* lists: drop a pin that just repeats the window starting at the same minute */
 const listPins = day => day.pins.filter(p => !day.segs.some(s => s.s === p.t && (p.name.startsWith(s.name) || s.name.startsWith(p.name))));
 
@@ -548,6 +597,75 @@ function foot(day) {
     if (k > r.checkedThrough || k < r.checkedFrom) notes.push('<span class="warn">This date is outside the checked calendar — scheduled releases may be missing. Check the official sources.</span>');
   }
   return `<div class="sm-foot">${legend}<ul class="notes">${notes.map(n => `<li>${n}</li>`).join('')}</ul></div>`;
+}
+
+/* ── DIAL ────────────────────────────────────────────────── */
+function dial(day, now) {
+  const C = 420, rad = a => (-90 + a / 1440 * 360) * Math.PI / 180;
+  const pt = (r, a) => [(C + r * Math.cos(rad(a))).toFixed(1), (C + r * Math.sin(rad(a))).toFixed(1)];
+  const arc = (r0, r1, a0, a1) => { const L = (a1 - a0) > 720 ? 1 : 0, [x0, y0] = pt(r1, a0), [x1, y1] = pt(r1, a1), [x2, y2] = pt(r0, a1), [x3, y3] = pt(r0, a0); return `M${x0} ${y0}A${r1} ${r1} 0 ${L} 1 ${x1} ${y1}L${x2} ${y2}A${r0} ${r0} 0 ${L} 0 ${x3} ${y3}Z`; };
+  const r = day.sess[S.session], live = now && !now.pre;
+  let g = `<defs><pattern id="sm-hatch" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="10" height="10" fill="#16161a"/><rect width="5" height="10" fill="#232329"/></pattern></defs>`;
+  g += `<circle cx="${C}" cy="${C}" r="196" fill="none" stroke="rgba(255,255,255,.05)"/>`;
+  /* a full-day single segment can't be drawn as one arc — split it */
+  day.segs.forEach(s => {
+    const cls = `dseg lv-${s.lvl}${live && now.seg === s ? ' cur' : ''}`, t = `<title>${esc(s.name)} · ${hhmm(s.s)}–${hhmm(s.e)} ET · ${LV[s.lvl]}</title>`;
+    if (s.e - s.s >= 1440) g += `<path class="${cls}" d="${arc(206, 300, 0, 720)}">${t}</path><path class="${cls}" d="${arc(206, 300, 720, 1440)}">${t}</path>`;
+    else g += `<path class="${cls}" d="${arc(206, 300, s.s, s.e)}">${t}</path>`;
+  });
+  day.lanes.forEach((l, i) => {
+    const r0 = 316 + i * 13;
+    g += `<circle cx="${C}" cy="${C}" r="${r0 + 3}" fill="none" stroke="rgba(255,255,255,.05)" stroke-width="6"/>`;
+    l.bars.forEach(b => { g += `<path d="${arc(r0, r0 + 6, b[0], b[1])}" fill="${l.c}"><title>${l.name} cash ${hhmm(b[0])}–${hhmm(b[1])} ET</title></path>`; });
+  });
+  for (let h = 0; h < 24; h++) {
+    const x = h * 60, [x0, y0] = pt(372, x), [x1, y1] = pt(h % 3 ? 380 : 388, x);
+    g += `<line x1="${x0}" y1="${y0}" x2="${x1}" y2="${y1}" stroke="rgba(255,255,255,${h % 3 ? .15 : .35})" stroke-width="2"/>`;
+    if (h % 3 === 0) { const [tx, ty] = pt(410 + Math.abs(Math.cos(rad(x))) * 34 + Math.abs(Math.sin(rad(x))) * 13, x);   /* clear the bracket by the label's own width/height */ g += `<text class="dhour${h === 0 ? ' key' : ''}" x="${tx}" y="${ty}" text-anchor="middle" dominant-baseline="central">${hhmm(x)}</text>`; }
+  }
+  day.pins.forEach(p => { const [x, y] = pt(190, p.t); g += `<circle cx="${x}" cy="${y}" r="${p.major ? 6 : 4}" fill="${p.lvl === 'event' ? 'var(--lv-event)' : 'var(--text2)'}"><title>${hhmm(p.t)} · ${esc(p.name)}</title></circle>`; });
+  if (S.session !== 'full') {
+    g += `<path d="${arc(180, 400, 0, r[0])}" fill="rgba(10,10,11,.74)"/><path d="${arc(180, 400, r[1], 1440)}" fill="rgba(10,10,11,.74)"/>`;
+    const [bx0, by0] = pt(398, r[0]), [bx1, by1] = pt(398, r[1]);
+    g += `<path d="M${bx0} ${by0}A398 398 0 ${(r[1] - r[0]) > 720 ? 1 : 0} 1 ${bx1} ${by1}" fill="none" stroke="var(--brand)" stroke-width="4" stroke-linecap="round"/>`;
+  }
+  if (live) {
+    const [x0, y0] = pt(198, now.a), [x1, y1] = pt(312, now.a);
+    g += `<line x1="${x0}" y1="${y0}" x2="${x1}" y2="${y1}" stroke="#fff" stroke-width="5" stroke-linecap="round"/><circle cx="${x1}" cy="${y1}" r="10" fill="#fff" stroke="#0a0a0b" stroke-width="4"/>`;
+  }
+
+  let center;
+  if (now && now.pre) center = `<div class="b-k">${now.name}</div><div class="b-state">Closed</div><div class="b-cd tnum" data-until="${now.untilMs}"></div><div class="b-sub">until ${now.reopenDay} 18:00 ET</div>`;
+  else if (live) center = `<div class="b-k">${clock} ET</div><div class="b-state lv-${now.lvl}">${LV[now.lvl]}</div><div class="b-name">${now.name}</div><div class="b-cd tnum" data-until="${now.untilMs}"></div><div class="b-sub">left in this window</div>`;
+  else center = `<div class="b-k">Planning</div><div class="b-state">${wd3(S.date)} ${S.date.d}</div><div class="b-name">${MON[S.date.m - 1]} ${S.date.y}</div><div class="b-sub">${day.segs.filter(s => s.lvl === 'target').length} target windows</div>`;
+
+  let items;
+  if (live) {
+    items = [...day.segs.filter(s => s.s > now.a).map(s => ({ t: s.s, lvl: s.lvl, name: s.name, d: `${LV[s.lvl]} · ${dur(s.e - s.s)}` })),
+             ...listPins(day).filter(p => p.t > now.a).map(p => ({ t: p.t, lvl: p.lvl === 'event' ? 'event' : 'thin', name: p.name, d: p.note }))]
+      .filter(x => S.session === 'full' || (x.t >= r[0] && x.t < r[1])).sort((a, b) => a.t - b.t).slice(0, 7);
+  } else {
+    items = day.segs.filter(s => inRange(r, s.s, s.e)).map(s => ({ t: s.s, lvl: s.lvl, name: s.name, d: `${LV[s.lvl]} · ${hhmm(s.s)}–${hhmm(s.e)}` }));
+  }
+  const listHead = live ? 'Coming up' : `Windows · ${SESSIONS.find(x => x[0] === S.session)[1]}`;
+  const list = items.length
+    ? `<div class="b-list">${items.map(x => `<div class="b-item lv-${x.lvl}"><div class="b-t tnum">${hhmm(x.t)}</div><div><div class="b-n">${x.name}</div><div class="b-d">${x.d}</div></div><div class="b-in tnum"${live ? ` data-until="${day.origin + x.t * 60000}" data-fmt="in"` : ''}></div></div>`).join('')}</div>`
+    : '<p class="c-empty">Nothing left in this session.</p>';
+
+  return `
+  <div class="b-grid">
+    <div class="b-dial"><svg viewBox="-52 -52 944 944" role="img" aria-label="24-hour dial of the trade date, 18:00 ET at the top">${g}</svg><div class="b-center">${center}</div></div>
+    <div class="b-side">
+      <div class="daybar"><div><div class="date">${WDN[dow(S.date)]} ${S.date.d} ${MON[S.date.m - 1]} ${S.date.y}</div><div class="date-sub">${tradeSpan(S.date)}</div></div>
+        <div class="c-nav"><button class="step" data-act="prev" aria-label="Previous trading day">←</button><button class="step" data-act="next" aria-label="Next trading day">→</button>${S.live ? '<span class="live-dot">Live</span>' : '<button class="live-btn" data-act="live">Back to live</button>'}${viewToggle()}</div></div>
+      <div><div class="ctl-l">Market</div>${chips(MARKETS, S.market, 'market', 'Market')}</div>
+      <div><div class="ctl-l">Session</div>${chips(SESSIONS, S.session, 'session', 'Session')}</div>
+      ${flagsHtml(day)}
+      ${day.banners.map(([c, t]) => `<div class="banner ${c}">${t}</div>`).join('')}
+      <div><div class="ctl-l">${listHead}</div>${list}</div>
+      <div><div class="ctl-l">Outer rings · cash hours</div><div class="b-rings">${day.lanes.map(l => `<span><i style="background:${l.c}"></i>${l.name}</span>`).join('')}<span><i style="background:var(--lv-event);width:10px;height:10px;border-radius:50%"></i>Events</span></div></div>
+    </div>
+  </div>`;
 }
 
 /* ── BOARD ───────────────────────────────────────────────── */
@@ -585,7 +703,7 @@ function board(day, now) {
     <div><div class="c-kick">${S.live ? `<span class="live-dot">Live</span>${clock} ET` : 'Planning view'}</div>
       <div class="c-date">${WDN[dow(S.date)]} ${S.date.d} ${MON[S.date.m - 1]}</div>
       <div class="c-sub">${tradeSpan(S.date)}</div></div>
-    <div class="c-nav"><button class="step" data-act="prev" aria-label="Previous trading day">←</button><button class="step" data-act="next" aria-label="Next trading day">→</button>${S.live ? '' : '<button class="live-btn" data-act="live">Back to live</button>'}</div>
+    <div class="c-nav"><button class="step" data-act="prev" aria-label="Previous trading day">←</button><button class="step" data-act="next" aria-label="Next trading day">→</button>${S.live ? '' : '<button class="live-btn" data-act="live">Back to live</button>'}${viewToggle()}</div>
   </div>
   <div class="c-tabs" role="group" aria-label="Session">${SESSIONS.map(([v, l]) => `<button class="c-tab${v === S.session ? ' on' : ''}" aria-pressed="${v === S.session}" data-act="session" data-v="${v}">${l}<span class="r tnum">${hhmm(day.sess[v][0])}–${hhmm(day.sess[v][1])}</span></button>`).join('')}</div>
   <div class="c-mid">${chips(MARKETS, S.market, 'market', 'Market')}${flagsHtml(day)}</div>
@@ -605,7 +723,7 @@ function render() {
   if (!S.session) S.session = defaultSession(day, now);
   const f = document.activeElement && app.contains(document.activeElement) ? document.activeElement : null;
   const fSel = f && f.dataset.act ? `[data-act="${f.dataset.act}"]${f.dataset.v ? `[data-v="${f.dataset.v}"]` : ''}` : null;
-  app.innerHTML = board(day, now) + foot(day);
+  app.innerHTML = (S.view === 'dial' ? dial(day, now) : board(day, now)) + foot(day);
   if (fSel) { const el = app.querySelector(fSel); if (el) el.focus(); }
   lastMin = Math.floor(ms / 60000);
   tick();
@@ -621,8 +739,7 @@ setInterval(() => { if (S.live && Math.floor(nowMs() / 60000) !== lastMin) rende
 app.addEventListener('click', e => {
   const b = e.target.closest('[data-act]'); if (!b) return;
   const act = b.dataset.act;
-  if (act === 'market') S.market = b.dataset.v;
-  if (act === 'session') S.session = b.dataset.v;
+  if (act === 'market' || act === 'session' || act === 'view') { S[act] = b.dataset.v; remember(act, b.dataset.v); }
   if (act === 'prev' || act === 'next') {
     S.date = stepDate(S.date, act === 'prev' ? -1 : 1);
     S.live = key(S.date) === key(liveDate(nowMs()));
