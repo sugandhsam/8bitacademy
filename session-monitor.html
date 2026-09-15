@@ -118,7 +118,7 @@
   .b-rings span { display: inline-flex; align-items: center; gap: 9px; }
   .b-rings i { width: 22px; height: 6px; border-radius: 3px; display: inline-block; }
   @media (max-width: 1240px) { .b-grid { grid-template-columns: 1fr; } .b-grid > .b-left { position: relative; top: 0; margin: 0 auto; } }
-  @media (max-width: 720px) { .b-item { grid-template-columns: 64px minmax(0, 1fr) auto; gap: 12px; } .b-t { font-size: 18px; } .b-n { font-size: 18px; } }
+  @media (max-width: 720px) { .b-item { grid-template-columns: 64px minmax(0, 1fr) auto; gap: 12px; } .b-t { font-size: 18px; } .b-n { font-size: 18px; } .dpin, .b-rings .b-ring-ev { display: none; } }
 
   /* ── BOARD ──────────────────────────────────────────────── */
   .c-top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 28px; margin-bottom: 40px; }
@@ -680,7 +680,7 @@ function dial(day, now) {
     g += `<line x1="${x0}" y1="${y0}" x2="${x1}" y2="${y1}" stroke="rgba(255,255,255,${h % 3 ? .15 : .35})" stroke-width="2"/>`;
     if (h % 3 === 0) { const [tx, ty] = pt(410 + Math.abs(Math.cos(rad(x))) * 34 + Math.abs(Math.sin(rad(x))) * 13, x);   /* clear the bracket by the label's own width/height */ g += `<text class="dhour${h === 0 ? ' key' : ''}" x="${tx}" y="${ty}" text-anchor="middle" dominant-baseline="central">${hhmm(x)}</text>`; }
   }
-  day.pins.forEach(p => { const [x, y] = pt(190, p.t); g += `<circle cx="${x}" cy="${y}" r="${p.major ? 6 : 4}" fill="${p.lvl === 'event' ? 'var(--lv-event)' : 'var(--text2)'}"><title>${hhmm(p.t)} · ${esc(p.name)}</title></circle>`; });
+  day.pins.forEach(p => { const [x, y] = pt(190, p.t); g += `<circle class="dpin" cx="${x}" cy="${y}" r="${p.major ? 6 : 4}" fill="${p.lvl === 'event' ? 'var(--lv-event)' : 'var(--text2)'}"><title>${hhmm(p.t)} · ${esc(p.name)}</title></circle>`; });
   if (S.session !== 'full') {
     g += `<path d="${arc(180, 400, 0, r[0])}" fill="rgba(10,10,11,.74)"/><path d="${arc(180, 400, r[1], 1440)}" fill="rgba(10,10,11,.74)"/>`;
     const [bx0, by0] = pt(398, r[0]), [bx1, by1] = pt(398, r[1]);
@@ -693,7 +693,7 @@ function dial(day, now) {
 
   let center;
   if (now && now.pre) center = `<div class="b-k">${now.name}</div><div class="b-state">Closed</div><div class="b-cd tnum" data-until="${now.untilMs}"></div><div class="b-sub">until ${now.reopenDay} 18:00 ET</div>`;
-  else if (live) center = `<div class="b-k">${clock} ET</div><div class="b-cd b-cd-lg tnum" data-until="${now.untilMs}"></div><div class="b-sub">left in this window</div><div class="b-name b-name-live">${now.name}</div><div class="b-state b-state-sm lv-${now.lvl}">${LV[now.lvl]}</div>`;
+  else if (live) center = `<div class="b-cd b-cd-lg tnum" data-until="${now.untilMs}"></div><div class="b-sub">left in this window</div><div class="b-name b-name-live">${now.name}</div><div class="b-state b-state-sm lv-${now.lvl}">${LV[now.lvl]}</div>`;
   else center = `<div class="b-k">Planning</div><div class="b-state">${wd3(S.date)} ${S.date.d}</div><div class="b-name">${MON[S.date.m - 1]} ${S.date.y}</div><div class="b-sub">${day.hol && day.hol.kind === 'closed' ? 'CME closed' : `${day.segs.filter(s => s.lvl === 'target').length} target windows`}</div>`;
 
   let items;
@@ -713,10 +713,10 @@ function dial(day, now) {
   <div class="b-grid">
     <div class="b-left">
       <div class="b-dial"><svg viewBox="-52 -52 944 944" role="img" aria-label="24-hour dial of the trade date, 18:00 ET at the top">${g}</svg><div class="b-center">${center}</div></div>
-      <div class="b-legend"><div class="ctl-l">Outer rings · cash hours</div><div class="b-rings">${day.lanes.map(l => `<span><i style="background:${l.c}"></i>${l.name}</span>`).join('')}<span><i style="background:var(--lv-event);width:10px;height:10px;border-radius:50%"></i>Events</span></div></div>
+      <div class="b-legend"><div class="ctl-l">Outer rings · cash hours</div><div class="b-rings">${day.lanes.map(l => `<span><i style="background:${l.c}"></i>${l.name}</span>`).join('')}<span class="b-ring-ev"><i style="background:var(--lv-event);width:10px;height:10px;border-radius:50%"></i>Events</span></div></div>
     </div>
     <div class="b-side">
-      <div class="daybar"><div><div class="date">${WDN[dow(S.date)]} ${S.date.d} ${MON[S.date.m - 1]} ${S.date.y}</div><div class="date-sub">${tradeSpan(S.date)}</div></div>
+      <div class="daybar"><div>${S.live ? `<div class="c-kick">${clock} ET</div>` : ''}<div class="date">${WDN[dow(S.date)]} ${S.date.d} ${MON[S.date.m - 1]} ${S.date.y}</div><div class="date-sub">${tradeSpan(S.date)}</div></div>
         <div class="c-nav"><button class="step" data-act="prev" aria-label="Previous trading day">←</button><button class="step" data-act="next" aria-label="Next trading day">→</button>${S.live ? '<span class="live-dot">Live</span>' : '<button class="live-btn" data-act="live">Back to live</button>'}${viewToggle()}</div></div>
       <div><div class="ctl-l">Market</div>${chips(MARKETS, S.market, 'market', 'Market')}</div>
       <div><div class="ctl-l">Session</div>${chips(SESSIONS, S.session, 'session', 'Session')}</div>
