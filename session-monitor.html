@@ -82,7 +82,9 @@
 
   /* ── DIAL ───────────────────────────────────────────────── */
   .b-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(400px, 1fr); gap: 56px; align-items: start; }
-  .b-grid > .b-dial { position: sticky; top: calc(var(--topbar-h) + 32px); }
+  .b-grid > .b-left { position: sticky; top: calc(var(--topbar-h) + 32px); width: 100%; max-width: 860px; }
+  .b-legend { margin-top: 28px; text-align: center; }
+  .b-legend .b-rings { justify-content: center; }
   .b-dial { position: relative; width: 100%; max-width: 860px; aspect-ratio: 1; container-type: inline-size; }
   .b-dial svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; overflow: visible; }
   .dseg { stroke: var(--bg); stroke-width: 3; }
@@ -97,6 +99,10 @@
   .b-name { font-size: max(15px, 3.2cqw); color: var(--text); font-weight: 700; line-height: 1.2; overflow-wrap: anywhere; }
   .b-cd { font-size: 6.6cqw; color: var(--text); font-weight: 700; line-height: 1; margin-top: 2.4cqw; }
   .b-sub { font-size: max(13px, 2.1cqw); color: var(--text3); margin-top: .8cqw; }
+  /* live: countdown leads, rating sits under the window name */
+  .b-cd-lg { font-size: 8.4cqw; margin-top: 1.6cqw; }
+  .b-name-live { margin-top: 2.6cqw; }
+  .b-state-sm { font-size: 4.4cqw; letter-spacing: -.01em; margin: .8cqw 0 0; }
   .b-side > * + * { margin-top: 40px; }
   .daybar { display: grid; gap: 18px; }
   .daybar .c-nav { gap: 10px; }
@@ -111,7 +117,7 @@
   .b-rings { display: flex; flex-wrap: wrap; gap: 10px 24px; font-size: 15px; }
   .b-rings span { display: inline-flex; align-items: center; gap: 9px; }
   .b-rings i { width: 22px; height: 6px; border-radius: 3px; display: inline-block; }
-  @media (max-width: 1240px) { .b-grid { grid-template-columns: 1fr; } .b-grid > .b-dial { position: relative; top: 0; margin: 0 auto; } }
+  @media (max-width: 1240px) { .b-grid { grid-template-columns: 1fr; } .b-grid > .b-left { position: relative; top: 0; margin: 0 auto; } }
   @media (max-width: 720px) { .b-item { grid-template-columns: 64px minmax(0, 1fr) auto; gap: 12px; } .b-t { font-size: 18px; } .b-n { font-size: 18px; } }
 
   /* ── BOARD ──────────────────────────────────────────────── */
@@ -687,7 +693,7 @@ function dial(day, now) {
 
   let center;
   if (now && now.pre) center = `<div class="b-k">${now.name}</div><div class="b-state">Closed</div><div class="b-cd tnum" data-until="${now.untilMs}"></div><div class="b-sub">until ${now.reopenDay} 18:00 ET</div>`;
-  else if (live) center = `<div class="b-k">${clock} ET</div><div class="b-state lv-${now.lvl}">${LV[now.lvl]}</div><div class="b-name">${now.name}</div><div class="b-cd tnum" data-until="${now.untilMs}"></div><div class="b-sub">left in this window</div>`;
+  else if (live) center = `<div class="b-k">${clock} ET</div><div class="b-cd b-cd-lg tnum" data-until="${now.untilMs}"></div><div class="b-sub">left in this window</div><div class="b-name b-name-live">${now.name}</div><div class="b-state b-state-sm lv-${now.lvl}">${LV[now.lvl]}</div>`;
   else center = `<div class="b-k">Planning</div><div class="b-state">${wd3(S.date)} ${S.date.d}</div><div class="b-name">${MON[S.date.m - 1]} ${S.date.y}</div><div class="b-sub">${day.hol && day.hol.kind === 'closed' ? 'CME closed' : `${day.segs.filter(s => s.lvl === 'target').length} target windows`}</div>`;
 
   let items;
@@ -705,7 +711,10 @@ function dial(day, now) {
 
   return `
   <div class="b-grid">
-    <div class="b-dial"><svg viewBox="-52 -52 944 944" role="img" aria-label="24-hour dial of the trade date, 18:00 ET at the top">${g}</svg><div class="b-center">${center}</div></div>
+    <div class="b-left">
+      <div class="b-dial"><svg viewBox="-52 -52 944 944" role="img" aria-label="24-hour dial of the trade date, 18:00 ET at the top">${g}</svg><div class="b-center">${center}</div></div>
+      <div class="b-legend"><div class="ctl-l">Outer rings · cash hours</div><div class="b-rings">${day.lanes.map(l => `<span><i style="background:${l.c}"></i>${l.name}</span>`).join('')}<span><i style="background:var(--lv-event);width:10px;height:10px;border-radius:50%"></i>Events</span></div></div>
+    </div>
     <div class="b-side">
       <div class="daybar"><div><div class="date">${WDN[dow(S.date)]} ${S.date.d} ${MON[S.date.m - 1]} ${S.date.y}</div><div class="date-sub">${tradeSpan(S.date)}</div></div>
         <div class="c-nav"><button class="step" data-act="prev" aria-label="Previous trading day">←</button><button class="step" data-act="next" aria-label="Next trading day">→</button>${S.live ? '<span class="live-dot">Live</span>' : '<button class="live-btn" data-act="live">Back to live</button>'}${viewToggle()}</div></div>
@@ -714,7 +723,6 @@ function dial(day, now) {
       ${flagsHtml(day)}
       ${day.banners.map(([c, t]) => `<div class="banner ${c}">${t}</div>`).join('')}
       <div><div class="ctl-l">${listHead}</div>${list}</div>
-      <div><div class="ctl-l">Outer rings · cash hours</div><div class="b-rings">${day.lanes.map(l => `<span><i style="background:${l.c}"></i>${l.name}</span>`).join('')}<span><i style="background:var(--lv-event);width:10px;height:10px;border-radius:50%"></i>Events</span></div></div>
     </div>
   </div>`;
 }
