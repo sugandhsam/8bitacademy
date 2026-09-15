@@ -50,7 +50,8 @@
   var TOOLS_SIDEBAR = [
     { head: 'Tools', links: [
       { href: 'tools.html',         label: 'All tools',      num: ''   },
-      { href: '07-playbook.html',   label: 'The Edge',       num: '01' }
+      { href: '07-playbook.html',   label: 'The Edge',       num: '01' },
+      { href: 'session-monitor.html', label: 'Session Monitor', num: '02' }
     ]}
   ];
 
@@ -84,7 +85,7 @@
     return [{ head: 'Indicators', links: items }];
   }
 
-  var TOOLS_PAGES = ['tools.html', '07-playbook.html'];
+  var TOOLS_PAGES = ['tools.html', '07-playbook.html', 'session-monitor.html'];
 
   var section = file === '06-indicators.html' ? 'indicators'
               : TOOLS_PAGES.indexOf(file) !== -1 ? 'tools'
