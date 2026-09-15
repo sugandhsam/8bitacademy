@@ -243,7 +243,7 @@
     <div class="why-card">
       <div class="n">05</div>
       <h3>Expiry and roll</h3>
-      <p>ES and NQ expire on the third Friday of March, June, September and December, settling to the index opening print. Volume moves to the next contract about a week earlier. Crude expires monthly; gold has first notice days before each delivery month.</p>
+      <p>ES and NQ expire on the third Friday of March, June, September and December, settling to the index opening print. CME’s customary roll date is the Monday of expiry week. Crude expires monthly; gold has first notice days before each delivery month.</p>
     </div>
   </div>
 </section>
@@ -345,7 +345,7 @@ const nthFriday = (y, m, n) => ({ y, m, d: 1 + ((5 - dow({ y, m, d: 1 }) + 7) % 
 const lastBiz = (y, m) => { let d = addDays({ y, m: m + 1, d: 1 }, -1); while (!isBiz(d)) d = addDays(d, -1); return d; };
 /* CL last trade date, falling in month m (the month before the contract month):
    3 business days before the 25th, or 4 if the 25th isn't a business day.
-   ⚠️ agent's reading of CME CL specs — confirm against cmegroup.com contract specs. */
+   Matches every CL last trade date in CME's product calendar (checked 2026-09-15) once holidays are in calendar.json. */
 function clLastTrade(y, m) {
   let d = { y, m, d: 25 }, n = isBiz(d) ? 3 : 4;
   while (n > 0) { d = addDays(d, -1); if (isBiz(d)) n--; }
@@ -402,13 +402,13 @@ function buildDay(date, market) {
   const dataName = prints.join(' + ');
 
   /* ES quarterly: 3rd Friday Mar/Jun/Sep/Dec, settles to the index opening print — cmegroup.com.
-     Roll date = 8 calendar days before expiry (convention; ⚠️ confirm on CME roll-dates page). */
+     Roll date = Monday of expiry week — CME "Customary Roll Dates" table (checked 2026-09-15). */
   const qMonth = d => [3, 6, 9, 12].includes(d.m);
   const expiry = qMonth(date) && key(nthFriday(date.y, date.m, 3)) === k;
-  const in8 = addDays(date, 8), roll = qMonth(in8) && key(nthFriday(in8.y, in8.m, 3)) === key(in8);
+  const in4 = addDays(date, 4), roll = qMonth(in4) && key(nthFriday(in4.y, in4.m, 3)) === key(in4);
   const clExpiry = key(clLastTrade(date.y, date.m)) === k;
-  /* GC first notice day = last business day of the month before a delivery month — CME rulebook ch. 7.
-     Delivery months Feb/Apr/Jun/Aug/Oct/Dec (⚠️ confirm on CME gold specs). */
+  /* GC first notice day = last business day of the month before a delivery month — matches CME's product calendar (checked 2026-09-15).
+     CME lists every month near term; only the bi-monthly Feb/Apr/Jun/Aug/Oct/Dec contracts are flagged (⚠️ trading convention, not a CME rule). */
   const gcFnd = date.m % 2 === 1 && key(lastBiz(date.y, date.m)) === k;
 
   const mismatch = A.lse0 === et(4);   /* London cash open normally lands 03:00 ET */
